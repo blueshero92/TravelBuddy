@@ -1,3 +1,11 @@
 <Solution>
-  <Project Path="TravelBuddy/TravelBuddy.csproj" />
+  <Folder Name="/Data/">
+    <Project Path="TravelBuddy.Data.Models/TravelBuddy.Data.Models.csproj" />
+    <Project Path="TravelBuddy.Data/TravelBuddy.Data.csproj" />
+  </Folder>
+  <Folder Name="/Services/" />
+  <Folder Name="/Tests/" />
+  <Folder Name="/Web/">
+    <Project Path="TravelBuddy/TravelBuddy.csproj" />
+  </Folder>
 </Solution>
