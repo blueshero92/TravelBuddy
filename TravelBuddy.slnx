@@ -8,4 +8,5 @@
   <Folder Name="/Web/">
     <Project Path="TravelBuddy/TravelBuddy.csproj" />
   </Folder>
+  <Project Path="TravelBuddy.GCommon/TravelBuddy.GCommon.csproj" Id="e66046ff-a1c0-4026-954a-f0e6ba110eb3" />
 </Solution>

@@ -15,6 +15,16 @@ namespace TravelBuddy.Data
 
         public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; } = null!;
 
+        public virtual DbSet<Excursion> Excursions { get; set; } = null!;
+
+        public virtual DbSet<Booking> Bookings { get; set; } = null!;
+
+        public virtual DbSet<BookingCancellationRequest> BookingCancellationRequests { get; set; } = null!;
+
+        public virtual DbSet<Notification> Notifications { get; set; } = null!;
+
+        public virtual DbSet<Favorite> Favorites { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
