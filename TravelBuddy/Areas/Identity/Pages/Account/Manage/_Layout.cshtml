@@ -1,0 +1,32 @@
+@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
+    {
+        Layout = parentLayout.ToString();
+    }
+    else
+    {
+        Layout = "/Views/Shared/_Layout.cshtml";
+    }
+}
+
+<div class="tb-manage-wrapper">
+    <div class="tb-manage-container">
+        <div class="tb-manage-hero">
+            <div class="tb-manage-hero-icon"><i class="fa-solid fa-user-gear"></i></div>
+            <div>
+                <h1>Account Settings</h1>
+                <p>Manage your TravelBuddy profile and preferences</p>
+            </div>
+        </div>
+        <div class="tb-manage-body">
+            <partial name="_ManageNav" />
+            <div class="tb-manage-content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

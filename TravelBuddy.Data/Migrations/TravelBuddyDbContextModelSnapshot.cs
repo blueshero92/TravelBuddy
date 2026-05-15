@@ -257,7 +257,7 @@ namespace TravelBuddy.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("Bookings", (string)null);
                 });
 
             modelBuilder.Entity("TravelBuddy.Data.Models.BookingCancellationRequest", b =>
@@ -292,7 +292,7 @@ namespace TravelBuddy.Data.Migrations
                     b.HasIndex("BookingId")
                         .IsUnique();
 
-                    b.ToTable("BookingCancellationRequests");
+                    b.ToTable("BookingCancellationRequests", (string)null);
                 });
 
             modelBuilder.Entity("TravelBuddy.Data.Models.Excursion", b =>
@@ -335,7 +335,7 @@ namespace TravelBuddy.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Excursions");
+                    b.ToTable("Excursions", (string)null);
                 });
 
             modelBuilder.Entity("TravelBuddy.Data.Models.Favorite", b =>
@@ -352,7 +352,7 @@ namespace TravelBuddy.Data.Migrations
 
                     b.HasIndex("ExcursionId");
 
-                    b.ToTable("Favorites");
+                    b.ToTable("Favorites", (string)null);
                 });
 
             modelBuilder.Entity("TravelBuddy.Data.Models.Notification", b =>
@@ -383,7 +383,7 @@ namespace TravelBuddy.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

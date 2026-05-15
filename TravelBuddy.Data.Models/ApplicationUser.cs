@@ -13,11 +13,10 @@ namespace TravelBuddy.Data.Models
             Id = Guid.NewGuid();
         }
 
-        [Required]
         [PersonalData]
         [MaxLength(FullNameMaxLength)]
         [Comment("The full name of the user.")]
-        public string FullName { get; set; } = null!;
+        public string? FullName { get; set; }
 
         public virtual ICollection<Booking> Bookings { get; set; } 
             = new HashSet<Booking>();

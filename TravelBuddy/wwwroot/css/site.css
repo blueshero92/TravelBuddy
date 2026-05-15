@@ -705,4 +705,183 @@ a:hover { color: var(--tb-accent); }
 }
 
 .tb-privacy-list li { margin-bottom: .2rem; }
+
+/* =============================================
+   TravelBuddy – Account Manage Pages
+   ============================================= */
+
+.tb-manage-wrapper {
+    min-height: calc(100vh - 72px);
+    background: var(--tb-light);
+    padding: 3rem 1rem 4rem;
+}
+
+.tb-manage-container {
+    max-width: 860px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 1.25rem;
+    box-shadow: 0 8px 40px rgba(0,0,0,.10);
+    overflow: hidden;
+}
+
+.tb-manage-hero {
+    background: linear-gradient(135deg, var(--tb-primary-dk) 0%, var(--tb-primary) 100%);
+    padding: 2rem 2rem 1.75rem;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.tb-manage-hero-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.15);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    border: 2px solid rgba(255,255,255,.3);
+    flex-shrink: 0;
+}
+
+.tb-manage-hero h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.45rem;
+    font-weight: 800;
+    margin: 0 0 .2rem;
+    color: #fff;
+}
+
+.tb-manage-hero p {
+    font-size: .88rem;
+    opacity: .85;
+    margin: 0;
+}
+
+.tb-manage-body {
+    display: flex;
+    min-height: 400px;
+}
+
+/* Sidebar nav */
+.tb-manage-nav {
+    width: 200px;
+    flex-shrink: 0;
+    background: var(--tb-light);
+    border-right: 1px solid #e8ecf0;
+    padding: 1.5rem 0;
+}
+
+.tb-manage-nav .nav-link {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .65rem 1.5rem;
+    color: var(--tb-text);
+    font-size: .9rem;
+    font-weight: 500;
+    border-radius: 0;
+    transition: background var(--tb-transition), color var(--tb-transition);
+}
+
+.tb-manage-nav .nav-link:hover {
+    background: rgba(0,119,182,.08);
+    color: var(--tb-primary);
+}
+
+.tb-manage-nav .nav-link.active {
+    background: rgba(0,119,182,.12);
+    color: var(--tb-primary);
+    font-weight: 700;
+    border-left: 3px solid var(--tb-primary);
+}
+
+/* Main content area */
+.tb-manage-content {
+    flex: 1;
+    padding: 2rem 2.5rem;
+    min-width: 0;
+}
+
+.tb-manage-content h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--tb-dark);
+    margin-bottom: 1.5rem;
+    padding-bottom: .75rem;
+    border-bottom: 2px solid var(--tb-light);
+}
+
+/* Status message */
+.tb-status-success {
+    background: #f0fdf4;
+    border-left: 4px solid #22c55e;
+    border-radius: .5rem;
+    padding: .75rem 1rem;
+    color: #15803d;
+    font-size: .88rem;
+    margin-bottom: 1.25rem;
+}
+
+.tb-status-error {
+    background: #fff0f0;
+    border-left: 4px solid #e63946;
+    border-radius: .5rem;
+    padding: .75rem 1rem;
+    color: #c1121f;
+    font-size: .88rem;
+    margin-bottom: 1.25rem;
+}
+
+/* Manage form elements */
+.tb-manage-form .tb-field-group { margin-bottom: 1.25rem; }
+
+.tb-manage-btn {
+    padding: .75rem 2rem;
+    background: linear-gradient(135deg, var(--tb-primary) 0%, var(--tb-primary-dk) 100%);
+    color: #fff;
+    border: none;
+    border-radius: .65rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: .95rem;
+    cursor: pointer;
+    transition: opacity var(--tb-transition), transform var(--tb-transition), box-shadow var(--tb-transition);
+    box-shadow: 0 4px 16px rgba(0,119,182,.3);
+}
+
+.tb-manage-btn:hover {
+    opacity: .92;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,119,182,.35);
+}
+
+.tb-manage-btn-danger {
+    background: linear-gradient(135deg, #e63946 0%, #c1121f 100%);
+    box-shadow: 0 4px 16px rgba(230,57,70,.3);
+}
+
+.tb-manage-btn-danger:hover {
+    box-shadow: 0 8px 24px rgba(230,57,70,.35);
+}
+
+.tb-manage-warning {
+    background: #fff8e6;
+    border-left: 4px solid var(--tb-accent);
+    border-radius: .5rem;
+    padding: .85rem 1.1rem;
+    color: #92400e;
+    font-size: .9rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 600px) {
+    .tb-manage-body { flex-direction: column; }
+    .tb-manage-nav { width: 100%; border-right: none; border-bottom: 1px solid #e8ecf0; padding: .75rem 0; }
+    .tb-manage-content { padding: 1.5rem 1.25rem; }
+}
 }

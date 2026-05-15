@@ -1,0 +1,28 @@
+@page
+@model DeletePersonalDataModel
+@{
+    ViewData["Title"] = "Delete Personal Data";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+<h3><i class="fa-solid fa-shield-halved me-2"></i>Personal Data</h3>
+<div class="tb-manage-warning">
+    <i class="fa-solid fa-triangle-exclamation me-1"></i>
+    <strong>Deleting your account is permanent and cannot be undone.</strong> All your data will be removed.
+</div>
+<form id="delete-user" method="post" class="tb-manage-form">
+    <div asp-validation-summary="ModelOnly" class="tb-status-error" role="alert"></div>
+    @if (Model.RequirePassword)
+    {
+        <div class="tb-field-group">
+            <label asp-for="Input.Password" class="tb-field-label"><i class="fa-solid fa-lock me-1"></i> Confirm your password</label>
+            <input asp-for="Input.Password" class="tb-field-input" autocomplete="current-password" aria-required="true" placeholder="Enter your password to confirm" />
+            <span asp-validation-for="Input.Password" class="tb-field-error"></span>
+        </div>
+    }
+    <button class="tb-manage-btn tb-manage-btn-danger" type="submit"><i class="fa-solid fa-trash me-2"></i>Delete Account</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

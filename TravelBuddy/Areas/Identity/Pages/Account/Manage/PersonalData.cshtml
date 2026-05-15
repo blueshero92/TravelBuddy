@@ -1,0 +1,20 @@
+@page
+@model PersonalDataModel
+@{
+    ViewData["Title"] = "Personal Data";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+<h3><i class="fa-solid fa-shield-halved me-2"></i>Personal Data</h3>
+<p>Your account contains personal data that you have given us. This page allows you to delete that data.</p>
+<div class="tb-manage-warning">
+    <i class="fa-solid fa-triangle-exclamation me-1"></i>
+    <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
+</div>
+<a id="delete" asp-page="DeletePersonalData" class="tb-manage-btn tb-manage-btn-danger">
+    <i class="fa-solid fa-trash me-2"></i>Delete Account
+</a>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

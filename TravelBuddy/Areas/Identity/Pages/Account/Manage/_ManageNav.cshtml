@@ -1,0 +1,14 @@
+@using TravelBuddy.Data.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+<nav class="tb-manage-nav">
+    <ul class="nav flex-column">
+        <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index"><i class="fa-solid fa-user me-2"></i>Profile</a></li>
+        <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email"><i class="fa-solid fa-envelope me-2"></i>Email</a></li>
+        <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword"><i class="fa-solid fa-lock me-2"></i>Password</a></li>
+        <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData"><i class="fa-solid fa-shield-halved me-2"></i>Personal data</a></li>
+    </ul>
+</nav>

@@ -1,0 +1,25 @@
+@page
+@model EmailModel
+@{
+    ViewData["Title"] = "Manage Email";
+    ViewData["ActivePage"] = ManageNavPages.Email;
+}
+
+<h3><i class="fa-solid fa-envelope me-2"></i>Email</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+<form id="email-form" method="post" class="tb-manage-form">
+    <div class="tb-field-group">
+        <label class="tb-field-label"><i class="fa-solid fa-envelope me-1"></i> Current Email</label>
+        <input asp-for="Email" class="tb-field-input" disabled />
+    </div>
+    <div class="tb-field-group">
+        <label asp-for="Input.NewEmail" class="tb-field-label"><i class="fa-solid fa-envelope-open me-1"></i> New Email</label>
+        <input asp-for="Input.NewEmail" class="tb-field-input" autocomplete="email" aria-required="true" placeholder="Enter new email address" />
+        <span asp-validation-for="Input.NewEmail" class="tb-field-error"></span>
+    </div>
+    <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="tb-manage-btn">Update Email</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

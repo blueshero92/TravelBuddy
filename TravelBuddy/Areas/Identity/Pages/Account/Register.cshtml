@@ -26,6 +26,14 @@
                        aria-required="true" placeholder="name@example.com" />
                 <span asp-validation-for="Input.Email" class="tb-field-error"></span>
             </div>
+            <div class="tb-field-group">
+                <label asp-for="Input.FullName" class="tb-field-label">
+                    <i class="fa-solid fa-user me-1"></i> Full Name
+                </label>
+                <input asp-for="Input.FullName" class="tb-field-input" autocomplete="name"
+                       aria-required="true" placeholder="John Doe" />
+                <span asp-validation-for="Input.FullName" class="tb-field-error"></span>
+            </div>
 
             <div class="tb-field-group">
                 <label asp-for="Input.Password" class="tb-field-label">

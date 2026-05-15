@@ -1,0 +1,31 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<h3><i class="fa-solid fa-user me-2"></i>Profile</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+<form id="profile-form" method="post" class="tb-manage-form">
+    <div asp-validation-summary="ModelOnly" class="tb-status-error" role="alert"></div>
+    <div class="tb-field-group">
+        <label class="tb-field-label"><i class="fa-solid fa-envelope me-1"></i> Username</label>
+        <input asp-for="Username" class="tb-field-input" disabled />
+    </div>
+    <div class="tb-field-group">
+        <label asp-for="Input.FullName" class="tb-field-label"><i class="fa-solid fa-id-card me-1"></i> Full Name</label>
+        <input asp-for="Input.FullName" class="tb-field-input" placeholder="Your full name" />
+        <span asp-validation-for="Input.FullName" class="tb-field-error"></span>
+    </div>
+    <div class="tb-field-group">
+        <label asp-for="Input.PhoneNumber" class="tb-field-label"><i class="fa-solid fa-phone me-1"></i> Phone Number</label>
+        <input asp-for="Input.PhoneNumber" class="tb-field-input" placeholder="Your phone number" />
+        <span asp-validation-for="Input.PhoneNumber" class="tb-field-error"></span>
+    </div>
+    <button id="update-profile-button" type="submit" class="tb-manage-btn">Save Changes</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
