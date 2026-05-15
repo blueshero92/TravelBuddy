@@ -1,8 +1,91 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="tb-hero">
+    <div class="tb-hero-content">
+        <span class="tb-hero-eyebrow">✈ Explore the World</span>
+        <h1>Discover Your Next<br />Dream Destination</h1>
+        <p>Hand-picked tours, expert guides, and unforgettable experiences tailored just for you.</p>
+        <form class="tb-search-bar" onsubmit="return false;">
+            <i class="fa-solid fa-magnifying-glass text-muted"></i>
+            <input type="text" placeholder="Where do you want to go?" aria-label="Search destinations" />
+            <button class="btn" type="submit">Search</button>
+        </form>
+    </div>
+</section>
+
+<section class="tb-stats">
+    <div class="container">
+        <div class="row text-center g-4 justify-content-center">
+            <div class="col-6 col-md-4">
+                <div class="tb-stat-number">10+</div>
+                <div class="tb-stat-label">Destinations</div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="tb-stat-number">500+</div>
+                <div class="tb-stat-label">Happy Travellers</div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="tb-stat-number">4.9★</div>
+                <div class="tb-stat-label">Average Rating</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="tb-section tb-section-alt">
+    <div class="container">
+        <div class="text-center">
+            <p class="tb-section-sub text-uppercase fw-bold" style="color:var(--tb-accent);letter-spacing:2px;font-size:.8rem;">Our Promise</p>
+            <h2 class="tb-section-title">Why Choose TravelBuddy?</h2>
+            <div class="tb-divider"></div>
+            <p class="tb-section-sub">We take care of every detail so all you have to do is enjoy the journey.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-sm-6 col-lg-3">
+                <div class="tb-feature-card">
+                    <div class="tb-feature-icon"><i class="fa-solid fa-earth-americas"></i></div>
+                    <h5>Global Coverage</h5>
+                    <p>Carefully curated destinations with local expertise and personalised itineraries.</p>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="tb-feature-card">
+                    <div class="tb-feature-icon"><i class="fa-solid fa-shield-heart"></i></div>
+                    <h5>Travel Protection</h5>
+                    <p>Comprehensive travel insurance and 24/7 emergency support wherever you are.</p>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="tb-feature-card">
+                    <div class="tb-feature-icon"><i class="fa-solid fa-tag"></i></div>
+                    <h5>Best Price Guarantee</h5>
+                    <p>We match any lower price you find — no hidden fees, transparent pricing always.</p>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="tb-feature-card">
+                    <div class="tb-feature-icon"><i class="fa-solid fa-headset"></i></div>
+                    <h5>24/7 Support</h5>
+                    <p>Our dedicated team is always on hand to assist you before, during, and after your trip.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="tb-cta">
+    <div class="container">
+        <h2>Ready to Start Your Adventure?</h2>
+        <p>Sign up today and get exclusive deals on your first booking.</p>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+            <a asp-area="Identity" asp-page="/Account/Register" class="tb-btn-primary">
+                <i class="fa-solid fa-user-plus me-2"></i>Get Started Free
+            </a>
+            <a href="#" class="tb-btn-outline">
+                <i class="fa-solid fa-compass me-2"></i>Browse Destinations
+            </a>
+        </div>
+    </div>
+</section>

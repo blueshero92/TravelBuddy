@@ -4,31 +4,57 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="tb-auth-wrapper">
+    <div class="tb-auth-card">
 
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+        <div class="tb-auth-header">
+            <div class="tb-auth-icon">
+                <i class="fa-solid fa-map-location-dot"></i>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Password</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            <h1 class="tb-auth-title">Start Your Journey</h1>
+            <p class="tb-auth-subtitle">Create your free TravelBuddy account today</p>
+        </div>
+
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="tb-auth-form">
+            <div asp-validation-summary="ModelOnly" class="tb-auth-alert" role="alert"></div>
+
+            <div class="tb-field-group">
+                <label asp-for="Input.Email" class="tb-field-label">
+                    <i class="fa-solid fa-envelope me-1"></i> Email Address
+                </label>
+                <input asp-for="Input.Email" class="tb-field-input" autocomplete="username"
+                       aria-required="true" placeholder="name@example.com" />
+                <span asp-validation-for="Input.Email" class="tb-field-error"></span>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+
+            <div class="tb-field-group">
+                <label asp-for="Input.Password" class="tb-field-label">
+                    <i class="fa-solid fa-lock me-1"></i> Password
+                </label>
+                <input asp-for="Input.Password" class="tb-field-input" autocomplete="new-password"
+                       aria-required="true" placeholder="Create a password" />
+                <span asp-validation-for="Input.Password" class="tb-field-error"></span>
             </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+
+            <div class="tb-field-group">
+                <label asp-for="Input.ConfirmPassword" class="tb-field-label">
+                    <i class="fa-solid fa-lock me-1"></i> Confirm Password
+                </label>
+                <input asp-for="Input.ConfirmPassword" class="tb-field-input" autocomplete="new-password"
+                       aria-required="true" placeholder="Repeat your password" />
+                <span asp-validation-for="Input.ConfirmPassword" class="tb-field-error"></span>
+            </div>
+
+            <button id="registerSubmit" type="submit" class="tb-auth-btn">
+                <i class="fa-solid fa-user-plus me-2"></i>Create Account
+            </button>
         </form>
+
+        <div class="tb-auth-footer">
+            <p>Already have an account?
+                <a asp-page="./Login">Log in here</a>
+            </p>
+        </div>
     </div>
 </div>
 
