@@ -19,12 +19,12 @@
             <div asp-validation-summary="ModelOnly" class="tb-auth-alert" role="alert"></div>
 
             <div class="tb-field-group">
-                <label asp-for="Input.Email" class="tb-field-label">
-                    <i class="fa-solid fa-envelope me-1"></i> Email Address
+                <label asp-for="Input.LogInIdentifier" class="tb-field-label">
+                    <i class="fa-solid fa-envelope me-1"></i> Email or Username
                 </label>
-                <input asp-for="Input.Email" class="tb-field-input" autocomplete="username"
-                       aria-required="true" placeholder="name@example.com" />
-                <span asp-validation-for="Input.Email" class="tb-field-error"></span>
+                <input asp-for="Input.LogInIdentifier" class="tb-field-input" autocomplete="username"
+                       aria-required="true" placeholder="name@example.com or username" />
+                <span asp-validation-for="Input.LogInIdentifier" class="tb-field-error"></span>
             </div>
 
             <div class="tb-field-group">
