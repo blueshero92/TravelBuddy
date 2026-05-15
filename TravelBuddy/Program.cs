@@ -20,7 +20,7 @@ namespace TravelBuddy
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<TravelBuddyDbContext>();
 
             builder.Services.AddControllersWithViews();
@@ -39,6 +39,8 @@ namespace TravelBuddy
                 app.UseHsts();
             }
 
+
+
             app.UseHttpsRedirection();
             app.UseRouting();
 
@@ -46,10 +48,12 @@ namespace TravelBuddy
             app.UseAuthorization();
 
             app.MapStaticAssets();
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
+
             app.MapRazorPages()
                .WithStaticAssets();
 
