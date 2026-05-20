@@ -36,5 +36,29 @@ namespace TravelBuddy.Services.Core
 
             return excursionsViewModel;
         }
+
+        public async Task<ExcursionViewModel> GetExcursionByIdAsync(Guid id)
+        {
+            Excursion? excursion = await dbContext.Excursions
+                                                  .FirstOrDefaultAsync(e => e.Id == id);
+
+            if (excursion == null)
+            {
+                return null;
+            }
+
+            ExcursionViewModel excursionViewModel = new ExcursionViewModel
+            {
+                Id = excursion.Id,
+                Title = excursion.Title,
+                Destination = excursion.Destination,
+                StartDate = excursion.StartDate,
+                EndDate = excursion.EndDate,
+                Price = excursion.Price,
+                Capacity = excursion.Capacity
+            };
+
+            return excursionViewModel;
+        }
     }
 }

@@ -1,0 +1,102 @@
+﻿@model TravelBuddy.ViewModels.ExcursionViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+    int duration = (Model.EndDate - Model.StartDate).Days;
+}
+
+<section class="tb-page-hero">
+    <div class="tb-page-hero-content">
+        <h1>@Model.Title</h1>
+        <p><i class="fa-solid fa-location-dot me-1"></i>@Model.Destination</p>
+    </div>
+</section>
+
+<section class="tb-section">
+    <div class="container">
+        <div class="row g-5">
+
+            <!-- Main info -->
+            <div class="col-lg-8">
+                <div class="tb-privacy-card" style="padding: 0; overflow: hidden;">
+                    <img src="@(Model.ImageUrl ?? "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=900&auto=format&fit=crop")"
+                         alt="@Model.Title"
+                         style="width: 100%; height: 340px; object-fit: cover; display: block;" />
+                </div>
+
+                <div class="tb-privacy-card">
+                    <div class="tb-privacy-section">
+                        <div class="tb-privacy-icon">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <div>
+                            <h2>Trip Overview</h2>
+                            <p>
+                                Join us on an unforgettable journey to <strong>@Model.Destination</strong>.
+                                This excursion runs for <strong>@duration day@(duration != 1 ? "s" : "")</strong>,
+                                departing on <strong>@Model.StartDate.ToString("MMMM dd, yyyy")</strong> and
+                                returning on <strong>@Model.EndDate.ToString("MMMM dd, yyyy")</strong>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tb-privacy-card">
+                    <div class="tb-privacy-section">
+                        <div class="tb-privacy-icon">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </div>
+                        <div>
+                            <h2>Details</h2>
+                            <ul class="tb-privacy-list">
+                                <li><i class="fa-regular fa-calendar me-2"></i>Start: <strong>@Model.StartDate.ToString("dddd, MMMM dd, yyyy")</strong></li>
+                                <li><i class="fa-regular fa-calendar-check me-2"></i>End: <strong>@Model.EndDate.ToString("dddd, MMMM dd, yyyy")</strong></li>
+                                <li><i class="fa-solid fa-hourglass-half me-2"></i>Duration: <strong>@duration day@(duration != 1 ? "s" : "")</strong></li>
+                                <li><i class="fa-solid fa-users me-2"></i>Available spots: <strong>@Model.Capacity</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking sidebar -->
+            <div class="col-lg-4">
+                <div class="tb-privacy-card" style="position: sticky; top: 90px;">
+                    <div class="text-center mb-3">
+                        <span class="tb-price" style="font-size: 2rem;">
+                            $@Model.Price.ToString("0.00")
+                        </span>
+                        <span class="text-muted" style="font-size: .9rem;"> / person</span>
+                    </div>
+                    <hr />
+                    <ul class="list-unstyled mb-4" style="font-size: .92rem; color: var(--tb-text);">
+                        <li class="mb-2">
+                            <i class="fa-regular fa-calendar me-2" style="color: var(--tb-primary);"></i>
+                            @Model.StartDate.ToString("MMM dd") – @Model.EndDate.ToString("MMM dd, yyyy")
+                        </li>
+                        <li class="mb-2">
+                            <i class="fa-solid fa-users me-2" style="color: var(--tb-primary);"></i>
+                            @Model.Capacity spots available
+                        </li>
+                        <li class="mb-2">
+                            <i class="fa-solid fa-hourglass-half me-2" style="color: var(--tb-primary);"></i>
+                            @duration day@(duration != 1 ? "s" : "")
+                        </li>
+                    </ul>
+                    <form asp-controller="Booking" asp-action="Create" method="post">
+                        <input type="hidden" name="excursionId" value="@Model.Id" />
+                        <button type="submit" class="tb-btn-primary w-100 text-center">
+                            <i class="fa-solid fa-ticket me-2"></i>Book Now
+                        </button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a asp-controller="Excursion" asp-action="Index" class="text-muted" style="font-size: .88rem;">
+                            <i class="fa-solid fa-arrow-left me-1"></i>Back to all excursions
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
