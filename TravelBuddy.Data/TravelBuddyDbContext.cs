@@ -28,6 +28,8 @@ namespace TravelBuddy.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.ApplyConfigurationsFromAssembly(typeof(TravelBuddyDbContext).Assembly);
         }
     }
 }

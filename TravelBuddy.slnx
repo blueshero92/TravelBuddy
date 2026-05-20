@@ -3,9 +3,12 @@
     <Project Path="TravelBuddy.Data.Models/TravelBuddy.Data.Models.csproj" />
     <Project Path="TravelBuddy.Data/TravelBuddy.Data.csproj" />
   </Folder>
-  <Folder Name="/Services/" />
+  <Folder Name="/Services/">
+    <Project Path="TravelBuddy.Services.Core/TravelBuddy.Services.Core.csproj" Id="6b8c5a82-f9b3-42fc-ab0c-a1432bcd8727" />
+  </Folder>
   <Folder Name="/Tests/" />
   <Folder Name="/Web/">
+    <Project Path="TravelBuddy.ViewModels/TravelBuddy.ViewModels.csproj" Id="0db5aa72-b641-4682-bada-790435b0882f" />
     <Project Path="TravelBuddy/TravelBuddy.csproj" />
   </Folder>
   <Project Path="TravelBuddy.GCommon/TravelBuddy.GCommon.csproj" Id="e66046ff-a1c0-4026-954a-f0e6ba110eb3" />

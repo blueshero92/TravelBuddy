@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelBuddy.Data;
 
@@ -11,9 +12,11 @@ using TravelBuddy.Data;
 namespace TravelBuddy.Data.Migrations
 {
     [DbContext(typeof(TravelBuddyDbContext))]
-    partial class TravelBuddyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260520134035_ImageUrlAddedForExcursions")]
+    partial class ImageUrlAddedForExcursions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -339,44 +342,6 @@ namespace TravelBuddy.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Excursions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("c31c6d7f-07f7-4b33-8330-e45d3c5e3819"),
-                            Capacity = 20,
-                            Destination = "Maldives",
-                            EndDate = new DateTime(2024, 7, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImageUrl = "https://example.com/images/beach-paradise.jpg",
-                            IsActive = true,
-                            Price = 1500.00m,
-                            StartDate = new DateTime(2024, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "Beach Paradise"
-                        },
-                        new
-                        {
-                            Id = new Guid("7f763f9f-152f-46b6-95cc-7ca4cb907a9b"),
-                            Capacity = 15,
-                            Destination = "Swiss Alps",
-                            EndDate = new DateTime(2024, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImageUrl = "https://example.com/images/mountain-adventure.jpg",
-                            IsActive = true,
-                            Price = 1200.00m,
-                            StartDate = new DateTime(2024, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "Mountain Adventure"
-                        },
-                        new
-                        {
-                            Id = new Guid("178a0c9f-75b7-4c90-9e72-53922dfa72e4"),
-                            Capacity = 25,
-                            Destination = "New York City",
-                            EndDate = new DateTime(2024, 9, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImageUrl = "https://example.com/images/city-exploration.jpg",
-                            IsActive = true,
-                            Price = 1000.00m,
-                            StartDate = new DateTime(2024, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "City Exploration"
-                        });
                 });
 
             modelBuilder.Entity("TravelBuddy.Data.Models.Favorite", b =>
