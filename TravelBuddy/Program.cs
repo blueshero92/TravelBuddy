@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TravelBuddy.Data;
 using TravelBuddy.Data.Models;
+using TravelBuddy.Services.Core;
+using TravelBuddy.Services.Core.Contracts;
 
 namespace TravelBuddy
 {
@@ -19,6 +21,9 @@ namespace TravelBuddy
                 options.UseSqlServer(connectionString));
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+            // Register application services.
+            builder.Services.AddScoped<IExcursionService, ExcursionService>();
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<TravelBuddyDbContext>();

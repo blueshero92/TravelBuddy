@@ -1,0 +1,68 @@
+﻿@model IEnumerable<TravelBuddy.ViewModels.ExcursionViewModel>
+
+@{
+    ViewData["Title"] = "Excursions";
+}
+
+<section class="tb-page-hero">
+    <div class="tb-page-hero-content">
+        <h1><i class="fa-solid fa-map-location-dot me-2"></i>All Destinations</h1>
+        <p>Browse our available trips and find your next adventure</p>
+    </div>
+</section>
+
+<section class="tb-section">
+    <div class="container">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5">
+                <i class="fa-solid fa-compass fa-3x mb-3" style="color: var(--tb-muted);"></i>
+                <h4 class="text-muted">No destinations available at the moment.</h4>
+                <p class="text-muted">Check back soon for new adventures!</p>
+            </div>
+        }
+        else
+        {
+            <div class="row g-4">
+                @foreach (var excursion in Model)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="tb-dest-card card h-100">
+                            <div class="card-img-wrapper position-relative">
+                                <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600&auto=format&fit=crop"
+                                     class="card-img-top" alt="@excursion.Destination" />
+                                <span class="tb-badge-dest">
+                                    <i class="fa-solid fa-location-dot me-1"></i>@excursion.Destination
+                                </span>
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">@excursion.Title</h5>
+                                <div class="d-flex gap-3 mb-2 text-muted" style="font-size: .88rem;">
+                                    <span>
+                                        <i class="fa-regular fa-calendar me-1"></i>
+                                        @excursion.StartDate.ToString("MMM dd") – @excursion.EndDate.ToString("MMM dd, yyyy")
+                                    </span>
+                                </div>
+                                <div class="d-flex gap-3 mb-3 text-muted" style="font-size: .88rem;">
+                                    <span>
+                                        <i class="fa-solid fa-users me-1"></i>@excursion.Capacity spots left
+                                    </span>
+                                </div>
+                                <div class="mt-auto d-flex align-items-center justify-content-between">
+                                    <span class="tb-price">
+                                        $@excursion.Price.ToString("0.00")
+                                        <small>/ person</small>
+                                    </span>
+                                    <a asp-controller="Excursion" asp-action="Details" asp-route-id="@excursion.Id"
+                                       class="tb-btn-primary" style="padding: .5rem 1.3rem; font-size: .9rem;">
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</section>

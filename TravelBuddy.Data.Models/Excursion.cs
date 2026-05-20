@@ -41,6 +41,9 @@ namespace TravelBuddy.Data.Models
         [Comment("Indicates whether the excursion is active.")]
         public bool IsActive { get; set; } = true;
 
+        [Comment("URL of the excursion image.")]
+        public string? ImageUrl { get; set; }
+
         public virtual ICollection<Booking> Bookings { get; set; }
             = new HashSet<Booking>();
 
