@@ -1,0 +1,81 @@
+﻿@model TravelBuddy.ViewModels.BookingViewModel
+
+@{
+    ViewData["Title"] = "Booking Confirmed";
+    int duration = (Model.ExcursionEndDate - Model.ExcursionStartDate).Days;
+    string statusLabel = Model.Status == 1 ? "Confirmed" : "Pending";
+    string statusColor = Model.Status == 1 ? "#22c55e" : "var(--tb-accent)";
+    string statusIcon = Model.Status == 1 ? "fa-circle-check" : "fa-clock";
+}
+
+<section class="tb-page-hero">
+    <div class="tb-page-hero-content">
+        <h1><i class="fa-solid fa-ticket me-2"></i>Booking Received!</h1>
+        <p>Your adventure is on its way — here's your booking summary</p>
+    </div>
+</section>
+
+<section class="tb-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+
+                <!-- Status banner -->
+                <div class="tb-privacy-card text-center mb-4">
+                    <div style="width:72px; height:72px; border-radius:50%; background: linear-gradient(135deg, var(--tb-primary), #48cae4);
+                                display:flex; align-items:center; justify-content:center;
+                                margin: 0 auto 1rem; font-size:1.8rem; color:#fff;
+                                box-shadow: 0 4px 16px rgba(0,119,182,.3);">
+                        <i class="fa-solid @statusIcon"></i>
+                    </div>
+                    <h2 style="font-family:'Montserrat',sans-serif; font-weight:800; color:var(--tb-dark);">
+                        Status: <span style="color:@statusColor;">@statusLabel</span>
+                    </h2>
+                    <p class="text-muted mb-0" style="font-size:.9rem;">
+                        Booked on @Model.BookedOn.ToString("MMMM dd, yyyy") at @Model.BookedOn.ToString("HH:mm")
+                    </p>
+                </div>
+
+                <!-- Excursion summary card -->
+                <div class="tb-privacy-card" style="padding:0; overflow:hidden;">
+                    <img src="@(Model.ExcursionImageUrl ?? "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=900&auto=format&fit=crop")"
+                         alt="@Model.ExcursionTitle"
+                         style="width:100%; height:240px; object-fit:cover; display:block;" />
+                    <div style="padding:1.75rem 2rem;">
+                        <h3 style="font-family:'Montserrat',sans-serif; font-weight:800; color:var(--tb-dark); margin-bottom:.25rem;">
+                            @Model.ExcursionTitle
+                        </h3>
+                        <p class="text-muted mb-3">
+                            <i class="fa-solid fa-location-dot me-1"></i>@Model.ExcursionDestination
+                        </p>
+                        <ul class="tb-privacy-list">
+                            <li>
+                                <i class="fa-regular fa-calendar me-2"></i>
+                                @Model.ExcursionStartDate.ToString("MMM dd, yyyy") – @Model.ExcursionEndDate.ToString("MMM dd, yyyy")
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-hourglass-half me-2"></i>
+                                @duration day@(duration != 1 ? "s" : "")
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-tag me-2"></i>
+                                <strong>$@Model.ExcursionPrice.ToString("0.00")</strong> per person
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="d-flex gap-3 mt-4 justify-content-center flex-wrap">
+                    <a asp-controller="Booking" asp-action="MyBookings" class="tb-btn-primary">
+                        <i class="fa-solid fa-list me-2"></i>My Bookings
+                    </a>
+                    <a asp-controller="Excursion" asp-action="Index" class="tb-btn-outline" style="color:var(--tb-primary); border-color:var(--tb-primary);">
+                        <i class="fa-solid fa-compass me-2"></i>Browse More Excursions
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

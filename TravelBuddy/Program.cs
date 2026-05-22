@@ -24,6 +24,7 @@ namespace TravelBuddy
 
             // Register application services.
             builder.Services.AddScoped<IExcursionService, ExcursionService>();
+            builder.Services.AddScoped<IBookingService, BookingService>();
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<TravelBuddyDbContext>();

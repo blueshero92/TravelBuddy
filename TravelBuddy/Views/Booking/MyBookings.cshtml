@@ -1,0 +1,120 @@
+﻿@model IEnumerable<TravelBuddy.ViewModels.BookingViewModel>
+
+@{
+    ViewData["Title"] = "My Bookings";
+}
+
+<section class="tb-page-hero">
+    <div class="tb-page-hero-content">
+        <h1><i class="fa-solid fa-list-check me-2"></i>My Bookings</h1>
+        <p>All your travel adventures in one place</p>
+    </div>
+</section>
+
+<section class="tb-section">
+    <div class="container">
+
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5">
+                <div style="font-size:3.5rem; color:var(--tb-accent); margin-bottom:1rem;">
+                    <i class="fa-solid fa-suitcase-rolling"></i>
+                </div>
+                <h3 style="font-family:'Montserrat',sans-serif; font-weight:700; color:var(--tb-dark);">
+                    No bookings yet
+                </h3>
+                <p class="text-muted mb-4">Start exploring and book your first excursion!</p>
+                <a asp-controller="Excursion" asp-action="Index" class="tb-btn-primary">
+                    <i class="fa-solid fa-compass me-2"></i>Browse Excursions
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="row g-4">
+                @foreach (var booking in Model)
+                {
+                    string statusLabel = booking.Status == 1 ? "Confirmed"
+                                       : booking.Status == 2 ? "Cancelled"
+                                       : "Pending";
+                    string statusColor = booking.Status == 1 ? "#22c55e"
+                                       : booking.Status == 2 ? "#ef4444"
+                                       : "var(--tb-accent)";
+                    string statusIcon  = booking.Status == 1 ? "fa-circle-check"
+                                       : booking.Status == 2 ? "fa-circle-xmark"
+                                       : "fa-clock";
+                    int duration = (booking.ExcursionEndDate - booking.ExcursionStartDate).Days;
+
+                    <div class="col-md-6 col-lg-4">
+                        <div class="tb-dest-card h-100" style="display:flex; flex-direction:column;">
+
+                            <!-- Image -->
+                            <div style="position:relative; overflow:hidden; border-radius:16px 16px 0 0;">
+                                <img src="@(booking.ExcursionImageUrl ?? "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=900&auto=format&fit=crop")"
+                                     alt="@booking.ExcursionTitle"
+                                     style="width:100%; height:190px; object-fit:cover; display:block;" />
+                                <!-- Status badge -->
+                                <span style="position:absolute; top:.75rem; right:.75rem;
+                                             background:@statusColor; color:#fff;
+                                             padding:.25rem .75rem; border-radius:20px;
+                                             font-size:.78rem; font-weight:700; letter-spacing:.5px;
+                                             box-shadow:0 2px 8px rgba(0,0,0,.2);">
+                                    <i class="fa-solid @statusIcon me-1"></i>@statusLabel
+                                </span>
+                            </div>
+
+                            <!-- Body -->
+                            <div style="padding:1.25rem 1.5rem; flex:1; display:flex; flex-direction:column;">
+                                <h5 style="font-family:'Montserrat',sans-serif; font-weight:800;
+                                           color:var(--tb-dark); margin-bottom:.2rem;">
+                                    @booking.ExcursionTitle
+                                </h5>
+                                <p class="text-muted mb-3" style="font-size:.88rem;">
+                                    <i class="fa-solid fa-location-dot me-1"></i>@booking.ExcursionDestination
+                                </p>
+
+                                <ul class="tb-privacy-list" style="font-size:.88rem; margin-bottom:1rem;">
+                                    <li>
+                                        <i class="fa-regular fa-calendar me-2"></i>
+                                        @booking.ExcursionStartDate.ToString("MMM dd, yyyy") – @booking.ExcursionEndDate.ToString("MMM dd, yyyy")
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-hourglass-half me-2"></i>
+                                        @duration day@(duration != 1 ? "s" : "")
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-tag me-2"></i>
+                                        <strong>$@booking.ExcursionPrice.ToString("0.00")</strong>
+                                    </li>
+                                    <li>
+                                        <i class="fa-regular fa-clock me-2"></i>
+                                        Booked on @booking.BookedOn.ToString("MMM dd, yyyy")
+                                    </li>
+                                </ul>
+
+                                <div class="mt-auto d-flex flex-column gap-2">
+                                    <a asp-controller="Excursion"
+                                       asp-action="Details"
+                                       asp-route-id="@booking.ExcursionId"
+                                       class="tb-btn-primary w-100 text-center"
+                                       style="background:var(--tb-primary); font-size:.85rem;">
+                                        <i class="fa-solid fa-circle-info me-1"></i>View Excursion
+                                    </a>
+                                    <a asp-controller="Booking"
+                                       asp-action="CancelBooking"
+                                       asp-route-id="@booking.Id"
+                                       class="tb-btn-primary w-100 text-center"
+                                       style="background:#ef4444; font-size:.85rem;">
+                                        <i class="fa-solid fa-xmark me-1"></i>Cancel Booking
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+    </div>
+</section>
