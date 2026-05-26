@@ -1,0 +1,70 @@
+﻿@model TravelBuddy.ViewModels.BookingViewModel
+
+@{
+    ViewData["Title"] = "Cancel Booking";
+}
+
+<section class="tb-page-hero">
+    <div class="tb-page-hero-content">
+        <h1><i class="fa-solid fa-triangle-exclamation me-2"></i>Cancel Booking</h1>
+        <p>Please review before confirming cancellation</p>
+    </div>
+</section>
+
+<section class="tb-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+
+                <div class="tb-privacy-card" style="padding:0; overflow:hidden;">
+                    <img src="@(Model.ExcursionImageUrl ?? "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=900&auto=format&fit=crop")"
+                         alt="@Model.ExcursionTitle"
+                         style="width:100%; height:200px; object-fit:cover; display:block;" />
+                    <div style="padding:1.75rem 2rem;">
+                        <h3 style="font-family:'Montserrat',sans-serif; font-weight:800; color:var(--tb-dark); margin-bottom:.25rem;">
+                            @Model.ExcursionTitle
+                        </h3>
+                        <p class="text-muted mb-3">
+                            <i class="fa-solid fa-location-dot me-1"></i>@Model.ExcursionDestination
+                        </p>
+                        <ul class="tb-privacy-list mb-4">
+                            <li>
+                                <i class="fa-regular fa-calendar me-2"></i>
+                                @Model.ExcursionStartDate.ToString("MMM dd, yyyy") – @Model.ExcursionEndDate.ToString("MMM dd, yyyy")
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-tag me-2"></i>
+                                <strong>$@Model.ExcursionPrice.ToString("0.00")</strong> per person
+                            </li>
+                            <li>
+                                <i class="fa-regular fa-clock me-2"></i>
+                                Booked on @Model.BookedOn.ToString("MMM dd, yyyy")
+                            </li>
+                        </ul>
+
+                        <p class="text-center mb-4" style="color:#ef4444; font-weight:600;">
+                            <i class="fa-solid fa-circle-exclamation me-1"></i>
+                            Are you sure you want to cancel this booking?
+                        </p>
+
+                        <form asp-controller="Booking" asp-action="Cancel" method="post" class="d-flex gap-3 justify-content-center flex-wrap">
+                            <input type="hidden" name="bookingId" value="@Model.Id" />
+                            <button type="submit"
+                                    class="tb-btn-primary"
+                                    style="background:#ef4444;">
+                                <i class="fa-solid fa-xmark me-2"></i>Yes, Cancel Booking
+                            </button>
+                            <a asp-controller="Booking" asp-action="MyBookings"
+                               class="tb-btn-primary"
+                               style="background:var(--tb-primary);">
+                                <i class="fa-solid fa-arrow-left me-2"></i>Go Back
+                            </a>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

@@ -19,6 +19,7 @@ namespace TravelBuddy.Services.Core
             IEnumerable<Excursion> excursions = await dbContext
                                                      .Excursions                                                
                                                      .OrderBy(e => e.StartDate)
+                                                     .AsNoTracking()
                                                      .ToListAsync();
 
             IEnumerable<ExcursionViewModel> excursionsViewModel = excursions
