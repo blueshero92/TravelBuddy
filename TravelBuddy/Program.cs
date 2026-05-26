@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TravelBuddy.Data;
 using TravelBuddy.Data.Models;
+using TravelBuddy.Data.Seeding;
+using TravelBuddy.Data.Seeding.Contracts;
 using TravelBuddy.Services.Core;
 using TravelBuddy.Services.Core.Contracts;
 
@@ -26,7 +28,11 @@ namespace TravelBuddy
             builder.Services.AddScoped<IExcursionService, ExcursionService>();
             builder.Services.AddScoped<IBookingService, BookingService>();
 
+            // Register the identity seeder for seeding roles and admin user.
+            builder.Services.AddTransient<IIdentitySeeder, IdentitySeeder>();
+
             builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<TravelBuddyDbContext>();
 
             builder.Services.AddControllersWithViews();
@@ -52,6 +58,14 @@ namespace TravelBuddy
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            // Seed roles and admin user on startup.
+            using (var scope = app.Services.CreateScope())
+            {
+                var seeder = scope.ServiceProvider.GetRequiredService<IIdentitySeeder>();
+                seeder.SeedRolesAsync().GetAwaiter().GetResult();
+                seeder.SeedAdminUserAsync().GetAwaiter().GetResult();
+            }
 
             app.MapStaticAssets();
 

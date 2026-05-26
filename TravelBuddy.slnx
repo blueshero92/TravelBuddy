@@ -8,6 +8,7 @@
   </Folder>
   <Folder Name="/Tests/" />
   <Folder Name="/Web/">
+    <Project Path="TravelBuddy.Infrastructure/TravelBuddy.Infrastructure.csproj" Id="5fe9645a-930e-4381-b22f-d7789a7a5d74" />
     <Project Path="TravelBuddy.ViewModels/TravelBuddy.ViewModels.csproj" Id="0db5aa72-b641-4682-bada-790435b0882f" />
     <Project Path="TravelBuddy/TravelBuddy.csproj" />
   </Folder>
