@@ -58,5 +58,16 @@ namespace TravelBuddy.Controllers
 
             return RedirectToAction(nameof(MyBookings));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> CancellationRequests()
+        {
+            Guid userId = GetUserId();
+
+            IEnumerable<BookingCancellationRequestViewModel> cancellationRequests
+                = await bookingService.GetUserCancellationRequestsAsync(userId);
+
+            return View(cancellationRequests);
+        }
     }
 }

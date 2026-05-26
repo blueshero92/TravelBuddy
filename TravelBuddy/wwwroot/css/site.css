@@ -41,7 +41,7 @@ a:hover { color: var(--tb-accent); }
 .tb-navbar {
     background: rgba(2, 62, 138, 0.96);
     backdrop-filter: blur(8px);
-    padding: .75rem 1.5rem;
+    padding: .75rem .6rem;
     position: sticky;
     top: 0;
     z-index: 1000;

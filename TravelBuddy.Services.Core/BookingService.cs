@@ -95,14 +95,50 @@ namespace TravelBuddy.Services.Core
                 })
                 .FirstOrDefaultAsync();
         }
+
         public async Task CancelBookingAsync(Guid userId, Guid bookingId)
         {
             Booking booking = await dbContext.Bookings
                 .FirstAsync(b => b.Id == bookingId && b.UserId == userId);
 
+            BookingCancellationRequest cancellationRequest = new BookingCancellationRequest()
+            {
+                UserId = userId,
+                BookingId = bookingId,
+                RequestedOn = DateTime.Now,
+                Status = CancellationRequestStatus.Pending
+            };
+
+            dbContext.BookingCancellationRequests.Add(cancellationRequest);
+
             booking.Status = Status.Pending;
 
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<BookingCancellationRequestViewModel>> GetUserCancellationRequestsAsync(Guid userId)
+        {
+            IEnumerable<BookingCancellationRequestViewModel> cancellationRequests = await dbContext.BookingCancellationRequests
+                .Where(r => r.UserId == userId)
+                .Select(r => new BookingCancellationRequestViewModel()
+                {
+                    UserId = r.UserId,
+                    BookingId = r.BookingId,
+                    ExcursionId = r.Booking.ExcursionId,
+                    ExcursionTitle = r.Booking.Excursion.Title,
+                    ExcursionDestination = r.Booking.Excursion.Destination,
+                    ExcursionStartDate = r.Booking.Excursion.StartDate,
+                    ExcursionEndDate = r.Booking.Excursion.EndDate,
+                    ExcursionPrice = r.Booking.Excursion.Price,
+                    ExcursionImageUrl = r.Booking.Excursion.ImageUrl,
+                    RequestedOn = r.RequestedOn,
+                    Reason = r.Reason,
+                    CancellationStatus = (int)r.Status
+                })
+                .ToListAsync();
+
+            return cancellationRequests;
+
         }
 
     }

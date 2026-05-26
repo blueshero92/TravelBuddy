@@ -20,7 +20,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg tb-navbar">
-            <div class="container">
+            <div class="container-fluid px-lg-2 px-3">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <i class="fa-solid fa-plane-departure me-2"></i>Travel<span>Buddy</span>
                 </a>
@@ -29,7 +29,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarMain">
-                    <ul class="navbar-nav mx-auto gap-1">
+                    <ul class="navbar-nav me-auto gap-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
                                 <i class="fa-solid fa-house me-1"></i>Home
@@ -45,16 +45,24 @@
                                 <i class="fa-solid fa-map-marked-alt me-1"></i>Destinations
                             </a>
                         </li>
-						@if (User.Identity?.IsAuthenticated == true)
-						{
-							<li class="nav-item">
-								<a class="nav-link" asp-area="" asp-controller="Booking" asp-action="MyBookings">
-									<i class="fa-solid fa-suitcase-rolling me-1"></i>My Bookings
-								</a>
-							</li>
-						}					
                     </ul>
-                    <div class="d-flex align-items-center gap-2">
+
+                    <div class="d-flex align-items-center gap-2 ms-lg-3">
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <ul class="navbar-nav gap-1">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Booking" asp-action="MyBookings">
+                                        <i class="fa-solid fa-suitcase-rolling me-1"></i>My Bookings
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Booking" asp-action="CancellationRequests">
+                                        <i class="fa-solid fa-file-circle-xmark me-1"></i>My Cancellation Requests
+                                    </a>
+                                </li>
+                            </ul>
+                        }
                         <partial name="_LoginPartial" />
                     </div>
                 </div>
