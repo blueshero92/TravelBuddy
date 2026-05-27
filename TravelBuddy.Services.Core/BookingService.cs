@@ -46,8 +46,33 @@ namespace TravelBuddy.Services.Core
             return bookings;
         }
 
+        // Action for booking confimation.
+        public async Task<BookingViewModel> CreateBookingGetAsync(Guid userId, Guid excursionId)
+        {
+            //Fetch the excursion that the user wants to book.
+            Excursion? excursion = await dbContext
+                                        .Excursions
+                                        .AsNoTracking()
+                                        .SingleOrDefaultAsync(e => e.Id == excursionId);
+
+            //Create a BookingViewModel to return the details of the excursion for booking confirmation.
+            BookingViewModel bookingVm = new BookingViewModel()
+            {
+                UserId = userId,
+                ExcursionId = excursionId,
+                ExcursionTitle = excursion!.Title,
+                ExcursionDestination = excursion.Destination,
+                ExcursionStartDate = excursion.StartDate,
+                ExcursionEndDate = excursion.EndDate,
+                ExcursionPrice = excursion.Price,
+                ExcursionImageUrl = excursion.ImageUrl
+            };
+
+            return bookingVm;
+        }
+
         // Create a new booking for a user when button is clicked and return the details of the created booking.
-        public async Task<BookingViewModel> CreateBookingAsync(Guid userId, Guid excursionId)
+        public async Task<BookingViewModel> CreateBookingPostAsync(Guid userId, Guid excursionId)
         {
             //Fetch the excursion that the user wants to book.
             Excursion? excursion = await dbContext
@@ -220,5 +245,6 @@ namespace TravelBuddy.Services.Core
             //Return the collection of all cancellation requests for admin review and management.
             return cancellationRequests;
         }
+
     }
 }

@@ -83,12 +83,10 @@
                             @duration day@(duration != 1 ? "s" : "")
                         </li>
                     </ul>
-                    <form asp-controller="Booking" asp-action="Create" method="post">
-                        <input type="hidden" name="excursionId" value="@Model.Id" />
-                        <button type="submit" class="tb-btn-primary w-100 text-center">
-                            <i class="fa-solid fa-ticket me-2"></i>Book Now
-                        </button>
-                    </form>
+                    <a asp-controller="Booking" asp-action="Create" asp-route-excursionId="@Model.Id"
+                       class="tb-btn-primary w-100 text-center d-block">
+                        <i class="fa-solid fa-ticket me-2"></i>Book Now
+                    </a>
                     <div class="text-center mt-3">
                         <a asp-controller="Excursion" asp-action="Index" class="text-muted" style="font-size: .88rem;">
                             <i class="fa-solid fa-arrow-left me-1"></i>Back to all excursions
