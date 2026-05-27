@@ -10,5 +10,7 @@ namespace TravelBuddy.Services.Core.Contracts
         Task CancelBookingAsync(Guid userId, Guid bookingId);
 
         Task<IEnumerable<BookingCancellationRequestViewModel>> GetUserCancellationRequestsAsync(Guid userId);
+        Task<IEnumerable<BookingCancellationRequestViewModel>> GetAllCancellationRequestsAsync();
+
     }
 }

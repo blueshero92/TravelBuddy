@@ -35,7 +35,8 @@
                             Add, edit or remove excursions available to users.
                         </p>
                         <div class="mt-auto">
-                            <a href="#" class="tb-btn-primary w-100 text-center" style="background:var(--tb-primary); font-size:.85rem;">
+                            <a asp-area="Admin" asp-controller="HomeAdmin" asp-action="ManageExcursions"
+                               class="tb-btn-primary w-100 text-center" style="background:var(--tb-primary); font-size:.85rem;">
                                 <i class="fa-solid fa-arrow-right me-1"></i>Manage Excursions
                             </a>
                         </div>
@@ -65,7 +66,8 @@
                             Review and approve or reject user cancellation requests.
                         </p>
                         <div class="mt-auto">
-                            <a href="#" class="tb-btn-primary w-100 text-center" style="background:#ef4444; font-size:.85rem;">
+                            <a asp-area="Admin" asp-controller="HomeAdmin" asp-action="ManageCancellations"
+                               class="tb-btn-primary w-100 text-center" style="background:#ef4444; font-size:.85rem;">
                                 <i class="fa-solid fa-arrow-right me-1"></i>View Requests
                             </a>
                         </div>

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<TravelBuddy.ViewModels.ExcursionViewModel>
+
+@{
+    ViewData["Title"] = "Manage Excursions";
+}
+
+<section class="tb-page-hero">
+    <div class="tb-page-hero-content">
+        <h1><i class="fa-solid fa-map-marked-alt me-2"></i>Manage Excursions</h1>
+        <p>Add, edit or remove excursions available to users</p>
+    </div>
+</section>
+
+<section class="tb-section">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+            <a asp-area="Admin" asp-controller="HomeAdmin" asp-action="Index"
+               class="tb-btn-primary" style="background:var(--tb-primary); font-size:.88rem;">
+                <i class="fa-solid fa-arrow-left me-1"></i>Back to Panel
+            </a>
+            <a href="#" class="tb-btn-primary" style="font-size:.88rem;">
+                <i class="fa-solid fa-plus me-1"></i>Add Excursion
+            </a>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5">
+                <div style="font-size:3.5rem; color:var(--tb-accent); margin-bottom:1rem;">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                </div>
+                <h3 style="font-family:'Montserrat',sans-serif; font-weight:700; color:var(--tb-dark);">
+                    No excursions yet
+                </h3>
+                <p class="text-muted mb-4">Click "Add Excursion" to create the first one.</p>
+            </div>
+        }
+        else
+        {
+            <div class="d-flex flex-column gap-3">
+                @foreach (var excursion in Model)
+                {
+                    int duration = (excursion.EndDate - excursion.StartDate).Days;
+
+                    <div class="tb-privacy-card mb-0" style="display:flex; align-items:center; gap:1.25rem; padding:1rem 1.5rem;">
+
+                        <img src="@(excursion.ImageUrl ?? "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=900&auto=format&fit=crop")"
+                             alt="@excursion.Title"
+                             style="width:100px; height:72px; object-fit:cover; border-radius:.6rem; flex-shrink:0;" />
+
+                        <div style="flex:1; min-width:0;">
+                            <h5 style="font-family:'Montserrat',sans-serif; font-weight:800; color:var(--tb-dark); margin-bottom:.15rem;">
+                                @excursion.Title
+                            </h5>
+                            <p class="text-muted mb-0" style="font-size:.85rem;">
+                                <i class="fa-solid fa-location-dot me-1"></i>@excursion.Destination
+                                <span class="mx-2">·</span>
+                                <i class="fa-regular fa-calendar me-1"></i>@excursion.StartDate.ToString("MMM dd") – @excursion.EndDate.ToString("MMM dd, yyyy")
+                                <span class="mx-2">·</span>
+                                <i class="fa-solid fa-hourglass-half me-1"></i>@duration day@(duration != 1 ? "s" : "")
+                                <span class="mx-2">·</span>
+                                <i class="fa-solid fa-tag me-1"></i><strong>$@excursion.Price.ToString("0.00")</strong>
+                                <span class="mx-2">·</span>
+                                <i class="fa-solid fa-users me-1"></i>@excursion.Capacity spots
+                            </p>
+                        </div>
+
+                        <div class="d-flex gap-2 flex-shrink-0">
+                            <a href="#" class="tb-btn-primary" style="background:var(--tb-primary); font-size:.82rem; padding:.4rem .9rem;">
+                                <i class="fa-solid fa-pen me-1"></i>Edit
+                            </a>
+                            <a href="#" class="tb-btn-primary" style="background:#ef4444; font-size:.82rem; padding:.4rem .9rem;">
+                                <i class="fa-solid fa-trash me-1"></i>Delete
+                            </a>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        }
+
+    </div>
+</section>

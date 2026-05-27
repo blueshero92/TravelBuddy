@@ -141,5 +141,28 @@ namespace TravelBuddy.Services.Core
 
         }
 
+        public async Task<IEnumerable<BookingCancellationRequestViewModel>> GetAllCancellationRequestsAsync()
+        {
+            IEnumerable<BookingCancellationRequestViewModel> cancellationRequests = await dbContext
+                                                                                         .BookingCancellationRequests
+                                                                                         .Select(r => new BookingCancellationRequestViewModel()
+                                                                                         {
+                                                                                             UserId = r.UserId,
+                                                                                             BookingId = r.BookingId,
+                                                                                             ExcursionId = r.Booking.ExcursionId,
+                                                                                             ExcursionTitle = r.Booking.Excursion.Title,
+                                                                                             ExcursionDestination = r.Booking.Excursion.Destination,
+                                                                                             ExcursionStartDate = r.Booking.Excursion.StartDate,
+                                                                                             ExcursionEndDate = r.Booking.Excursion.EndDate,
+                                                                                             ExcursionPrice = r.Booking.Excursion.Price,
+                                                                                             ExcursionImageUrl = r.Booking.Excursion.ImageUrl,
+                                                                                             RequestedOn = r.RequestedOn,
+                                                                                             Reason = r.Reason,
+                                                                                             CancellationStatus = (int)r.Status
+                                                                                         })
+                                                                                         .ToListAsync();
+
+            return cancellationRequests;
+        }
     }
 }

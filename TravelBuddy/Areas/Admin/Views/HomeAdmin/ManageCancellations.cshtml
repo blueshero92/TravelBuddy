@@ -1,0 +1,104 @@
+﻿@model IEnumerable<TravelBuddy.ViewModels.BookingCancellationRequestViewModel>
+
+@{
+    ViewData["Title"] = "Cancellation Requests";
+}
+
+<section class="tb-page-hero">
+    <div class="tb-page-hero-content">
+        <h1><i class="fa-solid fa-file-circle-xmark me-2"></i>Cancellation Requests</h1>
+        <p>Review and approve or reject user cancellation requests</p>
+    </div>
+</section>
+
+<section class="tb-section">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+            <a asp-area="Admin" asp-controller="HomeAdmin" asp-action="Index"
+               class="tb-btn-primary" style="background:var(--tb-primary); font-size:.88rem;">
+                <i class="fa-solid fa-arrow-left me-1"></i>Back to Panel
+            </a>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5">
+                <div style="font-size:3.5rem; color:var(--tb-accent); margin-bottom:1rem;">
+                    <i class="fa-solid fa-inbox"></i>
+                </div>
+                <h3 style="font-family:'Montserrat',sans-serif; font-weight:700; color:var(--tb-dark);">
+                    No cancellation requests
+                </h3>
+                <p class="text-muted mb-4">There are no pending cancellation requests at the moment.</p>
+            </div>
+        }
+        else
+        {
+            <div class="d-flex flex-column gap-3">
+                @foreach (var request in Model)
+                {
+                    string statusLabel = request.CancellationStatus == 0 ? "Pending"
+                                       : request.CancellationStatus == 1 ? "Approved"
+                                       : "Rejected";
+                    string statusColor = request.CancellationStatus == 0 ? "var(--tb-accent)"
+                                       : request.CancellationStatus == 1 ? "#22c55e"
+                                       : "#ef4444";
+                    string statusIcon  = request.CancellationStatus == 0 ? "fa-clock"
+                                       : request.CancellationStatus == 1 ? "fa-circle-check"
+                                       : "fa-circle-xmark";
+
+                    <div class="tb-privacy-card mb-0" style="display:flex; align-items:center; gap:1.25rem; padding:1rem 1.5rem; flex-wrap:nowrap;">
+
+                        <img src="@(request.ExcursionImageUrl ?? "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=900&auto=format&fit=crop")"
+                             alt="@request.ExcursionTitle"
+                             style="width:100px; height:72px; object-fit:cover; border-radius:.6rem; flex-shrink:0;" />
+
+                        <div style="flex:1; min-width:0;">
+                            <h5 style="font-family:'Montserrat',sans-serif; font-weight:800; color:var(--tb-dark); margin-bottom:.15rem;">
+                                @request.ExcursionTitle
+                            </h5>
+                            <p class="text-muted mb-0" style="font-size:.85rem;">
+                                <i class="fa-solid fa-location-dot me-1"></i>@request.ExcursionDestination
+                                <span class="mx-2">·</span>
+                                <i class="fa-regular fa-calendar me-1"></i>@request.ExcursionStartDate.ToString("MMM dd") – @request.ExcursionEndDate.ToString("MMM dd, yyyy")
+                                <span class="mx-2">·</span>
+                                <i class="fa-solid fa-tag me-1"></i><strong>$@request.ExcursionPrice.ToString("0.00")</strong>
+                                <span class="mx-2">·</span>
+                                <i class="fa-regular fa-clock me-1"></i>Requested @request.RequestedOn.ToString("MMM dd, yyyy")
+                                @if (!string.IsNullOrWhiteSpace(request.Reason))
+                                {
+                                    <span class="mx-2">·</span>
+                                    <i class="fa-regular fa-note-sticky me-1"></i>@request.Reason
+                                }
+                            </p>
+                        </div>
+
+                        <span style="background:@statusColor; color:#fff;
+                                     padding:.25rem .75rem; border-radius:20px;
+                                     font-size:.78rem; font-weight:700; white-space:nowrap;
+                                     box-shadow:0 2px 8px rgba(0,0,0,.15);">
+                            <i class="fa-solid @statusIcon me-1"></i>@statusLabel
+                        </span>
+
+                        <div style="width:1px; height:36px; background:#e0e0e0; flex-shrink:0; margin:0 .5rem;"></div>
+
+                        <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                            @if (request.CancellationStatus == 0)
+                            {
+                                <a href="#" class="tb-btn-primary" style="background:#22c55e; font-size:.82rem; padding:.4rem .9rem;">
+                                    <i class="fa-solid fa-check me-1"></i>Approve
+                                </a>
+                                <a href="#" class="tb-btn-primary" style="background:#ef4444; font-size:.82rem; padding:.4rem .9rem;">
+                                    <i class="fa-solid fa-xmark me-1"></i>Reject
+                                </a>
+                            }
+                        </div>
+
+                    </div>
+                }
+            </div>
+        }
+
+    </div>
+</section>
