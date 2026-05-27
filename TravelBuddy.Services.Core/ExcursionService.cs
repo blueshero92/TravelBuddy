@@ -41,7 +41,7 @@ namespace TravelBuddy.Services.Core
         public async Task<ExcursionViewModel> GetExcursionByIdAsync(Guid id)
         {
             Excursion? excursion = await dbContext.Excursions
-                                                  .FirstOrDefaultAsync(e => e.Id == id);
+                                                  .SingleOrDefaultAsync(e => e.Id == id);
 
             if (excursion == null)
             {

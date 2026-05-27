@@ -56,6 +56,11 @@ namespace TravelBuddy.Controllers
 
             await bookingService.CancelBookingAsync(userId, bookingId);
 
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError(string.Empty, "Cannot cancel already cancelled booking.");
+            }
+
             return RedirectToAction(nameof(MyBookings));
         }
 
