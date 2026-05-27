@@ -61,6 +61,15 @@
                                         <i class="fa-solid fa-file-circle-xmark me-1"></i>My Cancellation Requests
                                     </a>
                                 </li>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="Admin" asp-controller="HomeAdmin" asp-action="Index"
+                                           style="color:var(--tb-accent-lt) !important;">
+                                            <i class="fa-solid fa-screwdriver-wrench me-1"></i>Admin Panel
+                                        </a>
+                                    </li>
+                                }
                             </ul>
                         }
                         <partial name="_LoginPartial" />

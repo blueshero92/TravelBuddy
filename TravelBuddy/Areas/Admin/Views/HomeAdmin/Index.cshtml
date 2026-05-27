@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Admin Control Panel";
+}
+
+<section class="tb-page-hero">
+    <div class="tb-page-hero-content">
+        <h1><i class="fa-solid fa-screwdriver-wrench me-2"></i>Admin Control Panel</h1>
+        <p>Welcome, Admin. What would you like to manage?</p>
+    </div>
+</section>
+
+<section class="tb-section">
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+
+            <div class="col-md-6 col-lg-4">
+                <div class="tb-dest-card h-100" style="display:flex; flex-direction:column;">
+                    <div style="position:relative; overflow:hidden; border-radius:16px 16px 0 0;">
+                        <img src="https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&auto=format&fit=crop"
+                             alt="Excursions"
+                             style="width:100%; height:190px; object-fit:cover; display:block;" />
+                        <span style="position:absolute; top:.75rem; right:.75rem;
+                                     background:var(--tb-primary); color:#fff;
+                                     padding:.25rem .75rem; border-radius:20px;
+                                     font-size:.78rem; font-weight:700; letter-spacing:.5px;
+                                     box-shadow:0 2px 8px rgba(0,0,0,.2);">
+                            <i class="fa-solid fa-map-marked-alt me-1"></i>Excursions
+                        </span>
+                    </div>
+                    <div style="padding:1.25rem 1.5rem; flex:1; display:flex; flex-direction:column;">
+                        <h5 style="font-family:'Montserrat',sans-serif; font-weight:800; color:var(--tb-dark); margin-bottom:.2rem;">
+                            Manage Excursions
+                        </h5>
+                        <p class="text-muted mb-3" style="font-size:.88rem;">
+                            Add, edit or remove excursions available to users.
+                        </p>
+                        <div class="mt-auto">
+                            <a href="#" class="tb-btn-primary w-100 text-center" style="background:var(--tb-primary); font-size:.85rem;">
+                                <i class="fa-solid fa-arrow-right me-1"></i>Manage Excursions
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="tb-dest-card h-100" style="display:flex; flex-direction:column;">
+                    <div style="position:relative; overflow:hidden; border-radius:16px 16px 0 0;">
+                        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&auto=format&fit=crop"
+                             alt="Cancellation Requests"
+                             style="width:100%; height:190px; object-fit:cover; display:block;" />
+                        <span style="position:absolute; top:.75rem; right:.75rem;
+                                     background:#ef4444; color:#fff;
+                                     padding:.25rem .75rem; border-radius:20px;
+                                     font-size:.78rem; font-weight:700; letter-spacing:.5px;
+                                     box-shadow:0 2px 8px rgba(0,0,0,.2);">
+                            <i class="fa-solid fa-file-circle-xmark me-1"></i>Cancellations
+                        </span>
+                    </div>
+                    <div style="padding:1.25rem 1.5rem; flex:1; display:flex; flex-direction:column;">
+                        <h5 style="font-family:'Montserrat',sans-serif; font-weight:800; color:var(--tb-dark); margin-bottom:.2rem;">
+                            Cancellation Requests
+                        </h5>
+                        <p class="text-muted mb-3" style="font-size:.88rem;">
+                            Review and approve or reject user cancellation requests.
+                        </p>
+                        <div class="mt-auto">
+                            <a href="#" class="tb-btn-primary w-100 text-center" style="background:#ef4444; font-size:.85rem;">
+                                <i class="fa-solid fa-arrow-right me-1"></i>View Requests
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

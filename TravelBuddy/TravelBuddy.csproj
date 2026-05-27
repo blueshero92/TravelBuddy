@@ -25,4 +25,8 @@
     <ProjectReference Include="..\TravelBuddy.Services.Core\TravelBuddy.Services.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Models\" />
+  </ItemGroup>
+
 </Project>
