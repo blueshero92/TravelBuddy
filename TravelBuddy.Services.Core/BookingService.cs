@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using TravelBuddy.Data;
 using TravelBuddy.Data.Models;
 using TravelBuddy.Data.Models.Enums;
@@ -10,16 +9,19 @@ namespace TravelBuddy.Services.Core
 {
     public class BookingService : IBookingService
     {
+        // Dependency injection of the TravelBuddyDbContext to interact with the database.
         private readonly TravelBuddyDbContext dbContext;
 
+        // Constructor to initialize the BookingService with the provided TravelBuddyDbContext.
         public BookingService(TravelBuddyDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
+        // Get all bookings for a specific user, including excursion details.
         public async Task<IEnumerable<BookingViewModel>> GetUserBookingsAsync(Guid userId)
         {
-
+            // Fetch bookings for the user and project them to BookingViewModel.
             IEnumerable<BookingViewModel> bookings = await dbContext
                                                           .Bookings
                                                           .Where(b => b.UserId == userId)
@@ -40,17 +42,21 @@ namespace TravelBuddy.Services.Core
                                                           .AsNoTracking()
                                                           .ToListAsync();
 
-
+            //Return the collection of bookings for the user.
             return bookings;
         }
 
+        // Create a new booking for a user when button is clicked and return the details of the created booking.
         public async Task<BookingViewModel> CreateBookingAsync(Guid userId, Guid excursionId)
         {
+            //Fetch the excursion that the user wants to book.
             Excursion? excursion = await dbContext
                                         .Excursions
                                         .AsNoTracking()
                                         .SingleOrDefaultAsync(e => e.Id == excursionId);
 
+
+            //Create a new booking entity with the provided userId and excursionId, and set the booking date and status.
             Booking booking = new Booking()
             {
                 UserId = userId,
@@ -59,10 +65,12 @@ namespace TravelBuddy.Services.Core
                 Status = Status.Confirmed
             };
 
+            //Add the new booking to the database context and save changes to persist it in the database.
             dbContext.Bookings.Add(booking);
 
             await dbContext.SaveChangesAsync();
 
+            //Create a BookingViewModel to return the details of the created booking..
             BookingViewModel bookingVm = new BookingViewModel()
             {
                 UserId = booking.UserId,
@@ -77,11 +85,14 @@ namespace TravelBuddy.Services.Core
                 Status = (int)booking.Status
             };
 
+            //Return the details of the created booking.
             return bookingVm;
         }
 
+        // Get a specific booking by its ID for a user.
         public async Task<BookingViewModel?> GetBookingByIdAsync(Guid bookingId, Guid userId)
         {
+            //Fetch the booking with the specified bookingId and userId, including excursion details, and project it to BookingViewModel.
             BookingViewModel? bookingVm = await dbContext
                                                .Bookings
                                                .Where(b => b.Id == bookingId && b.UserId == userId)
@@ -102,18 +113,29 @@ namespace TravelBuddy.Services.Core
                                                .AsNoTracking()
                                                .FirstOrDefaultAsync();
 
+            //Check if the booking was found. If not, return null.
+            if (bookingVm == null)
+            {
+                return null;
+            }
+
+            //Return the booking details if found.
             return bookingVm;
         }
 
+        // Cancel a booking by creating a cancellation request and updating the booking status to pending.
         public async Task<bool> CancelBookingAsync(Guid userId, Guid bookingId)
         {
+            //Fetch the booking that the user wants to cancel to ensure it exists and belongs to the user.
             Booking? booking = await dbContext
                                     .Bookings
+                                    .AsNoTracking()
                                     .SingleOrDefaultAsync(b => b.Id == bookingId && b.UserId == userId);
 
-
+         
             try
             {
+                //if the booking is found, create a new BookingCancellationRequest entity.
                 BookingCancellationRequest cancellationRequest = new BookingCancellationRequest()
                 {
                     UserId = userId,
@@ -122,6 +144,7 @@ namespace TravelBuddy.Services.Core
                     Status = CancellationRequestStatus.Pending
                 };
 
+                //Persist the cancellation request in the database by adding it to the context and saving changes. Also, update the booking status to pending.
                 dbContext.BookingCancellationRequests.Add(cancellationRequest);
 
                 booking?.Status = Status.Pending;
@@ -132,13 +155,16 @@ namespace TravelBuddy.Services.Core
             }
             catch (Exception ex)
             {
+                //If the booking is not found, return false to indicate that the cancellation request cannot be created.
                 return false;
             }
 
         }
 
+        // Get all cancellation requests for a specific user.
         public async Task<IEnumerable<BookingCancellationRequestViewModel>> GetUserCancellationRequestsAsync(Guid userId)
         {
+            //Fetch all cancellation requests for the specified userId and project them to BookingCancellationRequestViewModel.
             IEnumerable<BookingCancellationRequestViewModel> cancellationRequests
                 = await dbContext
                        .BookingCancellationRequests
@@ -161,12 +187,15 @@ namespace TravelBuddy.Services.Core
                        .AsNoTracking()
                        .ToListAsync();
 
+            //Return the collection of cancellation requests for the user.
             return cancellationRequests;
 
         }
 
+        // Get all cancellation requests for admin user to review and manage.
         public async Task<IEnumerable<BookingCancellationRequestViewModel>> GetAllCancellationRequestsAsync()
         {
+            //Fetch all cancellation requests and project them to a collection of BookingCancellationRequestViewModel.
             IEnumerable<BookingCancellationRequestViewModel> cancellationRequests
                 = await dbContext
                        .BookingCancellationRequests
@@ -188,6 +217,7 @@ namespace TravelBuddy.Services.Core
                        .AsNoTracking()
                        .ToListAsync();
 
+            //Return the collection of all cancellation requests for admin review and management.
             return cancellationRequests;
         }
     }

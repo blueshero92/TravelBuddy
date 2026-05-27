@@ -4,6 +4,7 @@ using System.Security.Claims;
 
 namespace TravelBuddy.Controllers
 {
+    // Base controller for all user-related controllers, providing security and enforcing authorization for authenticated users.
     [Authorize]
     [AutoValidateAntiforgeryToken]
     public class BaseController : Controller
