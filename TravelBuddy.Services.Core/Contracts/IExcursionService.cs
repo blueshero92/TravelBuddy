@@ -13,5 +13,9 @@ namespace TravelBuddy.Services.Core.Contracts
         Task<ExcursionInputModel> GetExcursionForEditByIdAsync(Guid excursionId);
 
         Task<bool> EditExcursionAsync(Guid excursionId, ExcursionInputModel? excursionIm);
+
+        Task<DeleteExcursionViewModel?> GetExcursionForDeleteionAsync(Guid excursionId);
+
+        Task<bool> DeleteExcursionAsync(Guid excursionId);
     }
 }

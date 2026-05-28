@@ -175,5 +175,62 @@ namespace TravelBuddy.Services.Core
                 return false;
             }
         }
+
+        // Task for retrieving a specific excursion by its Id for deletion purposes.
+        public async Task<DeleteExcursionViewModel?> GetExcursionForDeleteionAsync(Guid excursionId)
+        {
+            // Fetch the Excursion entity from the database using the provided excursion Id.
+            Excursion? excursion = await dbContext
+                                        .Excursions
+                                        .AsNoTracking()
+                                        .SingleOrDefaultAsync(e => e.Id == excursionId);
+
+            // Check if the fetched Excursion entity is null. If it is null, return null to indicate that the excursion cannot be retrieved for deletion.
+            if (excursion == null)
+            {
+                return null;
+            }
+
+            // Create a DeleteExcursionViewModel instance with the Id and Title of the fetched Excursion entity.
+            DeleteExcursionViewModel deleteExcursionViewModel = new DeleteExcursionViewModel
+            {
+                Id = excursionId,
+                Title = excursion.Title,
+                Destination = excursion.Destination,
+            };
+
+            // Return the DeleteExcursionViewModel instance with the Id and Title of the excursion to be deleted.
+            return deleteExcursionViewModel;
+        }
+
+        public async Task<bool> DeleteExcursionAsync(Guid excursionId)
+        {
+            // Fetch the Excursion entity from the database using the provided excursion Id.
+            Excursion? excursion = await dbContext
+                                        .Excursions
+                                        .SingleOrDefaultAsync(e => e.Id == excursionId);
+            // Check if the fetched Excursion entity is null. If it is null, return false to indicate that the excursion cannot be deleted.
+            if (excursion == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                // Remove the fetched Excursion entity from the database.
+                dbContext.Excursions.Remove(excursion);
+
+                // Save the changes to the database.
+                await dbContext.SaveChangesAsync();
+
+                // Return true to indicate that the excursion was successfully deleted.
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // If an exception occurs during the process of deleting the excursion, return false.
+                return false;
+            }
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TravelBuddy.Services.Core;
+
 using TravelBuddy.Services.Core.Contracts;
 using TravelBuddy.ViewModels.Excursion;
 
@@ -115,6 +115,46 @@ namespace TravelBuddy.Areas.Admin.Controllers
             }
 
             // If the excursion is successfully edited, redirect to the Index action to display the updated list of excursions.
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Task for displaying the confirmation page to delete an existing excursion, retrieving the excursion details by ID using the excursion service.
+        [HttpGet]
+        public async Task<IActionResult> DeleteExcursion(Guid excursionId)
+        {
+            // Retrieve the excursion details for deletion using the excursion service and store them in a variable.
+            DeleteExcursionViewModel? deleteExcursionViewModel = await excursionService.GetExcursionForDeleteionAsync(excursionId);
+
+            // Check if the retrieved excursion details are null, and if so, return a NotFound result.
+            if (deleteExcursionViewModel == null)
+            {
+                return NotFound();
+            }
+
+            // If the excursion details are successfully retrieved, return the view.
+            return View(deleteExcursionViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteExcursion(Guid excursionId, DeleteExcursionViewModel? deleteExcursionViewModel)
+        {
+            // Check if the input model is null and return a BadRequest result if it is.
+            if (deleteExcursionViewModel == null)
+            {
+                return BadRequest();
+            }
+
+            // Attempt to delete the excursion using the excursion service and store the result in a variable.
+            bool isDeleted = await excursionService.DeleteExcursionAsync(excursionId);
+
+            // If deletion fails, add a model error to the ModelState and return the view with the input model.
+            if (!isDeleted)
+            {
+                ModelState.AddModelError(string.Empty, "Failed to delete the excursion. Please try again.");
+                return View(deleteExcursionViewModel);
+            }
+
+            // If the excursion is successfully deleted, redirect to the Index action to display the updated list of excursions.
             return RedirectToAction(nameof(Index));
         }
     }
