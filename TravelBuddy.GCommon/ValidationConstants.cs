@@ -23,6 +23,12 @@
             public const int DestinationMinLength = 5;
             public const int DestinationMaxLength = 300;
 
+            public const decimal PriceMinValue = 100.00m;
+            public const decimal PriceMaxValue = 50000.00m;
+
+            public const int CapacityMinValue = 5;
+            public const int CapacityMaxValue = 200;
+
             public const string PriceType = "decimal(18,2)";
         }
 

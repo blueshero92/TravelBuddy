@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TravelBuddy.ViewModels.Excursion.ExcursionViewModel>
+﻿@model IEnumerable<ExcursionViewModel>
 
 @{
     ViewData["Title"] = "Manage Excursions";
@@ -19,7 +19,7 @@
                class="tb-btn-primary" style="background:var(--tb-primary); font-size:.88rem;">
                 <i class="fa-solid fa-arrow-left me-1"></i>Back to Panel
             </a>
-            <a href="#" class="tb-btn-primary" style="font-size:.88rem;">
+            <a asp-area="Admin" asp-controller="ExcursionManagement" asp-action="AddExcursion" class="tb-btn-primary" style="font-size:.88rem;">
                 <i class="fa-solid fa-plus me-1"></i>Add Excursion
             </a>
         </div>
@@ -45,7 +45,7 @@
 
                     <div class="tb-privacy-card mb-0" style="display:flex; align-items:center; gap:1.25rem; padding:1rem 1.5rem;">
 
-                        <img src="@(excursion.ImageUrl ?? "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=900&auto=format&fit=crop")"
+                        <img src="@excursion.ImageUrl"
                              alt="@excursion.Title"
                              style="width:100px; height:72px; object-fit:cover; border-radius:.6rem; flex-shrink:0;" />
 
@@ -67,7 +67,8 @@
                         </div>
 
                         <div class="d-flex gap-2 flex-shrink-0">
-                            <a href="#" class="tb-btn-primary" style="background:var(--tb-primary); font-size:.82rem; padding:.4rem .9rem;">
+                            <a asp-area="Admin" asp-controller="ExcursionManagement" asp-action="EditExcursion" asp-route-excursionId="@excursion.Id" class="tb-btn-primary"
+                                 style="background:var(--tb-primary); font-size:.82rem; padding:.4rem .9rem;">
                                 <i class="fa-solid fa-pen me-1"></i>Edit
                             </a>
                             <a href="#" class="tb-btn-primary" style="background:#ef4444; font-size:.82rem; padding:.4rem .9rem;">

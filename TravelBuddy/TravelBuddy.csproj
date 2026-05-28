@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TravelBuddy.Data.Models\TravelBuddy.Data.Models.csproj" />
     <ProjectReference Include="..\TravelBuddy.Data\TravelBuddy.Data.csproj" />
+    <ProjectReference Include="..\TravelBuddy.GCommon\TravelBuddy.GCommon.csproj" />
     <ProjectReference Include="..\TravelBuddy.Services.Core\TravelBuddy.Services.Core.csproj" />
   </ItemGroup>
 

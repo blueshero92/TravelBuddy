@@ -32,7 +32,8 @@ namespace TravelBuddy.Services.Core
                                                                            StartDate = e.StartDate,
                                                                            EndDate = e.EndDate,
                                                                            Price = e.Price,
-                                                                           Capacity = e.Capacity
+                                                                           Capacity = e.Capacity,
+                                                                           ImageUrl = e.ImageUrl ?? string.Empty,
                                                                        })
                                                                        .AsNoTracking()
                                                                        .ToListAsync();
@@ -65,11 +66,114 @@ namespace TravelBuddy.Services.Core
                 StartDate = excursion.StartDate,
                 EndDate = excursion.EndDate,
                 Price = excursion.Price,
-                Capacity = excursion.Capacity
+                Capacity = excursion.Capacity,
+                ImageUrl = excursion.ImageUrl ?? string.Empty,
             };
 
             // Return the ExcursionViewModel instance with the excursion's details.
             return excursionViewModel;
+        }
+
+        // Task for adding a new excursion to the database based on the provided ExcursionInputModel.
+        public async Task<bool> AddExcursionAsync(ExcursionInputModel? excursionIm)
+        {
+            // Check if the provided ExcursionInputModel is null. If it is null, return false to indicate that the excursion cannot be added.
+            if (excursionIm == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                // Create a new Excursion entity based on the provided ExcursionInputModel.
+                Excursion excursion = new Excursion
+                {
+                    Id = Guid.NewGuid(),
+                    Title = excursionIm.Title,
+                    Destination = excursionIm.Destination,
+                    StartDate = excursionIm.StartDate,
+                    EndDate = excursionIm.EndDate,
+                    Price = excursionIm.Price,
+                    Capacity = excursionIm.Capacity,
+                    ImageUrl = excursionIm.ImageUrl ?? string.Empty,
+                };
+
+                // Add the new Excursion entity to the database context and save changes to persist it in the database.
+                await dbContext.Excursions.AddAsync(excursion);
+
+                await dbContext.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                // If an exception occurs during the process of adding the excursion, return false to indicate that the excursion could not be added.
+                return false;
+            }
+        }
+
+        // Task for retrieving a specific excursion by its Id for editing purposes, returning an ExcursionInputModel with the excursion's details.
+        public async Task<ExcursionInputModel> GetExcursionForEditByIdAsync(Guid excursionId)
+        {
+            Excursion? excursion = await dbContext
+                                        .Excursions
+                                        .AsNoTracking()
+                                        .SingleOrDefaultAsync(e => e.Id == excursionId);
+
+            if (excursion == null)
+            {
+                return null;
+            }
+
+            ExcursionInputModel excursionInputModel = new ExcursionInputModel
+            {
+                Id = excursionId,
+                Title = excursion.Title,
+                Destination = excursion.Destination,
+                StartDate = excursion.StartDate,
+                EndDate = excursion.EndDate,
+                Price = excursion.Price,
+                Capacity = excursion.Capacity,
+                ImageUrl = excursion.ImageUrl ?? string.Empty,
+            };
+
+            return excursionInputModel;
+        }
+
+        // Task for editing an existing excursion in the database based on the provided ExcursionInputModel and excursion Id.
+        public async Task<bool> EditExcursionAsync(Guid excursionId, ExcursionInputModel? excursionIm)
+        {
+            // Fetch the existing Excursion entity from the database using the provided excursion Id.
+            Excursion? excursion = await dbContext
+                                        .Excursions
+                                        .SingleOrDefaultAsync(e => e.Id == excursionId);
+
+            // Check if the fetched Excursion entity or the provided ExcursionInputModel is null. If either is null, return false to indicate that the excursion cannot be edited.
+            if (excursion == null || excursionIm == null)
+            {
+                return false;
+            }
+
+            // Update the properties of the fetched Excursion entity with the values from the provided ExcursionInputModel.
+            try
+            {
+                excursion.Title = excursionIm.Title;
+                excursion.Destination = excursionIm.Destination;
+                excursion.StartDate = excursionIm.StartDate;
+                excursion.EndDate = excursionIm.EndDate;
+                excursion.Price = excursionIm.Price;
+                excursion.Capacity = excursionIm.Capacity;
+                excursion.ImageUrl = excursionIm.ImageUrl;
+
+                await dbContext.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                // If an exception occurs during the process of editing the excursion, return false to indicate that the excursion could not be edited.
+                return false;
+            }
         }
     }
 }

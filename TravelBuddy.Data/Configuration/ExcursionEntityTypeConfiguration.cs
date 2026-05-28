@@ -22,7 +22,7 @@ namespace TravelBuddy.Data.Configuration
                 EndDate = new DateTime(2024, 7, 7),
                 Price = 1500.00m,
                 Capacity = 20,
-                ImageUrl = "https://example.com/images/beach-paradise.jpg"
+                ImageUrl = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop"
             },
             new Excursion
             {
@@ -33,7 +33,7 @@ namespace TravelBuddy.Data.Configuration
                 EndDate = new DateTime(2024, 8, 22),
                 Price = 1200.00m,
                 Capacity = 15,
-                ImageUrl = "https://example.com/images/mountain-adventure.jpg"
+                ImageUrl = "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&auto=format&fit=crop"
             },
             new Excursion
             {
@@ -44,7 +44,7 @@ namespace TravelBuddy.Data.Configuration
                 EndDate = new DateTime(2024, 9, 17),
                 Price = 1000.00m,
                 Capacity = 25,
-                ImageUrl = "https://example.com/images/city-exploration.jpg"
+                ImageUrl = "https://images.unsplash.com/photo-1499092346589-b9b6be3e94b2?w=600&auto=format&fit=crop"
             }
         };
     }

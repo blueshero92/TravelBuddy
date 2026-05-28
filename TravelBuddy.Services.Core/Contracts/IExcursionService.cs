@@ -7,5 +7,11 @@ namespace TravelBuddy.Services.Core.Contracts
         Task<IEnumerable<ExcursionViewModel>> GetAllExcursionsAsync();
 
         Task<ExcursionViewModel> GetExcursionByIdAsync(Guid id);
+
+        Task<bool> AddExcursionAsync(ExcursionInputModel? excursionIm);
+
+        Task<ExcursionInputModel> GetExcursionForEditByIdAsync(Guid excursionId);
+
+        Task<bool> EditExcursionAsync(Guid excursionId, ExcursionInputModel? excursionIm);
     }
 }
