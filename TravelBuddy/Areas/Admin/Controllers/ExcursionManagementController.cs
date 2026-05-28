@@ -135,6 +135,8 @@ namespace TravelBuddy.Areas.Admin.Controllers
             return View(deleteExcursionViewModel);
         }
 
+
+        // Task for handling the confirmation of deleting an excursion, validating the input, and deleting the excursion using the excursion service.
         [HttpPost]
         public async Task<IActionResult> DeleteExcursion(Guid excursionId, DeleteExcursionViewModel? deleteExcursionViewModel)
         {
