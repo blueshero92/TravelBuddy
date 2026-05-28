@@ -2,7 +2,7 @@
 using TravelBuddy.Data;
 using TravelBuddy.Data.Models;
 using TravelBuddy.Services.Core.Contracts;
-using TravelBuddy.ViewModels;
+using TravelBuddy.ViewModels.Excursion;
 
 namespace TravelBuddy.Services.Core
 {

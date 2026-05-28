@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TravelBuddy.Services.Core;
 using TravelBuddy.Services.Core.Contracts;
-using TravelBuddy.ViewModels;
+using TravelBuddy.ViewModels.Excursion;
 
 namespace TravelBuddy.Areas.Admin.Controllers
 {
@@ -31,5 +31,7 @@ namespace TravelBuddy.Areas.Admin.Controllers
             //If the excursions are successfully retrieved, return the view with the excursions view model to be displayed on the Index page.
             return View(excursionsVm);
         }
+
+
     }
 }

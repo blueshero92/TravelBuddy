@@ -1,4 +1,4 @@
-﻿namespace TravelBuddy.ViewModels
+﻿namespace TravelBuddy.ViewModels.BookingCancellationRequest
 {
     public class BookingCancellationRequestViewModel
     {

@@ -1,4 +1,4 @@
-﻿namespace TravelBuddy.ViewModels
+﻿namespace TravelBuddy.ViewModels.Booking
 {
     public class BookingViewModel
     {

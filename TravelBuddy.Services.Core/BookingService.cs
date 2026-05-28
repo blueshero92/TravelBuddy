@@ -3,7 +3,8 @@ using TravelBuddy.Data;
 using TravelBuddy.Data.Models;
 using TravelBuddy.Data.Models.Enums;
 using TravelBuddy.Services.Core.Contracts;
-using TravelBuddy.ViewModels;
+using TravelBuddy.ViewModels.Booking;
+using TravelBuddy.ViewModels.BookingCancellationRequest;
 
 namespace TravelBuddy.Services.Core
 {

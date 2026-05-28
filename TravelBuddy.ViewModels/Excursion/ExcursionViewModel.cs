@@ -1,4 +1,4 @@
-﻿namespace TravelBuddy.ViewModels
+﻿namespace TravelBuddy.ViewModels.Excursion
 {
     public class ExcursionViewModel
     {

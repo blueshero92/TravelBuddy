@@ -1,4 +1,4 @@
-﻿using TravelBuddy.ViewModels;
+﻿using TravelBuddy.ViewModels.Excursion;
 
 namespace TravelBuddy.Services.Core.Contracts
 {

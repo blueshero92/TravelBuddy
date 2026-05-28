@@ -1,4 +1,5 @@
-﻿using TravelBuddy.ViewModels;
+﻿using TravelBuddy.ViewModels.Booking;
+using TravelBuddy.ViewModels.BookingCancellationRequest;
 
 namespace TravelBuddy.Services.Core.Contracts
 {

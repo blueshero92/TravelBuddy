@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TravelBuddy.Services.Core.Contracts;
-using TravelBuddy.ViewModels;
+using TravelBuddy.ViewModels.Booking;
 
 namespace TravelBuddy.Controllers
 {
