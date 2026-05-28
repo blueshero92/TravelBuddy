@@ -110,19 +110,5 @@ namespace TravelBuddy.Controllers
             return RedirectToAction(nameof(MyBookings));
         }
 
-        // Task for retrieving and displaying the current user's booking cancellation requests on the CancellationRequests page.
-        [HttpGet]
-        public async Task<IActionResult> CancellationRequests()
-        {
-            // Get the current user's Id using a method from the BaseController.
-            Guid userId = GetUserId();
-
-            // Asynchronously retrieves the current user's booking cancellation requests using the booking service.
-            IEnumerable<BookingCancellationRequestViewModel> cancellationRequests
-                = await bookingService.GetUserCancellationRequestsAsync(userId);
-
-            // Returns the view with the retrieved cancellation requests to be displayed to the user.
-            return View(cancellationRequests);
-        }
     }
 }
