@@ -2,6 +2,9 @@
 using TravelBuddy.Services.Core.Contracts;
 using TravelBuddy.ViewModels.Booking;
 
+using static TravelBuddy.GCommon.AppConstants;
+using static TravelBuddy.GCommon.OutputMessages;
+
 namespace TravelBuddy.Controllers
 {
     public class BookingController : BaseController
@@ -66,6 +69,7 @@ namespace TravelBuddy.Controllers
             };
 
             // Redirect to MyBookings after successful booking creation.
+            TempData[SuccessTempDataKey] = BookingCreateSuccess;
             return RedirectToAction(nameof(MyBookings));
         }
 
@@ -103,10 +107,11 @@ namespace TravelBuddy.Controllers
             // If the cancellation process encounters issues add model error.
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "Cannot cancel already cancelled booking.");
+                ModelState.AddModelError(string.Empty, BookingCancelAlreadyCancelled);
             }
 
             // After attempting to cancel the booking, redirect the user back to the MyBookings page to see the updated list of bookings.
+            TempData[WarningTempDataKey] = BookingCancelPending;
             return RedirectToAction(nameof(MyBookings));
         }
 

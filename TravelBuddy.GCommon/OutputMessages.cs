@@ -1,0 +1,48 @@
+﻿namespace TravelBuddy.GCommon
+{
+    public static class OutputMessages
+    {
+        // Favorites
+        public const string ExcursionAlreadyInFavorites = "The destination is already added to your favorites.";
+        public const string ExcursionAddedToFavorites = "Destination added to your favourites!";
+        public const string ExcursionNotInFavorites = "You can't remove a destination that is not added to your favorites.";
+        public const string ExcursionRemovedFromFavorites = "Destination successfully removed from your favourites!";
+
+        // Excursion management
+        public const string ExcursionAddFailed = "Failed to add the destination. Please try again.";
+        public const string ExcursionAddSuccess = "Destination added successfully.";
+        public const string ExcursionEditFailed = "Failed to edit the destination. Please try again.";
+        public const string ExcursionEditSuccess = "Destination edited successfully.";
+        public const string ExcursionDeleteFailed = "Failed to delete the destination. Please try again.";
+        public const string ExcursionDeleteSuccess = "Destination deleted successfully.";
+
+        // Identity seeding
+        public const string SeedRoleError = "Error while trying to seed role: {0}";
+        public const string SeedAdminUserError = "Error while trying to seed admin user.";
+        public const string SeedAdminRoleError = "Error while trying to add admin user to admin role.";
+        public const string AdminUsernameNotFound = "Admin username not found in configuration.";
+        public const string AdminEmailNotFound = "Admin email not found in configuration.";
+        public const string AdminPasswordNotFound = "Admin password not found in configuration.";
+        public const string AdminFullNameNotFound = "Admin full name not found in configuration.";
+
+        // Booking
+        public const string BookingCancelAlreadyCancelled = "Cannot cancel already cancelled booking.";
+        public const string BookingCancelPending = "Booking cancellation pending. Wait for administrator approval.";
+        public const string BookingCreateSuccess = "Booking created successfully.";
+
+        // ExcursionInputModel validation
+        public const string ExcursionTitleRequired = "Title is required.";
+        public const string ExcursionTitleMinLength = "Title must be at least {1} characters long.";
+        public const string ExcursionTitleMaxLength = "Title cannot exceed {1} characters.";
+        public const string ExcursionDestinationRequired = "Destination is required.";
+        public const string ExcursionDestinationMinLength = "Destination must be at least {1} characters long.";
+        public const string ExcursionDestinationMaxLength = "Destination cannot exceed {1} characters.";
+        public const string ExcursionStartDateRequired = "Start date is required.";
+        public const string ExcursionEndDateRequired = "End date is required.";
+        public const string ExcursionPriceRequired = "Price is required.";
+        public const string ExcursionPriceRange = "Price must be between {1} and {2}.";
+        public const string ExcursionCapacityRequired = "Capacity is required.";
+        public const string ExcursionCapacityRange = "Capacity must be between {1} and {2}.";
+    }
+}
+

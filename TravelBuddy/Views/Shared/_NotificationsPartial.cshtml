@@ -1,0 +1,29 @@
+﻿@using static TravelBuddy.GCommon.AppConstants;
+
+<script>
+	$(function () {
+		toastr.options = {
+			closeButton: true,
+			progressBar: true,
+			positionClass: "toast-top-right",
+			timeOut: 4000
+		};
+
+		@if (TempData[ErrorTempDataKey] != null)
+		{
+			<text>toastr.error('@TempData[ErrorTempDataKey]');</text>
+		}
+		@if (TempData[SuccessTempDataKey] != null)
+		{
+			<text>toastr.success('@TempData[SuccessTempDataKey]');</text>
+		}
+		@if (TempData[InfoTempDataKey] != null)
+		{
+			<text>toastr.info('@TempData[InfoTempDataKey]');</text>
+		}
+		@if (TempData[WarningTempDataKey] != null)
+		{
+			<text>toastr.warning('@TempData[WarningTempDataKey]');</text>
+		}
+	});
+</script>

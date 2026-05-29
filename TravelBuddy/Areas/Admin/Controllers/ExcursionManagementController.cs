@@ -3,6 +3,9 @@
 using TravelBuddy.Services.Core.Contracts;
 using TravelBuddy.ViewModels.Excursion;
 
+using static TravelBuddy.GCommon.AppConstants;
+using static TravelBuddy.GCommon.OutputMessages;
+
 namespace TravelBuddy.Areas.Admin.Controllers
 {
     public class ExcursionManagementController : BaseAdminController
@@ -63,11 +66,12 @@ namespace TravelBuddy.Areas.Admin.Controllers
             //if adding fails add a model error to the ModelState.
             if (!isAdded)
             {
-                ModelState.AddModelError(string.Empty, "Failed to add the excursion. Please try again.");
+                TempData[ErrorTempDataKey] = ExcursionAddFailed;
                 return View(excursionInputModel);
             }
 
-            // If the excursion is successfully added, redirect to the Index action to display the updated list of excursions.
+            // If the destination is successfully added, redirect to the Index action to display the updated list of destinations.
+            TempData[SuccessTempDataKey] = ExcursionAddSuccess;
             return RedirectToAction(nameof(Index));
 
         }
@@ -110,11 +114,12 @@ namespace TravelBuddy.Areas.Admin.Controllers
             // If editing fails, add a model error to the ModelState and return the view with the input model.
             if (!isEdited)
             {
-                ModelState.AddModelError(string.Empty, "Failed to edit the excursion. Please try again.");
+                TempData[ErrorTempDataKey] = ExcursionEditFailed;
                 return View(excursionInputModel);
             }
 
-            // If the excursion is successfully edited, redirect to the Index action to display the updated list of excursions.
+            // If the destination is successfully edited, redirect to the Index action to display the updated list of destinations.
+            TempData[SuccessTempDataKey] = ExcursionEditSuccess;
             return RedirectToAction(nameof(Index));
         }
 
@@ -152,11 +157,12 @@ namespace TravelBuddy.Areas.Admin.Controllers
             // If deletion fails, add a model error to the ModelState and return the view with the input model.
             if (!isDeleted)
             {
-                ModelState.AddModelError(string.Empty, "Failed to delete the excursion. Please try again.");
+                TempData[ErrorTempDataKey] = ExcursionDeleteFailed;
                 return View(deleteExcursionViewModel);
             }
 
-            // If the excursion is successfully deleted, redirect to the Index action to display the updated list of excursions.
+            // If the destination is successfully deleted, redirect to the Index action to display the updated list of destinations.
+            TempData[SuccessTempDataKey] = ExcursionDeleteSuccess;
             return RedirectToAction(nameof(Index));
         }
     }

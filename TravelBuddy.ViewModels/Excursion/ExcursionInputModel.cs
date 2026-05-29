@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static TravelBuddy.GCommon.OutputMessages;
 using static TravelBuddy.GCommon.ValidationConstants.ExcursionConstants;
 
 namespace TravelBuddy.ViewModels.Excursion
@@ -8,28 +9,28 @@ namespace TravelBuddy.ViewModels.Excursion
         [Required]
         public Guid Id { get; set; }
 
-        [Required(ErrorMessage = "Title is required.")]
-        [MinLength(TitleMinLength, ErrorMessage = "Title must be at least {1} characters long.")]
-        [MaxLength(TitleMaxLength, ErrorMessage = "Title cannot exceed {1} characters.")]
+        [Required(ErrorMessage = ExcursionTitleRequired)]
+        [MinLength(TitleMinLength, ErrorMessage = ExcursionTitleMinLength)]
+        [MaxLength(TitleMaxLength, ErrorMessage = ExcursionTitleMaxLength)]
         public string Title { get; set; } = null!;
 
-        [Required(ErrorMessage = "Destination is required.")]
-        [MinLength(DestinationMinLength, ErrorMessage = "Destination must be at least {1} characters long.")]
-        [MaxLength(DestinationMaxLength, ErrorMessage = "Destination cannot exceed {1} characters.")]
+        [Required(ErrorMessage = ExcursionDestinationRequired)]
+        [MinLength(DestinationMinLength, ErrorMessage = ExcursionDestinationMinLength)]
+        [MaxLength(DestinationMaxLength, ErrorMessage = ExcursionDestinationMaxLength)]
         public string Destination { get; set; } = null!;
 
-        [Required(ErrorMessage = "Start date is required.")]
+        [Required(ErrorMessage = ExcursionStartDateRequired)]
         public DateTime StartDate { get; set; }
 
-        [Required(ErrorMessage = "End date is required.")]
+        [Required(ErrorMessage = ExcursionEndDateRequired)]
         public DateTime EndDate { get; set; }
 
-        [Required(ErrorMessage = "Price is required.")]
-        [Range((double)PriceMinValue, (double)PriceMaxValue, ErrorMessage = "Price must be between {1} and {2}.")]
+        [Required(ErrorMessage = ExcursionPriceRequired)]
+        [Range((double)PriceMinValue, (double)PriceMaxValue, ErrorMessage = ExcursionPriceRange)]
         public decimal Price { get; set; }
 
-        [Required(ErrorMessage = "Capacity is required.")]
-        [Range(CapacityMinValue, CapacityMaxValue, ErrorMessage = "Capacity must be between {1} and {2}.")]
+        [Required(ErrorMessage = ExcursionCapacityRequired)]
+        [Range(CapacityMinValue, CapacityMaxValue, ErrorMessage = ExcursionCapacityRange)]
         public int Capacity { get; set; }
 
         public string? ImageUrl { get; set; }

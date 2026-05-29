@@ -884,4 +884,29 @@ a:hover { color: var(--tb-accent); }
     .tb-manage-nav { width: 100%; border-right: none; border-bottom: 1px solid #e8ecf0; padding: .75rem 0; }
     .tb-manage-content { padding: 1.5rem 1.25rem; }
 }
+
+/* Toastr overrides */
+#toast-container > .toast { opacity: 0.88 !important; }
+
+#toast-container > .toast-success {
+    background-color: rgba(26, 122, 74, 0.88) !important;
+    color: #fff !important;
+}
+
+#toast-container > .toast-error {
+    background-color: rgba(192, 57, 43, 0.88) !important;
+    color: #fff !important;
+}
+
+#toast-container > .toast-warning {
+    background-color: rgba(217, 119, 6, 0.88) !important;
+    color: #fff !important;
+}
+
+#toast-container > .toast-info {
+    background-color: rgba(0, 119, 182, 0.88) !important;
+    color: #fff !important;
+}
+
+#toast-container > div { box-shadow: 0 4px 16px rgba(0,0,0,.2) !important; }
 }

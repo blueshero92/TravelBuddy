@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using TravelBuddy.Data.Models;
 using TravelBuddy.Data.Seeding.Contracts;
+using static TravelBuddy.GCommon.OutputMessages;
 
 namespace TravelBuddy.Data.Seeding
 {
@@ -44,7 +45,7 @@ namespace TravelBuddy.Data.Seeding
 
                     if (!idnetityRoleResult.Succeeded)
                     {
-                        throw new InvalidOperationException(string.Format("Error while trying to seed role: {0}", role));
+                        throw new InvalidOperationException(string.Format(SeedRoleError, role));
                     }
                 }
             }
@@ -53,16 +54,16 @@ namespace TravelBuddy.Data.Seeding
         public async Task SeedAdminUserAsync()
         {
             string adminUsername = configuration["UserSeed:AdminUser:Username"]
-                ?? throw new InvalidOperationException("Admin username not found in configuration.");
+                ?? throw new InvalidOperationException(AdminUsernameNotFound);
 
             string adminEmail = configuration["UserSeed:AdminUser:Email"]
-                ?? throw new InvalidOperationException("Admin email not found in configuration.");
+                ?? throw new InvalidOperationException(AdminEmailNotFound);
 
             string adminPassword = configuration["UserSeed:AdminUser:Password"]
-                ?? throw new InvalidOperationException("Admin password not found in configuration.");
+                ?? throw new InvalidOperationException(AdminPasswordNotFound);
 
             string adminFullName = configuration["UserSeed:AdminUser:FullName"]
-                ?? throw new InvalidOperationException("Admin full name not found in configuration.");
+                ?? throw new InvalidOperationException(AdminFullNameNotFound);
 
             ApplicationUser? adminUser = await userManager.FindByEmailAsync(adminEmail);
 
@@ -80,7 +81,7 @@ namespace TravelBuddy.Data.Seeding
 
                 if (!result.Succeeded)
                 {
-                    throw new InvalidOperationException("Error while trying to seed admin user.");
+                    throw new InvalidOperationException(SeedAdminUserError);
                 }
             }
 
@@ -93,7 +94,7 @@ namespace TravelBuddy.Data.Seeding
 
                 if (!addToRoleResult.Succeeded)
                 {
-                    throw new InvalidOperationException("Error while trying to add admin user to admin role.");
+                    throw new InvalidOperationException(SeedAdminRoleError);
                 }
             }
         }

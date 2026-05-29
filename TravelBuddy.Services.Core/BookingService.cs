@@ -155,25 +155,34 @@ namespace TravelBuddy.Services.Core
             //Fetch the booking that the user wants to cancel to ensure it exists and belongs to the user.
             Booking? booking = await dbContext
                                     .Bookings
-                                    .AsNoTracking()
                                     .SingleOrDefaultAsync(b => b.Id == bookingId && b.UserId == userId);
 
-         
+            if (booking == null)
+            {
+                return false;
+            }
+
+            // Check if a cancellation request already exists for this booking.
+            bool requestExists = await dbContext
+                                       .BookingCancellationRequests
+                                       .AnyAsync(r => r.BookingId == bookingId);
             try
             {
-                //if the booking is found, create a new BookingCancellationRequest entity.
-                BookingCancellationRequest cancellationRequest = new BookingCancellationRequest()
+                // If no cancellation request exists, create a new one with the status set to pending.
+                if (!requestExists)
                 {
-                    UserId = userId,
-                    BookingId = bookingId,
-                    RequestedOn = DateTime.Now,
-                    Status = CancellationRequestStatus.Pending
-                };
+                    BookingCancellationRequest cancellationRequest = new BookingCancellationRequest()
+                    {
+                        UserId = userId,
+                        BookingId = bookingId,
+                        RequestedOn = DateTime.Now,
+                        Status = CancellationRequestStatus.Pending
+                    };
 
-                //Persist the cancellation request in the database by adding it to the context and saving changes. Also, update the booking status to pending.
-                dbContext.BookingCancellationRequests.Add(cancellationRequest);
+                    dbContext.BookingCancellationRequests.Add(cancellationRequest);
+                }
 
-                booking?.Status = Status.Pending;
+                booking.Status = Status.Pending;
 
                 await dbContext.SaveChangesAsync();
 
@@ -181,10 +190,9 @@ namespace TravelBuddy.Services.Core
             }
             catch (Exception ex)
             {
-                //If the booking is not found, return false to indicate that the cancellation request cannot be created.
+                // Log the exception (not implemented here for brevity).
                 return false;
             }
-
         }
 
         // Get all cancellation requests for a specific user.

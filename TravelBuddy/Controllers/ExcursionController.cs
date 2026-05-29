@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using TravelBuddy.Services.Core.Contracts;
 using TravelBuddy.ViewModels.Excursion;
 
+using static TravelBuddy.GCommon.AppConstants;
+using static TravelBuddy.GCommon.OutputMessages;
+
 namespace TravelBuddy.Controllers
 {
     public class ExcursionController : BaseController
@@ -75,10 +78,12 @@ namespace TravelBuddy.Controllers
             // If the operation to add to favorites fails, returns a BadRequest result indicating that the request was invalid.
             if (!isAddedToFavorites)
             {
-                return BadRequest();
+                TempData[ErrorTempDataKey] = ExcursionAlreadyInFavorites;
+                return RedirectToAction(nameof(MyFavoriteExcursions));
             }
 
             // If the operation is successful, redirects the user back to the details page of the excursion.
+            TempData[SuccessTempDataKey] = ExcursionAddedToFavorites;
             return RedirectToAction(nameof(MyFavoriteExcursions));
 
         }
@@ -96,10 +101,12 @@ namespace TravelBuddy.Controllers
             // If the operation to remove from favorites fails, returns a BadRequest result indicating that the request was invalid.
             if (!isRemovedFromFavorites)
             {
-                return BadRequest();
+                TempData[ErrorTempDataKey] = ExcursionNotInFavorites;
+                return RedirectToAction(nameof(MyFavoriteExcursions));
             }
 
             // If the operation is successful, redirects the user back to the MyFavoriteExcursions page.
+            TempData[SuccessTempDataKey] = ExcursionRemovedFromFavorites;
             return RedirectToAction(nameof(MyFavoriteExcursions));
         }
     }

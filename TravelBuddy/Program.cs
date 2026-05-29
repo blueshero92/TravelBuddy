@@ -70,7 +70,7 @@ namespace TravelBuddy
             app.MapStaticAssets();
 
             app.MapControllerRoute(
-                name: "areas",
+                name: "adminArea",
                 pattern: "{area:exists}/{controller=HomeAdmin}/{action=Index}/{id?}")
                .WithStaticAssets();
 
