@@ -203,6 +203,7 @@ namespace TravelBuddy.Services.Core
             return deleteExcursionViewModel;
         }
 
+        // Task for deleting a specific excursion from the database based on the provided excursion Id.
         public async Task<bool> DeleteExcursionAsync(Guid excursionId)
         {
             // Fetch the Excursion entity from the database using the provided excursion Id.
@@ -229,6 +230,110 @@ namespace TravelBuddy.Services.Core
             catch (Exception ex)
             {
                 // If an exception occurs during the process of deleting the excursion, return false.
+                return false;
+            }
+        }
+
+
+        // Task for retrieving the user's favorite excursions based on the provided user Id, returning a list of ExcursionViewModel.
+        public async Task<IEnumerable<ExcursionViewModel?>> GetUserFavoriteExcursionsAsync(Guid userId)
+        {
+            // Fetch favorites for the user by his Id and project them into ExcursionViewModel instances.
+            IEnumerable<ExcursionViewModel?> favoritesVm = await dbContext
+                                                                .Favorites
+                                                                .Where(f => f.UserId == userId)
+                                                                .Select(f => new ExcursionViewModel
+                                                                {
+                                                                    Id = f.Excursion.Id,
+                                                                    Title = f.Excursion.Title,
+                                                                    Destination = f.Excursion.Destination,
+                                                                    StartDate = f.Excursion.StartDate,
+                                                                    EndDate = f.Excursion.EndDate,
+                                                                    Price = f.Excursion.Price,
+                                                                    Capacity = f.Excursion.Capacity,
+                                                                    ImageUrl = f.Excursion.ImageUrl ?? string.Empty,
+                                                                })
+                                                                .AsNoTracking()
+                                                                .ToListAsync();
+
+            // Return the list of ExcursionViewModel instances representing the user's favorite excursions.
+            return favoritesVm;
+        }
+
+        // Task for adding a specific excursion to the user's favorites based on the provided user Id and excursion Id.
+        public async Task<bool> AddExcursionToFavoritesAsync(Guid userId, Guid excursionId)
+        {
+            // Check if the user has already added the excursion to their favorites.
+            bool isAlreadyFavorite = await dbContext
+                                          .Favorites
+                                          .AnyAsync(ue => ue.UserId == userId && ue.ExcursionId == excursionId);
+
+            // The excursion is already in the user's favorites and cannot be added again.
+            if (isAlreadyFavorite)
+            {
+                return false;
+            }
+
+            try
+            {
+                // Create a new Favorite entity to represent the user's favorite excursion.
+                Favorite favorite = new Favorite
+                {
+                    UserId = userId,
+                    ExcursionId = excursionId
+                };
+
+                // Add the new Favorite entity to the database context and save changes to persist it in the database.
+                await dbContext.Favorites.AddAsync(favorite);
+                await dbContext.SaveChangesAsync();
+
+                // The excursion was successfully added to the user's favorites.
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // If an exception occurs during the process of adding the excursion to favorites, return false.
+                return false;
+            }
+        }
+
+        // Task for removing a specific excursion from the user's favorites based on the provided user Id and excursion Id.
+        public async Task<bool> RemoveExcursionFromFavoritesAsync(Guid userId, Guid excursionId)
+        {
+            // Check if the excursion is already in the user's favorites before attempting to remove it.
+            bool isAlredyInFavorites = await dbContext
+                                            .Favorites
+                                            .AnyAsync(ue => ue.UserId == userId && ue.ExcursionId == excursionId);
+
+            // If the excursion is not in the user's favorites, it cannot be removed.
+            if (!isAlredyInFavorites)
+            {
+                return false;
+            }
+
+            try
+            {
+                // Fetch the Favorite entity that represents the user's favorite excursion based on the provided user Id and excursion Id.
+                Favorite? favorite = await dbContext
+                                          .Favorites
+                                          .SingleOrDefaultAsync(ue => ue.UserId == userId && ue.ExcursionId == excursionId);
+
+                // Check if the fetched Favorite entity is null. If it is null, return false to indicate that the excursion cannot be removed from favorites.
+                if (favorite == null)
+                {
+                    return false;
+                }
+
+                // Remove the fetched Favorite entity from the database context and save changes to persist the removal in the database.
+                dbContext.Favorites.Remove(favorite);
+
+                await dbContext.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // If an exception occurs during the process of removing the excursion from favorites, return false.
                 return false;
             }
         }

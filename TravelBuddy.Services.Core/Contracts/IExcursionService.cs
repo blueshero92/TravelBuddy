@@ -17,5 +17,12 @@ namespace TravelBuddy.Services.Core.Contracts
         Task<DeleteExcursionViewModel?> GetExcursionForDeleteionAsync(Guid excursionId);
 
         Task<bool> DeleteExcursionAsync(Guid excursionId);
+
+        Task<IEnumerable<ExcursionViewModel?>> GetUserFavoriteExcursionsAsync(Guid userId);
+
+        Task<bool> AddExcursionToFavoritesAsync(Guid userId, Guid excursionId);
+
+        Task<bool> RemoveExcursionFromFavoritesAsync(Guid userId, Guid excursionId);
+
     }
 }

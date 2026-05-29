@@ -1,24 +1,30 @@
-﻿@model IEnumerable<ExcursionViewModel>
+﻿@model IEnumerable<TravelBuddy.ViewModels.Excursion.ExcursionViewModel>
 
 @{
-    ViewData["Title"] = "Excursions";
+    ViewData["Title"] = "Favourites";
 }
 
 <section class="tb-page-hero">
     <div class="tb-page-hero-content">
-        <h1><i class="fa-solid fa-map-location-dot me-2"></i>All Destinations</h1>
-        <p>Browse our available trips and find your next adventure</p>
+        <h1><i class="fa-solid fa-heart me-2"></i>My Favourites</h1>
+        <p>Excursions you have saved for later</p>
     </div>
 </section>
 
 <section class="tb-section">
     <div class="container">
+
         @if (!Model.Any())
         {
             <div class="text-center py-5">
-                <i class="fa-solid fa-compass fa-3x mb-3" style="color: var(--tb-muted);"></i>
-                <h4 class="text-muted">No destinations available at the moment.</h4>
-                <p class="text-muted">Check back soon for new adventures!</p>
+                <div style="font-size:3.5rem; color:var(--tb-accent); margin-bottom:1rem;">
+                    <i class="fa-regular fa-heart"></i>
+                </div>
+                <h3 style="font-family:'Montserrat',sans-serif; font-weight:700; color:var(--tb-dark);">No favourites yet</h3>
+                <p class="text-muted mb-4">Browse destinations and click the heart to save them here.</p>
+                <a asp-controller="Excursion" asp-action="Index" class="tb-btn-primary">
+                    <i class="fa-solid fa-compass me-2"></i>Browse Destinations
+                </a>
             </div>
         }
         else
@@ -29,21 +35,20 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="tb-dest-card card h-100">
                             <div class="card-img-wrapper position-relative">
-                                <img src="@excursion.ImageUrl"
-                                     class="card-img-top" alt="@excursion.Destination" />
+                                <img src="@excursion.ImageUrl" class="card-img-top" alt="@excursion.Destination" />
                                 <span class="tb-badge-dest">
                                     <i class="fa-solid fa-location-dot me-1"></i>@excursion.Destination
                                 </span>
                             </div>
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">@excursion.Title</h5>
-                                <div class="d-flex gap-3 mb-2 text-muted" style="font-size: .88rem;">
+                                <div class="d-flex gap-3 mb-2 text-muted" style="font-size:.88rem;">
                                     <span>
                                         <i class="fa-regular fa-calendar me-1"></i>
                                         @excursion.StartDate.ToString("MMM dd") – @excursion.EndDate.ToString("MMM dd, yyyy")
                                     </span>
                                 </div>
-                                <div class="d-flex gap-3 mb-3 text-muted" style="font-size: .88rem;">
+                                <div class="d-flex gap-3 mb-3 text-muted" style="font-size:.88rem;">
                                     <span>
                                         <i class="fa-solid fa-users me-1"></i>@excursion.Capacity spots left
                                     </span>
@@ -89,5 +94,6 @@
                 }
             </div>
         }
+
     </div>
 </section>

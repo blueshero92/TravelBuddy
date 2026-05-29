@@ -5,7 +5,7 @@ using TravelBuddy.ViewModels.Excursion;
 
 namespace TravelBuddy.Controllers
 {
-    public class ExcursionController : Controller
+    public class ExcursionController : BaseController
     {
         //Dependency injection of the excursion service to handle business logic related to excursions.
         private readonly IExcursionService excursionService;
@@ -22,7 +22,7 @@ namespace TravelBuddy.Controllers
         public async Task<IActionResult> Index()
         {
             // Asynchronously retrieves a list of all excursions using the excursion service and passes it to the view for display.
-            IEnumerable<ExcursionViewModel> excursions 
+            IEnumerable<ExcursionViewModel> excursions
                 = await excursionService.GetAllExcursionsAsync();
 
             // Returns the view with the list of excursions to be rendered on the index page.
@@ -47,5 +47,60 @@ namespace TravelBuddy.Controllers
             return View(excursion);
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> MyFavoriteExcursions()
+        {
+            // Retrieves the user ID from the claims of the currently authenticated user.
+            Guid userId = GetUserId();
+
+            // Asynchronously retrieves a list of the user's favorite excursions using the excursion service and passes it to the view for display.
+            IEnumerable<ExcursionViewModel?> favoriteExcursions
+                = await excursionService.GetUserFavoriteExcursionsAsync(userId);
+
+            // Returns the view with the list of the user's favorite excursions to be rendered on the MyFavoriteExcursions page.
+            return View(favoriteExcursions);
+        }
+
+        // Task for adding a specific excursion to the user's favorites based on its Id.
+        [HttpPost]
+        public async Task<IActionResult> AddToFavorites(Guid excursionId)
+        {
+            // Retrieves the user ID from the claims of the currently authenticated user.
+            Guid userId = GetUserId();
+
+            // Attempts to add the specified excursion to the user's favorites using the excursion service.
+            bool isAddedToFavorites = await excursionService.AddExcursionToFavoritesAsync(userId, excursionId);
+
+            // If the operation to add to favorites fails, returns a BadRequest result indicating that the request was invalid.
+            if (!isAddedToFavorites)
+            {
+                return BadRequest();
+            }
+
+            // If the operation is successful, redirects the user back to the details page of the excursion.
+            return RedirectToAction(nameof(MyFavoriteExcursions));
+
+        }
+
+        // Task for removing a specific excursion from the user's favorites based on its Id.
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromFavorites(Guid excursionId)
+        {
+            // Retrieves the user ID from the claims of the currently authenticated user.
+            Guid userId = GetUserId();
+
+            // Attempts to remove the specified excursion from the user's favorites using the excursion service.
+            bool isRemovedFromFavorites = await excursionService.RemoveExcursionFromFavoritesAsync(userId, excursionId);
+
+            // If the operation to remove from favorites fails, returns a BadRequest result indicating that the request was invalid.
+            if (!isRemovedFromFavorites)
+            {
+                return BadRequest();
+            }
+
+            // If the operation is successful, redirects the user back to the MyFavoriteExcursions page.
+            return RedirectToAction(nameof(MyFavoriteExcursions));
+        }
     }
 }
