@@ -33,10 +33,19 @@ namespace TravelBuddy.Controllers
             return View(bookings);
         }
 
+        // Task for displaying the booking creation page for a specific excursion.
         [HttpGet]
         public async Task<IActionResult> Create(Guid excursionId)
         {
+            // Get the current user's Id using a method from the BaseController.
             Guid userId = GetUserId();
+
+            // If the user is an admin, they are not allowed to create bookings. Show an error message and redirect to the Excursion index page.
+            if (User.IsInRole("Admin"))
+            {
+                TempData[ErrorTempDataKey] = BookingCreateAdminForbidden;
+                return RedirectToAction("Index", "Excursion");
+            }
 
             // Asynchronously retrieves the booking details for the specified excursion and user using the booking service.
             BookingViewModel? booking = await bookingService.CreateBookingGetAsync(userId, excursionId);
@@ -56,8 +65,16 @@ namespace TravelBuddy.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Guid excursionId, BookingViewModel bookingVm)
         {
+
             // Get the current user's Id using a method from the BaseController.
             Guid userId = GetUserId();
+
+            // If the user is an admin, they are not allowed to create bookings. Show an error message and redirect to the Excursion index page.
+            if (User.IsInRole("Admin"))
+            {
+                TempData[ErrorTempDataKey] = BookingCreateAdminForbidden;
+                return RedirectToAction("Index", "Excursion");
+            }
 
             // Asynchronously creates a new booking for the specified excursion and user using the booking service.
             BookingViewModel? booking = await bookingService.CreateBookingPostAsync(userId, excursionId);
