@@ -32,6 +32,7 @@
         public const string BookingCancelDeclined = "Your cancellation request was previously declined by an administrator and cannot be re-submitted.";
         public const string BookingCancelApproved = "Your cancellation request was already approved by an administrator.";
         public const string BookingCreateSuccess = "Booking created successfully.";
+        public const string BookingCreateNoCapacity = "The excursion you are trying to book doesn't exist or is fully booked and no spots are available.";
 
         // Cancellation request notifications (sent to user)
         public const string CancellationApprovedNotification = "Your cancellation request for \"{0}\" has been approved. Your booking has been removed.";

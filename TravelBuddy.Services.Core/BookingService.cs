@@ -79,9 +79,19 @@ namespace TravelBuddy.Services.Core
             //Fetch the excursion that the user wants to book.
             Excursion? excursion = await dbContext
                                         .Excursions
-                                        .AsNoTracking()
                                         .SingleOrDefaultAsync(e => e.Id == excursionId);
 
+            //Check if the excursion exists. If not, return null to indicate that the booking cannot be created.
+            if (excursion == null)
+            {
+                return null;
+            }
+
+            // If the excursion is fully booked, prevent booking creation.
+            if (excursion.Capacity <= 0)
+            {
+                return null;
+            }
 
             //Create a new booking entity with the provided userId and excursionId, and set the booking date and status.
             Booking booking = new Booking()
@@ -92,10 +102,13 @@ namespace TravelBuddy.Services.Core
                 Status = Status.Confirmed
             };
 
+            excursion.Capacity -= 1;
+
             //Add the new booking to the database context and save changes to persist it in the database.
             dbContext.Bookings.Add(booking);
 
             await dbContext.SaveChangesAsync();
+
 
             //Create a BookingViewModel to return the details of the created booking..
             BookingViewModel bookingVm = new BookingViewModel()
@@ -111,6 +124,7 @@ namespace TravelBuddy.Services.Core
                 BookedOn = booking.BookedOn,
                 Status = (int)booking.Status
             };
+
 
             //Return the details of the created booking.
             return bookingVm;
@@ -303,6 +317,9 @@ namespace TravelBuddy.Services.Core
 
             // Prepare the notification message for the user about the approved cancellation.
             string excursionTitle = request.Booking.Excursion.Title;
+
+            // Increment the excursion capacity to reflect the cancellation.
+            request.Booking.Excursion.Capacity += 1;
 
             Guid userId = request.UserId;
 

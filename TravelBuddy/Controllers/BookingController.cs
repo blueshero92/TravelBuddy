@@ -62,10 +62,11 @@ namespace TravelBuddy.Controllers
             // Asynchronously creates a new booking for the specified excursion and user using the booking service.
             BookingViewModel? booking = await bookingService.CreateBookingPostAsync(userId, excursionId);
 
-            // If the booking creation fails (e.g., due to invalid excursionId or other issues), return a BadRequest response.
+            // If the booking creation fails (e.g., excursion not found or no capacity), show an error.
             if (booking == null)
             {
-                return BadRequest();
+                TempData[ErrorTempDataKey] = BookingCreateNoCapacity;
+                return RedirectToAction("Index", "Excursion");
             };
 
             // Redirect to MyBookings after successful booking creation.
