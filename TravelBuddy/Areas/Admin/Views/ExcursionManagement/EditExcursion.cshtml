@@ -36,12 +36,15 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label asp-for="StartDate" class="form-label fw-semibold"></label>
-                                <input asp-for="StartDate" type="date" class="form-control" />
+                                <input type="date" class="form-control" id="StartDate" name="StartDate"
+                                       min="@DateTime.Now.AddDays(14).ToString("yyyy-MM-dd")"
+                                       value="@(Model.StartDate == DateTime.MinValue ? "" : Model.StartDate.ToString("yyyy-MM-dd"))" />
                                 <span asp-validation-for="StartDate" class="text-danger small"></span>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label asp-for="EndDate" class="form-label fw-semibold"></label>
-                                <input asp-for="EndDate" type="date" class="form-control" />
+                                <input type="date" class="form-control" id="EndDate" name="EndDate"
+                                       value="@(Model.EndDate == DateTime.MinValue ? "" : Model.EndDate.ToString("yyyy-MM-dd"))" />
                                 <span asp-validation-for="EndDate" class="text-danger small"></span>
                             </div>
                         </div>
@@ -84,4 +87,25 @@
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script>
+        (function () {
+            var startDate = document.getElementById('StartDate');
+            var endDate = document.getElementById('EndDate');
+
+            function updateEndMin() {
+                if (startDate.value) {
+                    var d = new Date(startDate.value);
+                    d.setDate(d.getDate() + 2);
+                    var min = d.toISOString().split('T')[0];
+                    endDate.min = min;
+                    if (endDate.value && endDate.value < min) {
+                        endDate.value = min;
+                    }
+                }
+            }
+
+            startDate.addEventListener('change', updateEndMin);
+            updateEndMin();
+        })();
+    </script>
 }

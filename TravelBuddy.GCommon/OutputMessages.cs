@@ -32,7 +32,7 @@
         public const string BookingCancelDeclined = "Your cancellation request was previously declined by an administrator and cannot be re-submitted.";
         public const string BookingCancelApproved = "Your cancellation request was already approved by an administrator.";
         public const string BookingCreateSuccess = "Booking created successfully.";
-        public const string BookingCreateNoCapacity = "The excursion you are trying to book doesn't exist or is fully booked and no spots are available.";
+        public const string BookingCreateNoCapacity = "The destination trip you are trying to book doesn't exist or is fully booked and no spots are available.";
 
         // Cancellation request notifications (sent to user)
         public const string CancellationApprovedNotification = "Your cancellation request for \"{0}\" has been approved. Your booking has been removed.";
@@ -51,7 +51,9 @@
         public const string ExcursionDestinationMinLength = "Destination must be at least {1} characters long.";
         public const string ExcursionDestinationMaxLength = "Destination cannot exceed {1} characters.";
         public const string ExcursionStartDateRequired = "Start date is required.";
+        public const string ExcursionStartDateTooSoon = "Start date must be at least 14 days from today.";
         public const string ExcursionEndDateRequired = "End date is required.";
+        public const string ExcursionEndDateTooSoon = "End date must be at least 2 days after the start date.";        
         public const string ExcursionPriceRequired = "Price is required.";
         public const string ExcursionPriceRange = "Price must be between {1} and {2}.";
         public const string ExcursionCapacityRequired = "Capacity is required.";

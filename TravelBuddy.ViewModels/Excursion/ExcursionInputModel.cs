@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TravelBuddy.GCommon.CustomValidationAttributes;
 using static TravelBuddy.GCommon.OutputMessages;
 using static TravelBuddy.GCommon.ValidationConstants.ExcursionConstants;
 
@@ -20,9 +21,11 @@ namespace TravelBuddy.ViewModels.Excursion
         public string Destination { get; set; } = null!;
 
         [Required(ErrorMessage = ExcursionStartDateRequired)]
+        [MinDaysFromNow(14, ErrorMessage = ExcursionStartDateTooSoon)]
         public DateTime StartDate { get; set; }
 
         [Required(ErrorMessage = ExcursionEndDateRequired)]
+        [MinDaysAfterProperty(nameof(StartDate), 2, ErrorMessage = ExcursionEndDateTooSoon)]
         public DateTime EndDate { get; set; }
 
         [Required(ErrorMessage = ExcursionPriceRequired)]
