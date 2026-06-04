@@ -1,0 +1,68 @@
+@model IEnumerable<TravelBuddy.ViewModels.Notification.NotificationViewModel>
+
+@{
+	ViewData["Title"] = "My Notifications";
+}
+
+<section class="tb-page-hero">
+	<div class="tb-page-hero-content">
+		<h1><i class="fa-solid fa-bell me-2"></i>My Notifications</h1>
+		<p>Stay up to date with your booking and cancellation updates</p>
+	</div>
+</section>
+
+<section class="tb-section">
+	<div class="container">
+
+		<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+			<a asp-area="" asp-controller="Home" asp-action="Index"
+			   class="tb-btn-primary" style="background:var(--tb-primary); font-size:.88rem;">
+				<i class="fa-solid fa-arrow-left me-1"></i>Back to Home
+			</a>
+		</div>
+
+		@if (!Model.Any())
+		{
+			<div class="text-center py-5">
+				<div style="font-size:3.5rem; color:var(--tb-accent); margin-bottom:1rem;">
+					<i class="fa-solid fa-bell-slash"></i>
+				</div>
+				<h3 style="font-family:'Montserrat',sans-serif; font-weight:700; color:var(--tb-dark);">
+					No notifications yet
+				</h3>
+				<p class="text-muted mb-4">You will be notified here when something important happens with your bookings.</p>
+			</div>
+		}
+		else
+		{
+			<div class="d-flex flex-column gap-3">
+				@foreach (var notification in Model)
+				{
+					string cardBorder = notification.IsRead ? "1px solid #e0e0e0" : "2px solid var(--tb-accent)";
+					string iconColor  = notification.IsRead ? "#adb5bd" : "var(--tb-accent)";
+
+					<div class="tb-privacy-card mb-0" style="display:flex; align-items:flex-start; gap:1rem; padding:1rem 1.5rem; border: @cardBorder;">
+						<div style="font-size:1.6rem; color:@iconColor; flex-shrink:0; padding-top:.15rem;">
+							<i class="fa-solid fa-bell"></i>
+						</div>
+						<div style="flex:1; min-width:0;">
+							<p style="margin-bottom:.25rem; font-size:.95rem; color:var(--tb-dark); font-weight: @(notification.IsRead ? "400" : "600");">
+								@notification.Message
+							</p>
+							<small class="text-muted">
+								<i class="fa-regular fa-clock me-1"></i>@notification.SentOn.ToString("MMM dd, yyyy – HH:mm")
+							</small>
+						</div>
+						@if (!notification.IsRead)
+						{
+							<span style="background:var(--tb-accent); color:#fff; padding:.2rem .6rem; border-radius:20px; font-size:.72rem; font-weight:700; white-space:nowrap; align-self:center;">
+								New
+							</span>
+						}
+					</div>
+				}
+			</div>
+		}
+
+	</div>
+</section>

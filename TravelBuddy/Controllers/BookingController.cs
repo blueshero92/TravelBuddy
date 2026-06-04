@@ -101,14 +101,35 @@ namespace TravelBuddy.Controllers
             // Get the current user's Id using a method from the BaseController.
             Guid userId = GetUserId();
 
+            // If a declined request already exists, block the user from re-submitting.
+            bool isDeclined = await bookingService.HasDeclinedCancellationAsync(bookingId);
+
+            if (isDeclined)
+            {
+                TempData[ErrorTempDataKey] = BookingCancelDeclined;
+                return RedirectToAction(nameof(MyBookings));
+            }
+
+            // If an approved request already exists, block the user from re-submitting.
+            bool isApproved = await bookingService.HasApprovedCancellationAsync(bookingId);
+
+            if (isApproved)
+            {
+                TempData[ErrorTempDataKey] = BookingCancelApproved;
+                return RedirectToAction(nameof(MyBookings));
+            }
+
+            // If a pending request already exists, block the user from re-submitting.
+            bool isPending = await bookingService.HasPendingCancellationAsync(bookingId);
+
+            if (isPending)
+            {
+                TempData[WarningTempDataKey] = BookingCancelAlreadyPending;
+                return RedirectToAction(nameof(MyBookings));
+            }
+
             // Asynchronously cancels the specified booking for the user using the booking service.
             await bookingService.CancelBookingAsync(userId, bookingId);
-
-            // If the cancellation process encounters issues add model error.
-            if (!ModelState.IsValid)
-            {
-                ModelState.AddModelError(string.Empty, BookingCancelAlreadyCancelled);
-            }
 
             // After attempting to cancel the booking, redirect the user back to the MyBookings page to see the updated list of bookings.
             TempData[WarningTempDataKey] = BookingCancelPending;

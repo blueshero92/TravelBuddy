@@ -28,7 +28,19 @@
         // Booking
         public const string BookingCancelAlreadyCancelled = "Cannot cancel already cancelled booking.";
         public const string BookingCancelPending = "Booking cancellation pending. Wait for administrator approval.";
+        public const string BookingCancelAlreadyPending = "Your cancellation request is already pending administrator approval.";
+        public const string BookingCancelDeclined = "Your cancellation request was previously declined by an administrator and cannot be re-submitted.";
+        public const string BookingCancelApproved = "Your cancellation request was already approved by an administrator.";
         public const string BookingCreateSuccess = "Booking created successfully.";
+
+        // Cancellation request notifications (sent to user)
+        public const string CancellationApprovedNotification = "Your cancellation request for \"{0}\" has been approved. Your booking has been removed.";
+        public const string CancellationDeclinedNotification = "Your cancellation request for \"{0}\" has been declined. Your booking remains active.";
+
+        // Cancellation management (admin TempData)
+        public const string CancellationApproveSuccess = "Cancellation request approved. Booking has been deleted.";
+        public const string CancellationDeclineSuccess = "Cancellation request declined. Booking restored to confirmed.";
+        public const string CancellationRequestNotFound = "Cancellation request not found.";
 
         // ExcursionInputModel validation
         public const string ExcursionTitleRequired = "Title is required.";

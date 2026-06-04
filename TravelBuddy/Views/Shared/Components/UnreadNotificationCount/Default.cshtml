@@ -1,0 +1,12 @@
+@model int
+
+<a class="nav-link position-relative" asp-area="" asp-controller="Notification" asp-action="Index" title="Notifications">
+	<i class="fa-solid fa-bell"></i>
+	@if (Model > 0)
+	{
+		<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill"
+			  style="background:var(--tb-accent); font-size:.65rem; padding:.25em .5em;">
+			@(Model > 9 ? "9+" : Model.ToString())
+		</span>
+	}
+</a>

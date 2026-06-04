@@ -5,6 +5,7 @@ using TravelBuddy.Data.Models.Enums;
 using TravelBuddy.Services.Core.Contracts;
 using TravelBuddy.ViewModels.Booking;
 using TravelBuddy.ViewModels.BookingCancellationRequest;
+using static TravelBuddy.GCommon.OutputMessages;
 
 namespace TravelBuddy.Services.Core
 {
@@ -162,14 +163,36 @@ namespace TravelBuddy.Services.Core
                 return false;
             }
 
-            // Check if a cancellation request already exists for this booking.
-            bool requestExists = await dbContext
-                                       .BookingCancellationRequests
-                                       .AnyAsync(r => r.BookingId == bookingId);
+            // If a declined or approved request already exists, forbid re-submission.
+            bool declinedRequestExists = await dbContext
+                                              .BookingCancellationRequests
+                                              .AnyAsync(r => r.BookingId == bookingId && r.Status == CancellationRequestStatus.Declined);
+
+            // If a declined cancellation request already exists for this booking, return false to prevent re-submission.
+            if (declinedRequestExists)
+            {
+                return false;
+            }
+
+            // Check if an approved cancellation request already exists for this booking.
+            bool approvedRequestExists = await dbContext
+                                              .BookingCancellationRequests
+                                              .AnyAsync(r => r.BookingId == bookingId && r.Status == CancellationRequestStatus.Approved);
+
+            // If an approved cancellation request already exists for this booking, return false to prevent re-submission.
+            if (approvedRequestExists)
+            {
+                return false;
+            }
+
+            // Check if a pending cancellation request already exists for this booking.
+            bool pendingRequestExists = await dbContext
+                                      .BookingCancellationRequests
+                                      .AnyAsync(r => r.BookingId == bookingId && r.Status == CancellationRequestStatus.Pending);
             try
             {
-                // If no cancellation request exists, create a new one with the status set to pending.
-                if (!requestExists)
+                // If no pending cancellation request exists, create a new one with the status set to pending.
+                if (!pendingRequestExists)
                 {
                     BookingCancellationRequest cancellationRequest = new BookingCancellationRequest()
                     {
@@ -194,6 +217,7 @@ namespace TravelBuddy.Services.Core
                 return false;
             }
         }
+
 
         // Get all cancellation requests for a specific user.
         public async Task<IEnumerable<BookingCancellationRequestViewModel>> GetUserCancellationRequestsAsync(Guid userId)
@@ -253,6 +277,111 @@ namespace TravelBuddy.Services.Core
 
             //Return the collection of all cancellation requests for admin review and management.
             return cancellationRequests;
+        }
+
+
+        // Approve a cancellation request: mark the booking as Cancelled (kept as history) and notify the user.
+        public async Task<bool> ApproveCancellationAsync(Guid bookingId)
+        {
+            //Fetch the cancellation request for the specified bookingId, including the related booking and excursion details.
+            BookingCancellationRequest? request = await dbContext
+                                                       .BookingCancellationRequests
+                                                       .Include(r => r.Booking)
+                                                       .ThenInclude(b => b.Excursion)
+                                                       .SingleOrDefaultAsync(r => r.BookingId == bookingId);
+
+            //Check if the cancellation request and the related booking exist. If not, return false.
+            if (request == null || request.Booking == null)
+            {
+                return false;
+            }
+
+            // Update the cancellation request status to Approved, set the review date, and update the booking status to Cancelled.
+            request.Status = CancellationRequestStatus.Approved;
+            request.ReviewedOn = DateTime.Now;
+            request.Booking.Status = Status.Cancelled;
+
+            // Prepare the notification message for the user about the approved cancellation.
+            string excursionTitle = request.Booking.Excursion.Title;
+
+            Guid userId = request.UserId;
+
+            // Create a new notification for the user about the approved cancellation and add it to the database context.
+            dbContext.Notifications.Add(new Notification
+            {
+                Id = Guid.NewGuid(),
+                UserId = userId,
+                Message = string.Format(CancellationApprovedNotification, excursionTitle),
+                SentOn = DateTime.Now,
+                IsRead = false
+            });
+
+            // Save changes to the database to persist the updated cancellation request, booking status, and new notification.
+            await dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+        // Decline a cancellation request: restore booking to Confirmed and notify the user.
+        public async Task<bool> DeclineCancellationAsync(Guid bookingId)
+        {
+            //Fetch the cancellation request for the specified bookingId, including the related booking and excursion details.
+            BookingCancellationRequest? request = await dbContext
+                                                       .BookingCancellationRequests
+                                                       .Include(r => r.Booking)
+                                                       .ThenInclude(b => b.Excursion)
+                                                       .SingleOrDefaultAsync(r => r.BookingId == bookingId);
+
+            //Check if the cancellation request and the related booking exist. If not, return false.
+            if (request == null || request.Booking == null)
+            {
+                return false;
+            }
+
+            // Update the cancellation request status to Declined, set the review date, and restore the booking status to Confirmed.
+            request.Status = CancellationRequestStatus.Declined;
+            request.ReviewedOn = DateTime.Now;
+            request.Booking.Status = Status.Confirmed;
+
+            // Prepare the notification message for the user about the declined cancellation.
+            string excursionTitle = request.Booking.Excursion.Title;
+
+            Guid userId = request.UserId;
+
+            // Create a new notification for the user about the declined cancellation and add it to the database context.
+            dbContext.Notifications.Add(new Notification
+            {
+                Id = Guid.NewGuid(),
+                UserId = userId,
+                Message = string.Format(CancellationDeclinedNotification, excursionTitle),
+                SentOn = DateTime.Now,
+                IsRead = false
+            });
+            // Save changes to the database to persist the updated cancellation request, booking status, and new notification.
+            await dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+        // Check if a declined cancellation request already exists for a specific booking.
+        public async Task<bool> HasDeclinedCancellationAsync(Guid bookingId)
+        {
+            return await dbContext.BookingCancellationRequests
+                .AnyAsync(r => r.BookingId == bookingId && r.Status == CancellationRequestStatus.Declined);
+        }
+
+        // Check if an approved cancellation request already exists for a specific booking.
+        public async Task<bool> HasApprovedCancellationAsync(Guid bookingId)
+        {
+            return await dbContext.BookingCancellationRequests
+                .AnyAsync(r => r.BookingId == bookingId && r.Status == CancellationRequestStatus.Approved);
+        }
+
+        // Check if a pending cancellation request already exists for a specific booking.
+        public async Task<bool> HasPendingCancellationAsync(Guid bookingId)
+        {
+            return await dbContext.BookingCancellationRequests
+                .AnyAsync(r => r.BookingId == bookingId && r.Status == CancellationRequestStatus.Pending);
         }
 
     }

@@ -77,6 +77,9 @@
                                                 <i class="fa-solid fa-file-circle-xmark me-1"></i>My Cancellation Requests
                                             </a>
                                         </li>
+                                        <li class="nav-item">
+                                            @await Component.InvokeAsync("UnreadNotificationCount")
+                                        </li>
                                 }
                         }
                         <partial name="_LoginPartial" />

@@ -6,7 +6,6 @@ using TravelBuddy.Data.Seeding;
 using TravelBuddy.Data.Seeding.Contracts;
 using TravelBuddy.Services.Core;
 using TravelBuddy.Services.Core.Contracts;
-
 namespace TravelBuddy
 {
     public class Program
@@ -27,6 +26,7 @@ namespace TravelBuddy
             // Register application services.
             builder.Services.AddScoped<IExcursionService, ExcursionService>();
             builder.Services.AddScoped<IBookingService, BookingService>();
+            builder.Services.AddScoped<INotificationService, NotificationService>();
 
             // Register the identity seeder for seeding roles and admin user.
             builder.Services.AddTransient<IIdentitySeeder, IdentitySeeder>();

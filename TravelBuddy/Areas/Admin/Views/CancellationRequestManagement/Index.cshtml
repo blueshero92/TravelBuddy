@@ -86,12 +86,20 @@
                         <div class="d-flex align-items-center gap-2 flex-shrink-0">
                             @if (request.CancellationStatus == 0)
                             {
-                                <a href="#" class="tb-btn-primary" style="background:#22c55e; font-size:.82rem; padding:.4rem .9rem;">
-                                    <i class="fa-solid fa-check me-1"></i>Approve
-                                </a>
-                                <a href="#" class="tb-btn-primary" style="background:#ef4444; font-size:.82rem; padding:.4rem .9rem;">
-                                    <i class="fa-solid fa-xmark me-1"></i>Reject
-                                </a>
+                                <form asp-area="Admin" asp-controller="CancellationRequestManagement" asp-action="Approve" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="bookingId" value="@request.BookingId" />
+                                    <button type="submit" class="tb-btn-primary" style="background:#22c55e; font-size:.82rem; padding:.4rem .9rem; border:none; cursor:pointer;">
+                                        <i class="fa-solid fa-check me-1"></i>Approve
+                                    </button>
+                                </form>
+                                <form asp-area="Admin" asp-controller="CancellationRequestManagement" asp-action="Decline" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="bookingId" value="@request.BookingId" />
+                                    <button type="submit" class="tb-btn-primary" style="background:#ef4444; font-size:.82rem; padding:.4rem .9rem; border:none; cursor:pointer;">
+                                        <i class="fa-solid fa-xmark me-1"></i>Reject
+                                    </button>
+                                </form>
                             }
                         </div>
 

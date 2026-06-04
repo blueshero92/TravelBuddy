@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TravelBuddy.GCommon;
 using TravelBuddy.Services.Core.Contracts;
 using TravelBuddy.ViewModels.BookingCancellationRequest;
 
@@ -29,6 +30,34 @@ namespace TravelBuddy.Areas.Admin.Controllers
 
             //If the cancellation requests are successfully retrieved, return the view with the cancellation requests to be displayed on the Index page.
             return View(cancellationRequestsVm);
+        }
+
+        // Approve a cancellation request – cancels the booking and notifies the user.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Approve(Guid bookingId)
+        {
+            bool result = await bookingService.ApproveCancellationAsync(bookingId);
+
+            TempData[AppConstants.SuccessTempDataKey] = result
+                ? OutputMessages.CancellationApproveSuccess
+                : OutputMessages.CancellationRequestNotFound;
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Decline a cancellation request – restores booking to Confirmed and notifies the user.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Decline(Guid bookingId)
+        {
+            bool result = await bookingService.DeclineCancellationAsync(bookingId);
+
+            TempData[AppConstants.SuccessTempDataKey] = result
+                ? OutputMessages.CancellationDeclineSuccess
+                : OutputMessages.CancellationRequestNotFound;
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
