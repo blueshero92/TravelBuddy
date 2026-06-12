@@ -13,6 +13,7 @@ namespace TravelBuddy.ViewComponents
             this.notificationService = notificationService;
         }
 
+        // Task for retrieving the count of unread notifications for the current user and returning it to the view for display in a view component.
         public async Task<IViewComponentResult> InvokeAsync()
         {
             string? idValue = UserClaimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;

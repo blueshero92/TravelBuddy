@@ -39,7 +39,8 @@ Built as part of the **ASP.NET Fundamentals** course to demonstrate MVC architec
 |---|---|---|
 | ASP.NET Core MVC | .NET 10 | Web framework |
 | Entity Framework Core | 10 | ORM / Database access |
-| Microsoft SQL Server | — | Relational database |
+| PostgreSQL | 14+ | Relational database (via Npgsql) |
+| Npgsql.EntityFrameworkCore.PostgreSQL | 10 | EF Core provider for PostgreSQL |
 | ASP.NET Core Identity | — | Authentication and role management |
 | Bootstrap | 5 | Responsive frontend styling |
 | Razor Views (.cshtml) | — | Server-side HTML rendering |
@@ -56,7 +57,7 @@ Make sure you have the following installed before running the project:
 
 - [.NET SDK 10.0+](https://dotnet.microsoft.com/download)
 - [Visual Studio 2022+](https://visualstudio.microsoft.com/) or [VS Code](https://code.visualstudio.com/)
-- [SQL Server](https://www.microsoft.com/en-us/sql-server) (LocalDB or full instance)
+- [PostgreSQL 14+](https://www.postgresql.org/download/)
 - [Git](https://git-scm.com/)
 
 ---
@@ -80,11 +81,11 @@ dotnet restore
 
 ### 3. Configure the connection string
 
-In `TravelBuddy/appsettings.json` set your SQL Server connection:
+In `TravelBuddy/appsettings.json` set your PostgreSQL connection:
 
 ```json
 "ConnectionStrings": {
-  "TravelBuddyDbConnection": "Server=(localdb)\\mssqllocaldb;Database=TravelBuddyDb;Trusted_Connection=True;"
+  "TravelBuddyDbConnection": "Host=localhost;Port=5432;Database=TravelBuddy;Username=postgres;Password=yourpassword"
 }
 ```
 
@@ -193,7 +194,9 @@ TravelBuddy/
 
 ## 🗄️ Database Setup
 
-The project uses **Entity Framework Core** with a Code-First approach. All entity configurations live in `TravelBuddy.Data/Configuration/`.
+The project uses **Entity Framework Core** with a Code-First approach and **PostgreSQL** as the database provider (via `Npgsql.EntityFrameworkCore.PostgreSQL`). All entity configurations live in `TravelBuddy.Data/Configuration/`.
+
+> ⚠️ All `DateTime` values are stored as **UTC** (`timestamp with time zone`). Display conversion to local time (Europe/Sofia, UTC+2/+3) is handled via `DateTimeExtensions.ToAppLocalTime()` in `TravelBuddy.Infrastructure`.
 
 ### Key Entities
 
@@ -210,7 +213,7 @@ Connection string is configured in `appsettings.json`:
 
 ```json
 "ConnectionStrings": {
-  "TravelBuddyDbConnection": "Server=(localdb)\\mssqllocaldb;Database=TravelBuddyDb;Trusted_Connection=True;"
+  "TravelBuddyDbConnection": "Host=localhost;Port=5432;Database=TravelBuddy;Username=postgres;Password=yourpassword"
 }
 ```
 
@@ -229,7 +232,7 @@ Key settings in `appsettings.json`:
 ```json
 {
   "ConnectionStrings": {
-    "TravelBuddyDbConnection": "your-connection-string-here"
+    "TravelBuddyDbConnection": "Host=localhost;Port=5432;Database=TravelBuddy;Username=postgres;Password=yourpassword"
   },
   "AdminSettings": {
     "Username": "admin",

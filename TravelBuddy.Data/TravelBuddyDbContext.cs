@@ -29,6 +29,12 @@ namespace TravelBuddy.Data
         {
             base.OnModelCreating(builder);
 
+            // Convert table names to lowercase.
+            foreach (var entity in builder.Model.GetEntityTypes())
+            {
+                entity.SetTableName(entity.GetTableName()?.ToLower());
+            }
+
             builder.ApplyConfigurationsFromAssembly(typeof(TravelBuddyDbContext).Assembly);
         }
     }

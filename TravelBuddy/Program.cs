@@ -15,11 +15,11 @@ namespace TravelBuddy
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("TravelBuddyDbConnection") 
-                ?? throw new InvalidOperationException("Connection string 'TravelBuddyDbConnection' not found.");
+            var connectionString = builder.Configuration.GetConnectionString("TravelBuddyPostGreDbConnection") 
+                ?? throw new InvalidOperationException("Connection string 'TravelBuddyPostGreDbConnection' not found.");
 
             builder.Services.AddDbContext<TravelBuddyDbContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseNpgsql(connectionString));
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

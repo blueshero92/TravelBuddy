@@ -98,7 +98,7 @@ namespace TravelBuddy.Services.Core
             {
                 UserId = userId,
                 ExcursionId = excursionId,
-                BookedOn = DateTime.Now,
+                BookedOn = DateTime.UtcNow,
                 Status = Status.Confirmed
             };
 
@@ -212,7 +212,7 @@ namespace TravelBuddy.Services.Core
                     {
                         UserId = userId,
                         BookingId = bookingId,
-                        RequestedOn = DateTime.Now,
+                        RequestedOn = DateTime.UtcNow,
                         Status = CancellationRequestStatus.Pending
                     };
 
@@ -312,7 +312,7 @@ namespace TravelBuddy.Services.Core
 
             // Update the cancellation request status to Approved, set the review date, and update the booking status to Cancelled.
             request.Status = CancellationRequestStatus.Approved;
-            request.ReviewedOn = DateTime.Now;
+            request.ReviewedOn = DateTime.UtcNow;
             request.Booking.Status = Status.Cancelled;
 
             // Prepare the notification message for the user about the approved cancellation.
@@ -329,7 +329,7 @@ namespace TravelBuddy.Services.Core
                 Id = Guid.NewGuid(),
                 UserId = userId,
                 Message = string.Format(CancellationApprovedNotification, excursionTitle),
-                SentOn = DateTime.Now,
+                SentOn = DateTime.UtcNow,
                 IsRead = false
             });
 
@@ -357,7 +357,7 @@ namespace TravelBuddy.Services.Core
 
             // Update the cancellation request status to Declined, set the review date, and restore the booking status to Confirmed.
             request.Status = CancellationRequestStatus.Declined;
-            request.ReviewedOn = DateTime.Now;
+            request.ReviewedOn = DateTime.UtcNow;
             request.Booking.Status = Status.Confirmed;
 
             // Prepare the notification message for the user about the declined cancellation.
@@ -371,7 +371,7 @@ namespace TravelBuddy.Services.Core
                 Id = Guid.NewGuid(),
                 UserId = userId,
                 Message = string.Format(CancellationDeclinedNotification, excursionTitle),
-                SentOn = DateTime.Now,
+                SentOn = DateTime.UtcNow,
                 IsRead = false
             });
             // Save changes to the database to persist the updated cancellation request, booking status, and new notification.

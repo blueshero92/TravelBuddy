@@ -85,7 +85,7 @@
                                     </li>
                                     <li>
                                         <i class="fa-regular fa-clock me-2"></i>
-                                        Requested on @request.RequestedOn.ToString("MMM dd, yyyy")
+                                        Requested on @request.RequestedOn.ToAppLocalTime().ToString("MMM dd, yyyy")
                                     </li>
                                 </ul>
 

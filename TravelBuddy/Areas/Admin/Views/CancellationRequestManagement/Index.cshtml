@@ -65,7 +65,7 @@
                                 <span class="mx-2">·</span>
                                 <i class="fa-solid fa-tag me-1"></i><strong>$@request.ExcursionPrice.ToString("0.00")</strong>
                                 <span class="mx-2">·</span>
-                                <i class="fa-regular fa-clock me-1"></i>Requested @request.RequestedOn.ToString("MMM dd, yyyy")
+                                <i class="fa-regular fa-clock me-1"></i>Requested @request.RequestedOn.ToAppLocalTime().ToString("MMM dd, yyyy")
                                 @if (!string.IsNullOrWhiteSpace(request.Reason))
                                 {
                                     <span class="mx-2">·</span>

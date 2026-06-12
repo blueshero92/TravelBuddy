@@ -50,7 +50,7 @@
 								@notification.Message
 							</p>
 							<small class="text-muted">
-								<i class="fa-regular fa-clock me-1"></i>@notification.SentOn.ToString("MMM dd, yyyy – HH:mm")
+								<i class="fa-regular fa-clock me-1"></i>@notification.SentOn.ToAppLocalTime().ToString("MMM dd, yyyy – HH:mm")
 							</small>
 						</div>
 						@if (!notification.IsRead)

@@ -88,7 +88,7 @@
                                     </li>
                                     <li>
                                         <i class="fa-regular fa-clock me-2"></i>
-                                        Booked on @booking.BookedOn.ToString("MMM dd, yyyy")
+                                        Booked on @booking.BookedOn.ToAppLocalTime().ToString("MMM dd, yyyy")
                                     </li>
                                 </ul>
 
