@@ -15,22 +15,27 @@ namespace TravelBuddy
             var builder = WebApplication.CreateBuilder(args);
 
             var connectionString =
-                builder.Configuration.GetConnectionString("TravelBuddyPostGreDbConnection")
-                ?? Environment.GetEnvironmentVariable("DATABASE_URL")
-                ?? throw new InvalidOperationException("No database connection string found.");
+            builder.Configuration.GetConnectionString("TravelBuddyPostGreDbConnection")
+            ?? Environment.GetEnvironmentVariable("DATABASE_URL");
 
-            if (connectionString.StartsWith("postgresql://"))
+            if (string.IsNullOrWhiteSpace(connectionString))
             {
-                var uri = new Uri(connectionString);
-                var userInfo = uri.UserInfo.Split(':');
+                var host = Environment.GetEnvironmentVariable("PGHOST");
+                var port = Environment.GetEnvironmentVariable("PGPORT");
+                var user = Environment.GetEnvironmentVariable("PGUSER");
+                var pass = Environment.GetEnvironmentVariable("PGPASSWORD");
+                var db = Environment.GetEnvironmentVariable("PGDATABASE");
 
-                connectionString =
-                    $"Host={uri.Host};" +
-                    $"Port={uri.Port};" +
-                    $"Database={uri.AbsolutePath.TrimStart('/')};" +
-                    $"Username={userInfo[0]};" +
-                    $"Password={userInfo[1]};" +
-                    $"SSL Mode=Require;Trust Server Certificate=true";
+                if (!string.IsNullOrWhiteSpace(host))
+                {
+                    connectionString =
+                        $"Host={host};Port={port};Database={db};Username={user};Password={pass};SSL Mode=Require;Trust Server Certificate=true";
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new InvalidOperationException("No valid PostgreSQL connection variables found.");
             }
 
             // Add database exception filter for development environment to provide detailed error information.
