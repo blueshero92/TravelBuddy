@@ -16,7 +16,7 @@ namespace TravelBuddy
 
             var connectionString =
                 builder.Configuration.GetConnectionString("TravelBuddyPostGreDbConnection")
-                ?? builder.Configuration["DATABASE_URL"]
+                ?? Environment.GetEnvironmentVariable("DATABASE_URL")
                 ?? throw new InvalidOperationException("No database connection string found.");
 
             if (connectionString.StartsWith("postgresql://"))
