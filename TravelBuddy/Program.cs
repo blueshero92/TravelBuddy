@@ -79,11 +79,10 @@ namespace TravelBuddy
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // Apply any pending migrations and seed roles and admin user on startup.
+            // Apply seed roles and admin user on startup.
             using (var scope = app.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<TravelBuddyDbContext>();
-                db.Database.Migrate();
 
                 var seeder = scope.ServiceProvider.GetRequiredService<IIdentitySeeder>();
                 seeder.SeedRolesAsync().GetAwaiter().GetResult();
