@@ -37,7 +37,7 @@
                             <div class="col-md-6 mb-3">
                                 <label asp-for="StartDate" class="form-label fw-semibold"></label>
                                 <input type="date" class="form-control" id="StartDate" name="StartDate"
-                                       min="@DateTime.Now.AddDays(14).ToString("yyyy-MM-dd")"
+                                       min="@DateTime.UtcNow.AddDays(14).ToString("yyyy-MM-dd")"
                                        value="@(Model.StartDate == DateTime.MinValue ? "" : Model.StartDate.ToString("yyyy-MM-dd"))" />
                                 <span asp-validation-for="StartDate" class="text-danger small"></span>
                             </div>

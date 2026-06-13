@@ -14,7 +14,7 @@ namespace TravelBuddy.GCommon.CustomValidationAttributes
 
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            if (value is DateTime date && date < DateTime.Now.AddDays(days))
+            if (value is DateTime date && date.Date < DateTime.UtcNow.Date.AddDays(days))
             {
                 return new ValidationResult(
                     ErrorMessage ?? $"Date must be at least {days} days from today.",

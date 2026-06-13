@@ -91,8 +91,8 @@ namespace TravelBuddy.Services.Core
                     Id = Guid.NewGuid(),
                     Title = excursionIm.Title,
                     Destination = excursionIm.Destination,
-                    StartDate = excursionIm.StartDate,
-                    EndDate = excursionIm.EndDate,
+                    StartDate = DateTime.SpecifyKind(excursionIm.StartDate, DateTimeKind.Utc),
+                    EndDate = DateTime.SpecifyKind(excursionIm.EndDate, DateTimeKind.Utc),
                     Price = excursionIm.Price,
                     Capacity = excursionIm.Capacity,
                     ImageUrl = excursionIm.ImageUrl ?? string.Empty,
@@ -159,8 +159,8 @@ namespace TravelBuddy.Services.Core
             {
                 excursion.Title = excursionIm.Title;
                 excursion.Destination = excursionIm.Destination;
-                excursion.StartDate = excursionIm.StartDate;
-                excursion.EndDate = excursionIm.EndDate;
+                excursion.StartDate = DateTime.SpecifyKind(excursionIm.StartDate, DateTimeKind.Utc);
+                excursion.EndDate = DateTime.SpecifyKind(excursionIm.EndDate, DateTimeKind.Utc);
                 excursion.Price = excursionIm.Price;
                 excursion.Capacity = excursionIm.Capacity;
                 excursion.ImageUrl = excursionIm.ImageUrl;
