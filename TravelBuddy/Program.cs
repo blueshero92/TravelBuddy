@@ -39,6 +39,9 @@ namespace TravelBuddy
                 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             }
 
+            builder.Services.AddDbContext<TravelBuddyDbContext>(options =>
+                    options.UseNpgsql(connectionString));
+
             // Register application services.
             builder.Services.AddScoped<IExcursionService, ExcursionService>();
             builder.Services.AddScoped<IBookingService, BookingService>();
