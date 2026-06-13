@@ -16,16 +16,24 @@ namespace TravelBuddy
             var builder = WebApplication.CreateBuilder(args);
 
             var connectionString =
-            builder.Configuration.GetConnectionString("TravelBuddyPostGreDbConnection")
-            ?? Environment.GetEnvironmentVariable("DATABASE_URL");
+                builder.Configuration.GetConnectionString("TravelBuddyPostGreDbConnection")
+                ?? builder.Configuration["DATABASE_URL"]
+                ?? builder.Configuration["ConnectionStrings__TravelBuddyPostGreDbConnection"]
+                ?? Environment.GetEnvironmentVariable("DATABASE_URL")
+                ?? Environment.GetEnvironmentVariable("ConnectionStrings__TravelBuddyPostGreDbConnection");
 
             if (string.IsNullOrWhiteSpace(connectionString))
             {
-                var host = Environment.GetEnvironmentVariable("PGHOST");
-                var port = Environment.GetEnvironmentVariable("PGPORT");
-                var user = Environment.GetEnvironmentVariable("PGUSER");
-                var pass = Environment.GetEnvironmentVariable("PGPASSWORD");
-                var db = Environment.GetEnvironmentVariable("PGDATABASE");
+                var host = Environment.GetEnvironmentVariable("PGHOST")
+                        ?? builder.Configuration["PGHOST"];
+                var port = Environment.GetEnvironmentVariable("PGPORT")
+                        ?? builder.Configuration["PGPORT"];
+                var user = Environment.GetEnvironmentVariable("PGUSER")
+                        ?? builder.Configuration["PGUSER"];
+                var pass = Environment.GetEnvironmentVariable("PGPASSWORD")
+                        ?? builder.Configuration["PGPASSWORD"];
+                var db = Environment.GetEnvironmentVariable("PGDATABASE")
+                        ?? builder.Configuration["PGDATABASE"];
 
                 if (!string.IsNullOrWhiteSpace(host))
                 {
@@ -36,8 +44,9 @@ namespace TravelBuddy
 
             if (string.IsNullOrWhiteSpace(connectionString))
             {
-                var availableVars = string.Join(", ", Environment.GetEnvironmentVariables().Keys.Cast<string>().OrderBy(k => k));
-                throw new InvalidOperationException($"No valid PostgreSQL connection variables found. Available env vars: {availableVars}");
+                var allConfig = string.Join(", ", builder.Configuration.AsEnumerable().Select(c => c.Key).OrderBy(k => k));
+                var allEnv = string.Join(", ", Environment.GetEnvironmentVariables().Keys.Cast<string>().OrderBy(k => k));
+                throw new InvalidOperationException($"No valid PostgreSQL connection variables found. Config keys: {allConfig} | Env vars: {allEnv}");
             }
 
             // Add database exception filter for development environment to provide detailed error information.
