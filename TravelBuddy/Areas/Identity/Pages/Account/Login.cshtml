@@ -46,6 +46,16 @@
             <button id="login-submit" type="submit" class="tb-auth-btn">
                 <i class="fa-solid fa-right-to-bracket me-2"></i>Log In
             </button>
+
+            @if (!string.IsNullOrEmpty(Model.DemoAdminIdentifier))
+            {
+                <button type="button" id="demo-admin-btn" class="tb-auth-btn mt-2"
+                        style="background:var(--tb-accent); opacity:.9;"
+                        data-identifier="@Model.DemoAdminIdentifier"
+                        data-password="@Model.DemoAdminPassword">
+                    <i class="fa-solid fa-user-shield me-2"></i>Demo Admin Login
+                </button>
+            }
         </form>
         <div class="tb-auth-footer">
             <p>New to TravelBuddy?
@@ -57,4 +67,15 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            var btn = document.getElementById('demo-admin-btn');
+            if (!btn) return;
+            btn.addEventListener('click', function () {
+                document.getElementById('Input_LogInIdentifier').value = btn.dataset.identifier;
+                document.getElementById('Input_Password').value = btn.dataset.password;
+                document.getElementById('login-submit').click();
+            });
+        })();
+    </script>
 }

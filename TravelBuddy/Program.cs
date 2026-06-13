@@ -21,7 +21,11 @@ namespace TravelBuddy
             builder.Services.AddDbContext<TravelBuddyDbContext>(options =>
                 options.UseNpgsql(connectionString));
 
-            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+            // Add database exception filter for development environment to provide detailed error information.
+            if (builder.Environment.IsDevelopment())
+            {
+                builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+            }
 
             // Register application services.
             builder.Services.AddScoped<IExcursionService, ExcursionService>();
@@ -47,21 +51,25 @@ namespace TravelBuddy
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
             }
 
+            // HTTPS redirection is handled by Railway's edge proxy in production.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
 
-
-            app.UseHttpsRedirection();
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // Seed roles and admin user on startup.
+            // Apply any pending migrations and seed roles and admin user on startup.
             using (var scope = app.Services.CreateScope())
             {
+                var db = scope.ServiceProvider.GetRequiredService<TravelBuddyDbContext>();
+                db.Database.Migrate();
+
                 var seeder = scope.ServiceProvider.GetRequiredService<IIdentitySeeder>();
                 seeder.SeedRolesAsync().GetAwaiter().GetResult();
                 seeder.SeedAdminUserAsync().GetAwaiter().GetResult();

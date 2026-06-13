@@ -13,13 +13,18 @@ public class LoginModel : PageModel
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly ILogger<LoginModel> _logger;
+    private readonly IConfiguration _configuration;
 
-    public LoginModel(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+    public LoginModel(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, IConfiguration configuration)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _logger = logger;
+        _configuration = configuration;
     }
+
+    public string DemoAdminIdentifier { get; private set; } = string.Empty;
+    public string DemoAdminPassword { get; private set; } = string.Empty;
 
     /// <summary>
     ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -84,6 +89,9 @@ public class LoginModel : PageModel
         }
 
         returnUrl ??= Url.Content("~/");
+
+        DemoAdminIdentifier = _configuration["UserSeed:AdminUser:Email"] ?? string.Empty;
+        DemoAdminPassword   = _configuration["UserSeed:AdminUser:Password"] ?? string.Empty;
 
         ReturnUrl = returnUrl;
     }
