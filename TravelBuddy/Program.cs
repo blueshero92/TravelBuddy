@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using TravelBuddy.Data;
 using TravelBuddy.Data.Models;
 using TravelBuddy.Data.Seeding;
@@ -15,38 +14,16 @@ namespace TravelBuddy
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            var connectionString =
-                builder.Configuration.GetConnectionString("TravelBuddyPostGreDbConnection")
-                ?? builder.Configuration["DATABASE_URL"]
-                ?? builder.Configuration["ConnectionStrings__TravelBuddyPostGreDbConnection"]
-                ?? Environment.GetEnvironmentVariable("DATABASE_URL")
-                ?? Environment.GetEnvironmentVariable("ConnectionStrings__TravelBuddyPostGreDbConnection");
+            var connectionString = builder.Configuration.GetConnectionString("TravelBuddyPostGreDbConnection")
+                ?? throw new InvalidOperationException("Connection string 'TravelBuddyPostGreDbConnection' not found.");
 
-            if (string.IsNullOrWhiteSpace(connectionString))
+            // Railway provides connection strings in postgresql:// URL format.
+            // Convert to Npgsql keyword=value format if needed.
+            if (connectionString.StartsWith("postgresql://") || connectionString.StartsWith("postgres://"))
             {
-                var host = Environment.GetEnvironmentVariable("PGHOST")
-                        ?? builder.Configuration["PGHOST"];
-                var port = Environment.GetEnvironmentVariable("PGPORT")
-                        ?? builder.Configuration["PGPORT"];
-                var user = Environment.GetEnvironmentVariable("PGUSER")
-                        ?? builder.Configuration["PGUSER"];
-                var pass = Environment.GetEnvironmentVariable("PGPASSWORD")
-                        ?? builder.Configuration["PGPASSWORD"];
-                var db = Environment.GetEnvironmentVariable("PGDATABASE")
-                        ?? builder.Configuration["PGDATABASE"];
-
-                if (!string.IsNullOrWhiteSpace(host))
-                {
-                    connectionString =
-                        $"Host={host};Port={port};Database={db};Username={user};Password={pass};SSL Mode=Require;Trust Server Certificate=true";
-                }
-            }
-
-            if (string.IsNullOrWhiteSpace(connectionString))
-            {
-                var allConfig = string.Join(", ", builder.Configuration.AsEnumerable().Select(c => c.Key).OrderBy(k => k));
-                var allEnv = string.Join(", ", Environment.GetEnvironmentVariables().Keys.Cast<string>().OrderBy(k => k));
-                throw new InvalidOperationException($"No valid PostgreSQL connection variables found. Config keys: {allConfig} | Env vars: {allEnv}");
+                var uri = new Uri(connectionString);
+                var userInfo = uri.UserInfo.Split(':');
+                connectionString = $"Host={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=true";
             }
 
             // Add database exception filter for development environment to provide detailed error information.
