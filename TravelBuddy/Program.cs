@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using TravelBuddy.Data;
 using TravelBuddy.Data.Models;
 using TravelBuddy.Data.Seeding;
@@ -35,7 +36,8 @@ namespace TravelBuddy
 
             if (string.IsNullOrWhiteSpace(connectionString))
             {
-                throw new InvalidOperationException("No valid PostgreSQL connection variables found.");
+                var availableVars = string.Join(", ", Environment.GetEnvironmentVariables().Keys.Cast<string>().OrderBy(k => k));
+                throw new InvalidOperationException($"No valid PostgreSQL connection variables found. Available env vars: {availableVars}");
             }
 
             // Add database exception filter for development environment to provide detailed error information.
