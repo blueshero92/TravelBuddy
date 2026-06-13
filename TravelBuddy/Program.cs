@@ -15,8 +15,11 @@ namespace TravelBuddy
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("TravelBuddyPostGreDbConnection") 
-                ?? throw new InvalidOperationException("Connection string 'TravelBuddyPostGreDbConnection' not found.");
+            // In production (Railway), DATABASE_URL is injected automatically by the PostgreSQL service.
+            // Locally, TravelBuddyPostGreDbConnection is used from appsettings or user secrets.
+            var connectionString = builder.Configuration.GetConnectionString("TravelBuddyPostGreDbConnection")
+                ?? builder.Configuration["DATABASE_URL"]
+                ?? throw new InvalidOperationException("No database connection string found. Set 'TravelBuddyPostGreDbConnection' or 'DATABASE_URL'.");
 
             builder.Services.AddDbContext<TravelBuddyDbContext>(options =>
                 options.UseNpgsql(connectionString));
