@@ -25,6 +25,13 @@
         public const string AdminPasswordNotFound = "Admin password not found in configuration.";
         public const string AdminFullNameNotFound = "Admin full name not found in configuration.";
 
+        public const string SeedDemoAdminUserError = "Error while trying to seed demo admin user.";
+        public const string SeedDemoAdminRoleError = "Error while trying to add demo admin user to demo admin role.";
+        public const string DemoAdminUsernameNotFound = "Demo admin username not found in configuration.";
+        public const string DemoAdminEmailNotFound = "Demo admin email not found in configuration.";
+        public const string DemoAdminPasswordNotFound = "Demo admin password not found in configuration.";
+        public const string DemoAdminFullNameNotFound = "Demo admin full name not found in configuration.";
+
         // Booking
         public const string BookingCancelAlreadyCancelled = "Cannot cancel already cancelled booking.";
         public const string BookingCancelPending = "Booking cancellation pending. Wait for administrator approval.";

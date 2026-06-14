@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 using TravelBuddy.Services.Core.Contracts;
 using TravelBuddy.ViewModels.Excursion;
@@ -20,6 +21,7 @@ namespace TravelBuddy.Areas.Admin.Controllers
         }
 
         // Task for retrieving and displaying a list of all excursions for management purposes on the Index page.
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             //Retrieve all excursions using the excursion service and store them in a variable.
@@ -46,6 +48,7 @@ namespace TravelBuddy.Areas.Admin.Controllers
 
         // Task for handling the submission of the form to add a new excursion, validating the input, and adding the excursion using the excursion service.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddExcursion(ExcursionInputModel? excursionInputModel)
         {
             // Validate the input model and return the view with the model if it is not valid.
@@ -93,7 +96,9 @@ namespace TravelBuddy.Areas.Admin.Controllers
             return View(excursionInputModel);
         }
 
+        // Task for handling the submission of the form to edit an existing excursion, validating the input, and editing the excursion using the excursion service.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditExcursion(Guid excursionId, ExcursionInputModel? excursionInputModel)
         {
             // Validate the input model and return the view with the model if it is not valid.
@@ -143,6 +148,7 @@ namespace TravelBuddy.Areas.Admin.Controllers
 
         // Task for handling the confirmation of deleting an excursion, validating the input, and deleting the excursion using the excursion service.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteExcursion(Guid excursionId, DeleteExcursionViewModel? deleteExcursionViewModel)
         {
             // Check if the input model is null and return a BadRequest result if it is.

@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TravelBuddy.Services.Core.Contracts;
-using TravelBuddy.ViewModels;
 
 namespace TravelBuddy.Areas.Admin.Controllers
 {

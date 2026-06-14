@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TravelBuddy.Data.Models;
+using static TravelBuddy.GCommon.AppConstants;
 
 namespace TravelBuddy.Areas.Identity.Pages.Account.Manage;
 
@@ -90,6 +91,13 @@ public class ChangePasswordModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
+        // Check if the user is a demo admin and prevent password change so that the demo admin account remains secure and readonly.
+        if (User.IsInRole("DemoAdmin"))
+        {
+            TempData[ErrorTempDataKey] = "Demo admin users cannot change their password.";
+            return Page();
+        }
+
         if (!ModelState.IsValid)
         {
             return Page();

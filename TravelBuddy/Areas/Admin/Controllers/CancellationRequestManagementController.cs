@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TravelBuddy.GCommon;
 using TravelBuddy.Services.Core.Contracts;
 using TravelBuddy.ViewModels.BookingCancellationRequest;
+
+using static TravelBuddy.GCommon.AppConstants;
+using static TravelBuddy.GCommon.OutputMessages;
 
 namespace TravelBuddy.Areas.Admin.Controllers
 {
@@ -17,6 +21,7 @@ namespace TravelBuddy.Areas.Admin.Controllers
         }
 
         // Task for retrieving and displaying a list of all booking cancellation requests for management purposes on the Index page.
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             //Retrieve all booking cancellation requests using the booking service and store them in a variable.
@@ -34,28 +39,26 @@ namespace TravelBuddy.Areas.Admin.Controllers
 
         // Approve a cancellation request – cancels the booking and notifies the user.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Approve(Guid bookingId)
         {
             bool result = await bookingService.ApproveCancellationAsync(bookingId);
 
-            TempData[AppConstants.SuccessTempDataKey] = result
-                ? OutputMessages.CancellationApproveSuccess
-                : OutputMessages.CancellationRequestNotFound;
+            TempData[SuccessTempDataKey] = result ? CancellationApproveSuccess
+                                                  : CancellationRequestNotFound;
 
             return RedirectToAction(nameof(Index));
         }
 
         // Decline a cancellation request – restores booking to Confirmed and notifies the user.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Decline(Guid bookingId)
         {
             bool result = await bookingService.DeclineCancellationAsync(bookingId);
 
-            TempData[AppConstants.SuccessTempDataKey] = result
-                ? OutputMessages.CancellationDeclineSuccess
-                : OutputMessages.CancellationRequestNotFound;
+            TempData[SuccessTempDataKey] = result ? CancellationDeclineSuccess
+                                                  : CancellationRequestNotFound;
 
             return RedirectToAction(nameof(Index));
         }

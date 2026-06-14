@@ -11,7 +11,8 @@ namespace TravelBuddy.Data.Seeding
         //Roles for seeding.
         private readonly string[] AppRoles = new string[]
         {
-            "Admin"
+            "Admin",
+            "DemoAdmin"
         };
 
         private readonly RoleManager<IdentityRole<Guid>> roleManager;
@@ -95,6 +96,54 @@ namespace TravelBuddy.Data.Seeding
                 if (!addToRoleResult.Succeeded)
                 {
                     throw new InvalidOperationException(SeedAdminRoleError);
+                }
+            }
+        }
+
+        public async Task SeedDemoAdminUserAsync()
+        {
+            string demoAdminUsername = configuration["UserSeed:DemoAdminUser:Username"]
+                ?? throw new InvalidOperationException(DemoAdminUsernameNotFound);
+
+            string demoAdminEmail = configuration["UserSeed:DemoAdminUser:Email"]
+                ?? throw new InvalidOperationException(DemoAdminEmailNotFound);
+
+            string demoAdminPassword = configuration["UserSeed:DemoAdminUser:Password"]
+                ?? throw new InvalidOperationException(DemoAdminPasswordNotFound);
+
+            string demoAdminFullName = configuration["UserSeed:DemoAdminUser:FullName"]
+                ?? throw new InvalidOperationException(DemoAdminFullNameNotFound);
+
+            ApplicationUser? demoAdminUser = await userManager.FindByEmailAsync(demoAdminEmail);
+
+            if (demoAdminUser == null)
+            {
+                demoAdminUser = new ApplicationUser
+                {
+                    UserName = demoAdminUsername,
+                    Email = demoAdminEmail,
+                    FullName = demoAdminFullName
+                };
+
+                IdentityResult result
+                    = await userManager.CreateAsync(demoAdminUser, demoAdminPassword);
+
+                if (!result.Succeeded)
+                {
+                    throw new InvalidOperationException(SeedDemoAdminUserError);
+                }
+            }
+
+            bool isInRole = await userManager.IsInRoleAsync(demoAdminUser, AppRoles[1]);
+
+            if (!isInRole)
+            {
+                IdentityResult addToRoleResult
+                    = await userManager.AddToRoleAsync(demoAdminUser, AppRoles[1]);
+
+                if (!addToRoleResult.Succeeded)
+                {
+                    throw new InvalidOperationException(SeedDemoAdminRoleError);
                 }
             }
         }

@@ -5,7 +5,7 @@ namespace TravelBuddy.Areas.Admin.Controllers
 {
     // Base controller for all admin-related controllers, providing security and enforcing authorization for admin users.
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, DemoAdmin")]
     [AutoValidateAntiforgeryToken]
     public class BaseAdminController : Controller
     {

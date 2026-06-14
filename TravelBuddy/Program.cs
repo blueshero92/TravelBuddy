@@ -81,6 +81,7 @@ namespace TravelBuddy
                 var seeder = scope.ServiceProvider.GetRequiredService<IIdentitySeeder>();
                 seeder.SeedRolesAsync().GetAwaiter().GetResult();
                 seeder.SeedAdminUserAsync().GetAwaiter().GetResult();
+                seeder.SeedDemoAdminUserAsync().GetAwaiter().GetResult();
             }
 
             app.MapStaticAssets();

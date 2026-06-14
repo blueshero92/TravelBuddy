@@ -51,7 +51,7 @@
                     <div class="d-flex align-items-center gap-2 ms-lg-3">
                         @if (User.Identity?.IsAuthenticated == true)
                         {
-                                @if (User.IsInRole("Admin"))
+                                @if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin"))
                                 {
                                     <li class="nav-item">
                                         <a class="nav-link" asp-area="Admin" asp-controller="HomeAdmin" asp-action="Index"

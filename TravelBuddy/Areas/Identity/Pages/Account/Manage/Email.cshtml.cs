@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TravelBuddy.Data.Models;
+using static TravelBuddy.GCommon.AppConstants;
 
 namespace TravelBuddy.Areas.Identity.Pages.Account.Manage;
 
@@ -90,6 +91,12 @@ public class EmailModel : PageModel
 
     public async Task<IActionResult> OnPostChangeEmailAsync()
     {
+        if (User.IsInRole("DemoAdmin"))
+        {
+            TempData[ErrorTempDataKey] = "Demo admin users cannot change their Email.";
+            return Page();
+        }
+
         var user = await _userManager.GetUserAsync(User);
         if (user == null)
         {

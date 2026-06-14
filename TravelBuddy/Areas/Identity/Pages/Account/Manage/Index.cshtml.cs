@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 using TravelBuddy.Data.Models;
 
+using static TravelBuddy.GCommon.AppConstants;
+
 namespace TravelBuddy.Areas.Identity.Pages.Account.Manage;
 
 public class IndexModel : PageModel
@@ -88,7 +90,15 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
+        // Prevent demo admin users from changing their username or phone number.
+        if (User.IsInRole("DemoAdmin"))
+        {
+            TempData[ErrorTempDataKey] = "Demo admin users cannot change their username, full name, or phone number.";
+            return Page();
+        }
+
         var user = await _userManager.GetUserAsync(User);
+
         if (user == null)
         {
             return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
