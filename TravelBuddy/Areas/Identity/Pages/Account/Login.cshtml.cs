@@ -23,9 +23,6 @@ public class LoginModel : PageModel
         _configuration = configuration;
     }
 
-    public string DemoAdminIdentifier { get; private set; } = string.Empty;
-    public string DemoAdminPassword { get; private set; } = string.Empty;
-
     /// <summary>
     ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
     ///     directly from your code. This API may change or be removed in future releases.
@@ -89,9 +86,6 @@ public class LoginModel : PageModel
         }
 
         returnUrl ??= Url.Content("~/");
-
-        DemoAdminIdentifier = _configuration["UserSeed:AdminUser:Email"] ?? string.Empty;
-        DemoAdminPassword   = _configuration["UserSeed:AdminUser:Password"] ?? string.Empty;
 
         ReturnUrl = returnUrl;
     }
