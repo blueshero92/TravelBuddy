@@ -42,6 +42,32 @@ namespace TravelBuddy.Services.Core
             return excursionsViewModel;
         }
 
+        public async Task<IEnumerable<ExcursionViewModel>> SearchExcursionsAsync(string searchQuery)
+        {
+            // Query the database for excursions that match the search query in either the title or destination.
+            IEnumerable<ExcursionViewModel> filteredExcursionsViewModel = await dbContext
+                                                                             .Excursions
+                                                                             .Where(e => e.Title.ToLower().Contains(searchQuery.ToLower()) ||
+                                                                                         e.Destination.ToLower().Contains(searchQuery.ToLower()))
+                                                                             .OrderBy(e => e.StartDate)
+                                                                             .Select(e => new ExcursionViewModel
+                                                                             {
+                                                                                 Id = e.Id,
+                                                                                 Title = e.Title,
+                                                                                 Destination = e.Destination,
+                                                                                 StartDate = e.StartDate,
+                                                                                 EndDate = e.EndDate,
+                                                                                 Price = e.Price,
+                                                                                 Capacity = e.Capacity,
+                                                                                 ImageUrl = e.ImageUrl ?? string.Empty,
+                                                                             })
+                                                                             .AsNoTracking()
+                                                                             .ToListAsync();
+
+            // Return the list of ExcursionViewModel instances representing the filtered excursions.
+            return filteredExcursionsViewModel;
+        }
+
         // Task for retrieving a specific excursion by its Id for the excursion details page.
         public async Task<ExcursionViewModel> GetExcursionByIdAsync(Guid id)
         {

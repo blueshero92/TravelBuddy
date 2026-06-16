@@ -22,11 +22,22 @@ namespace TravelBuddy.Controllers
         // Task for retrieving and displaying a list of all excursions on the index page.
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? searchQuery)
         {
             // Asynchronously retrieves a list of all excursions using the excursion service and passes it to the view for display.
-            IEnumerable<ExcursionViewModel> excursions
-                = await excursionService.GetAllExcursionsAsync();
+            IEnumerable<ExcursionViewModel> excursions;
+
+            if (string.IsNullOrEmpty(searchQuery))
+            {
+                excursions = await excursionService.GetAllExcursionsAsync();
+            }
+            else
+            {
+                excursions = await excursionService.SearchExcursionsAsync(searchQuery);
+            }
+
+            // Stores the search query in the ViewData dictionary to be accessible in the view.
+            ViewData["SearchQuery"] = searchQuery;
 
             // Returns the view with the list of excursions to be rendered on the index page.
             return View(excursions);

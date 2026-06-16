@@ -13,6 +13,25 @@
 
 <section class="tb-section">
     <div class="container">
+        <form asp-action="Index" asp-controller="Excursion" method="get" class="tb-search-bar">
+            <i class="fa-solid fa-magnifying-glass text-muted"></i>
+            <input type="text" name="searchQuery" placeholder="Where do you want to go?" aria-label="Search destinations" 
+                   class="form-control" value="@ViewData["SearchQuery"]" />
+            <button class="btn" type="submit">Search</button>
+            @if (!string.IsNullOrWhiteSpace(ViewData["SearchQuery"]?.ToString()))
+            {
+
+                <a asp-action="Index"
+                   type="button" class="btn btn-outline-danger d-flex align-items-center justify-content-center">
+                    <i class="bi bi-x-circle"></i>&nbsp;Clear
+                </a>
+
+            }
+        </form>
+        <p>
+
+        </p>
+        <p></p>
         @if (!Model.Any())
         {
             <div class="text-center py-5">
