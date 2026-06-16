@@ -909,4 +909,146 @@ a:hover { color: var(--tb-accent); }
 }
 
 #toast-container > div { box-shadow: 0 4px 16px rgba(0,0,0,.2) !important; }
+
+/* Mobile responsiveness */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    overflow-x: hidden;
+}
+
+/* Hero */
+
+@media (max-width: 768px) {
+
+    .tb-hero {
+        min-height: 70vh;
+        padding: 2rem 1rem;
+    }
+
+    .tb-hero-content {
+        padding: 1.5rem 1rem;
+    }
+
+    .tb-search-bar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem;
+        border-radius: 1.5rem;
+        gap: .75rem;
+    }
+
+        .tb-search-bar input {
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .tb-search-bar .btn {
+            width: 100%;
+        }
+
+    .tb-hero h1 {
+        line-height: 1.2;
+    }
+}
+
+/* Stats */
+
+@media (max-width: 576px) {
+
+    .tb-stats {
+        padding: 2.5rem 0;
+    }
+
+    .tb-stat-number {
+        font-size: 2rem;
+    }
+
+    .tb-stat-label {
+        font-size: .8rem;
+    }
+}
+
+/* Feature cards */
+
+@media (max-width: 768px) {
+
+    .tb-feature-card {
+        padding: 1.5rem 1.2rem;
+    }
+
+    .tb-feature-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+}
+
+/* Destination cards */
+
+@media (max-width: 768px) {
+
+    .tb-dest-card .card-img-top {
+        height: 180px;
+    }
+}
+
+/* CTA */
+
+@media (max-width: 768px) {
+
+    .tb-cta {
+        padding: 3.5rem 1rem;
+    }
+
+        .tb-cta h2 {
+            line-height: 1.2;
+        }
+}
+
+/* Navbar */
+
+@media (max-width: 992px) {
+
+    .tb-navbar .nav-link {
+        padding: .6rem 1rem !important;
+    }
+}
+
+/* Auth & Manage pages */
+
+@media (max-width: 768px) {
+
+    .tb-auth-card {
+        margin: 0 1rem;
+    }
+
+    .tb-auth-form {
+        padding: 1.5rem;
+    }
+
+    .tb-manage-content {
+        padding: 1.5rem 1rem;
+    }
+}
+
+/* Small phones */
+
+@media (max-width: 400px) {
+
+    .tb-hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .tb-hero p {
+        font-size: .9rem;
+    }
+
+    .tb-search-bar {
+        border-radius: 1rem;
+    }
 }
