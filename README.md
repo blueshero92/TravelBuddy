@@ -2,6 +2,12 @@
 
 > A full-stack ASP.NET Core MVC web application for managing and booking tourist excursions, featuring role-based access control, a cancellation request workflow, and an in-app notification system.
 
+🌐 Live Demo
+
+Application: https://travelbuddy-demo.up.railway.app/
+
+The application provides dedicated Demo Admin Login button for quick access without manually entering credentials.
+
 ![.NET Version](https://img.shields.io/badge/.NET-10.0-purple)
 ![ASP.NET Core](https://img.shields.io/badge/ASP.NET_Core-MVC-blue)
 ![License](https://img.shields.io/badge/license-Educational-green)
@@ -27,9 +33,8 @@
 
 ## 📖 About the Project
 
-**TravelBuddy** is a server-side rendered web application that allows registered users to browse tourist excursions, create and manage bookings, maintain a favourites list, and submit cancellation requests. Administrators manage the full excursion catalogue and process cancellation requests with approve/decline decisions. The system automatically notifies users of outcomes via an in-app notification inbox.
-
-Built as part of the **ASP.NET Fundamentals** course to demonstrate MVC architecture, Entity Framework Core Code-First, ASP.NET Core Identity, service layer separation, custom validation attributes, and area-based project organisation.
+**TravelBuddy** is a server-side rendered web application that allows registered users to browse tourist excursions, create and manage bookings, maintain a favourites list, and submit cancellation requests. 
+Administrators manage the full excursion catalogue and process cancellation requests with approve/decline decisions. The system automatically notifies users of outcomes via an in-app notification inbox.
 
 ---
 
@@ -92,13 +97,26 @@ In `TravelBuddy/appsettings.json` set your PostgreSQL connection:
 ### 4. Configure the admin seed account
 
 ```json
-"AdminSettings": {
-  "Username": "admin",
-  "Email": "admin@travelbuddy.com",
-  "Password": "Admin123!",
-  "FullName": "Site Administrator"
-}
+  "UserSeed": {
+    "DemoAdminUser": {
+      "Username": "demoAdmin",
+      "Email": "demoAdmin@example.com",
+      "Password": "DemoAdmin1234!",
+      "FullName": "Demo Admin"
+    }
 ```
+## ⚠️ Demo Admin Account
+
+A demo administrator account is available for testing the administrative interface.
+It's also available through the Demo Admin Login button.
+
+**Important:**
+- The account is **read-only**.
+- Create, edit, and delete operations are disabled.
+- The account's credentials and profile information cannot be modified.
+- No changes made through this account will affect the application's data.
+
+These limitations are intentionally enforced to preserve the stability, security, and integrity of the demo environment while still allowing visitors to explore the administrative features of the application.
 
 ### 5. Apply database migrations
 
@@ -232,19 +250,23 @@ Key settings in `appsettings.json`:
 ```json
 {
   "ConnectionStrings": {
-    "TravelBuddyDbConnection": "Host=localhost;Port=5432;Database=TravelBuddy;Username=postgres;Password=yourpassword"
+    "TravelBuddyPostGreDbConnection": ""
   },
-  "AdminSettings": {
-    "Username": "admin",
-    "Email": "admin@travelbuddy.com",
-    "Password": "Admin123!",
-    "FullName": "Site Administrator"
+  "UserSeed": {
+    "DemoAdminUser": {
+      "Username": "demoAdmin",
+      "Email": "demoAdmin@example.com",
+      "Password": "DemoAdmin1234!",
+      "FullName": "Demo Admin"
+    }
   },
   "Logging": {
     "LogLevel": {
-      "Default": "Information"
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
     }
-  }
+  },
+  "AllowedHosts": "*"
 }
 ```
 
