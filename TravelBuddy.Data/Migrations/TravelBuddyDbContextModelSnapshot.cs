@@ -345,7 +345,7 @@ namespace TravelBuddy.Data.Migrations
                             Capacity = 20,
                             Destination = "Maldives",
                             EndDate = new DateTime(2026, 7, 7, 0, 0, 0, 0, DateTimeKind.Utc),
-                            ImageUrl = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop",
+                            ImageUrl = "/images/excursions/maldives-beach.jpg",
                             IsActive = true,
                             Price = 1500.00m,
                             StartDate = new DateTime(2026, 7, 1, 0, 0, 0, 0, DateTimeKind.Utc),
@@ -355,9 +355,9 @@ namespace TravelBuddy.Data.Migrations
                         {
                             Id = new Guid("7f763f9f-152f-46b6-95cc-7ca4cb907a9b"),
                             Capacity = 15,
-                            Destination = "Swiss Alps",
+                            Destination = "Swiss Alps, Switzerland",
                             EndDate = new DateTime(2026, 8, 22, 0, 0, 0, 0, DateTimeKind.Utc),
-                            ImageUrl = "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&auto=format&fit=crop",
+                            ImageUrl = "/images/excursions/alps-mountains.jpg",
                             IsActive = true,
                             Price = 1200.00m,
                             StartDate = new DateTime(2026, 8, 15, 0, 0, 0, 0, DateTimeKind.Utc),
@@ -367,13 +367,49 @@ namespace TravelBuddy.Data.Migrations
                         {
                             Id = new Guid("178a0c9f-75b7-4c90-9e72-53922dfa72e4"),
                             Capacity = 25,
-                            Destination = "New York City",
+                            Destination = "New York City, USA",
                             EndDate = new DateTime(2026, 9, 17, 0, 0, 0, 0, DateTimeKind.Utc),
-                            ImageUrl = "https://images.unsplash.com/photo-1499092346589-b9b6be3e94b2?w=600&auto=format&fit=crop",
+                            ImageUrl = "/images/excursions/nyc.jpg",
                             IsActive = true,
                             Price = 1000.00m,
                             StartDate = new DateTime(2026, 9, 10, 0, 0, 0, 0, DateTimeKind.Utc),
                             Title = "City Exploration"
+                        },
+                        new
+                        {
+                            Id = new Guid("0421801c-e358-45e8-a50b-90b0dbf4b220"),
+                            Capacity = 35,
+                            Destination = "Florence, Italy",
+                            EndDate = new DateTime(2026, 8, 7, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ImageUrl = "/images/excursions/florence.jpg",
+                            IsActive = true,
+                            Price = 1000.00m,
+                            StartDate = new DateTime(2026, 8, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Title = "The Magic Of Florence"
+                        },
+                        new
+                        {
+                            Id = new Guid("1d1c7ddb-d496-463c-8be1-c5b060e80ea6"),
+                            Capacity = 15,
+                            Destination = "Kavala, Greece",
+                            EndDate = new DateTime(2026, 8, 22, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ImageUrl = "/images/excursions/kavala-beach.jpg",
+                            IsActive = true,
+                            Price = 800.00m,
+                            StartDate = new DateTime(2026, 8, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Title = "Summer in Kavala"
+                        },
+                        new
+                        {
+                            Id = new Guid("6ae52e99-8f0b-4648-888b-e87302dbfc09"),
+                            Capacity = 25,
+                            Destination = "Paris, France",
+                            EndDate = new DateTime(2026, 9, 17, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ImageUrl = "/images/excursions/disneyland.jpg",
+                            IsActive = true,
+                            Price = 2000.00m,
+                            StartDate = new DateTime(2026, 9, 10, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Title = "Disneyland"
                         });
                 });
 
