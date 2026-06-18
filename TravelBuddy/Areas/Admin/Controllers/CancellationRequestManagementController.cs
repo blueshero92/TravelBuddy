@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TravelBuddy.GCommon;
 using TravelBuddy.Services.Core.Contracts;
 using TravelBuddy.ViewModels.BookingCancellationRequest;
 
-using static TravelBuddy.GCommon.AppConstants;
-using static TravelBuddy.GCommon.OutputMessages;
+using static TravelBuddy.GCommon.Constants.AppConstants;
+using static TravelBuddy.GCommon.Constants.OutputMessages;
 
 namespace TravelBuddy.Areas.Admin.Controllers
 {

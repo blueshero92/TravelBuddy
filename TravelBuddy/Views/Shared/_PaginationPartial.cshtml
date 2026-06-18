@@ -1,0 +1,38 @@
+﻿@{
+	var previousDisabled = !Model.HasPreviousPage ? "disabled" : "";
+	var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+
+	var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+	var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+	var currentArea = ViewContext.RouteData.Values["area"]?.ToString();
+}
+
+<div class="d-flex justify-content-center align-items-center gap-3 mb-4 flex-wrap">
+
+	<a asp-action="@currentAction"
+	   asp-controller="@currentController"
+	   asp-area="@currentArea"
+	   asp-route-pageNumber="@(Model.PageIndex - 1)"
+	   asp-route-searchQuery="@ViewData["SearchQuery"]"
+	   class="btn tb-btn-primary @previousDisabled"
+	   style="padding: .5rem 1.25rem; font-size: .9rem;">
+		<i class="bi bi-chevron-left me-1"></i>
+		&lt; Previous
+	</a>
+	<div class="bg-white shadow-sm rounded-pill px-4 py-2">
+		<span class="fw-semibold" style="color: var(--tb-black);">
+			Page @Model.PageIndex of @Model.TotalPages
+		</span>
+	</div>
+	<a asp-action="@currentAction"
+	   asp-controller="@currentController"
+	   asp-area="@currentArea"
+	   asp-route-pageNumber="@(Model.PageIndex + 1)"
+	   asp-route-searchQuery="@ViewData["SearchQuery"]"
+	   class="btn tb-btn-primary @nextDisabled"
+	   style="padding: .5rem 1.25rem; font-size: .9rem;">
+		Next >
+		<i class="bi bi-chevron-right ms-1"></i>
+	</a>
+
+</div>

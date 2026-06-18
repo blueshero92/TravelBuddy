@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TravelBuddy.GCommon.CustomValidationAttributes;
-using static TravelBuddy.GCommon.OutputMessages;
-using static TravelBuddy.GCommon.ValidationConstants.ExcursionConstants;
+using static TravelBuddy.GCommon.Constants.OutputMessages;
+using static TravelBuddy.GCommon.Constants.ValidationConstants.ExcursionConstants;
 
 namespace TravelBuddy.ViewModels.Excursion
 {

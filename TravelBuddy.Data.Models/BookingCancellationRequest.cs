@@ -4,8 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using TravelBuddy.Data.Models.Enums;
-
-using static TravelBuddy.GCommon.ValidationConstants.BookingCancellationRequestConstants;
+using static TravelBuddy.GCommon.Constants.ValidationConstants.BookingCancellationRequestConstants;
 
 namespace TravelBuddy.Data.Models
 {

@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TravelBuddy.GCommon.Pagination;
 using TravelBuddy.Services.Core.Contracts;
 using TravelBuddy.ViewModels.Booking;
 
-using static TravelBuddy.GCommon.AppConstants;
-using static TravelBuddy.GCommon.OutputMessages;
+using static TravelBuddy.GCommon.Constants.AppConstants;
+using static TravelBuddy.GCommon.Constants.OutputMessages;
 
 namespace TravelBuddy.Controllers
 {
@@ -20,7 +21,7 @@ namespace TravelBuddy.Controllers
 
         // Task for retrieving and displaying the current user's bookings on the MyBookings page.
         [HttpGet]
-        public async Task<IActionResult> MyBookings()
+        public async Task<IActionResult> MyBookings(int? pageNumber)
         {
             // Get the current user's Id using a method from the BaseController.
             Guid userId = GetUserId();
@@ -29,8 +30,10 @@ namespace TravelBuddy.Controllers
             IEnumerable<BookingViewModel> bookings
                 = await bookingService.GetUserBookingsAsync(userId);
 
+            int pageSize = PageSize;
+
             // Returns the view with the retrieved bookings to be displayed to the user.
-            return View(bookings);
+            return View(await PaginatedList<BookingViewModel>.CreateAsync(bookings, pageNumber ?? 1, pageSize));
         }
 
         // Task for displaying the booking creation page for a specific excursion.

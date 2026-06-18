@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 using TravelBuddy.Data.Models;
-
-using static TravelBuddy.GCommon.AppConstants;
+using static TravelBuddy.GCommon.Constants.AppConstants;
 
 namespace TravelBuddy.Areas.Identity.Pages.Account.Manage;
 

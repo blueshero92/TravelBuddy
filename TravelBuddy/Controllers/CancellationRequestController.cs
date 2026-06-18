@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TravelBuddy.GCommon.Pagination;
 using TravelBuddy.Services.Core.Contracts;
 using TravelBuddy.ViewModels.BookingCancellationRequest;
+
+using static TravelBuddy.GCommon.Constants.AppConstants;
 
 namespace TravelBuddy.Controllers
 {
@@ -16,7 +19,7 @@ namespace TravelBuddy.Controllers
 
         // Task for retrieving and displaying the current user's booking cancellation requests on the CancellationRequests page.
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
             // Get the current user's Id using a method from the BaseController.
             Guid userId = GetUserId();
@@ -25,8 +28,10 @@ namespace TravelBuddy.Controllers
             IEnumerable<BookingCancellationRequestViewModel> cancellationRequests
                 = await bookingService.GetUserCancellationRequestsAsync(userId);
 
+            int pageSize = PageSize;
+
             // Returns the view with the retrieved cancellation requests to be displayed to the user.
-            return View(cancellationRequests);
+            return View(await PaginatedList<BookingCancellationRequestViewModel>.CreateAsync(cancellationRequests, pageNumber ?? 1, pageSize));
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static TravelBuddy.GCommon.ValidationConstants.ExcursionConstants;
+using static TravelBuddy.GCommon.Constants.ValidationConstants.ExcursionConstants;
 
 namespace TravelBuddy.Data.Models
 {

@@ -1,4 +1,4 @@
-﻿namespace TravelBuddy.GCommon
+﻿namespace TravelBuddy.GCommon.Constants
 {
     public static class OutputMessages
     {

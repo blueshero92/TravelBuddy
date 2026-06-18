@@ -1,4 +1,4 @@
-﻿namespace TravelBuddy.GCommon
+﻿namespace TravelBuddy.GCommon.Constants
 {
     public static class AppConstants
     {
@@ -8,5 +8,10 @@
         public const string WarningTempDataKey = "WarningMessage";
         public const string InfoTempDataKey = "InfoMessage";
         public const string FavoritesErrorTempDataKey = "FavoritesError";
+
+        //Size of the page for pagination purposes, used in various controllers to determine how many items to display per page.
+        public const int PageSize = 6;
+
+        public const int NotificationsPageSize = 15;
     }
 }

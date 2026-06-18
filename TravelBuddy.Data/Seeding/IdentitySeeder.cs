@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using TravelBuddy.Data.Models;
 using TravelBuddy.Data.Seeding.Contracts;
-using static TravelBuddy.GCommon.OutputMessages;
+using static TravelBuddy.GCommon.Constants.OutputMessages;
 
 namespace TravelBuddy.Data.Seeding
 {

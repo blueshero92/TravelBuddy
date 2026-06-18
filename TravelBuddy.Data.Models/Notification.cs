@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
-using static TravelBuddy.GCommon.ValidationConstants.NotificationConstants;
+using static TravelBuddy.GCommon.Constants.ValidationConstants.NotificationConstants;
 
 namespace TravelBuddy.Data.Models
 {

@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TravelBuddy.GCommon.Pagination;
 using TravelBuddy.Services.Core.Contracts;
 using TravelBuddy.ViewModels.Excursion;
 
-using static TravelBuddy.GCommon.AppConstants;
-using static TravelBuddy.GCommon.OutputMessages;
+using static TravelBuddy.GCommon.Constants.AppConstants;
+using static TravelBuddy.GCommon.Constants.OutputMessages;
 
 namespace TravelBuddy.Controllers
 {
@@ -22,7 +23,7 @@ namespace TravelBuddy.Controllers
         // Task for retrieving and displaying a list of all excursions on the index page.
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Index(string? searchQuery)
+        public async Task<IActionResult> Index(string? searchQuery, int? pageNumber)
         {
             // Asynchronously retrieves a list of all excursions using the excursion service and passes it to the view for display.
             IEnumerable<ExcursionViewModel> excursions;
@@ -37,10 +38,12 @@ namespace TravelBuddy.Controllers
             }
 
             // Stores the search query in the ViewData dictionary to be accessible in the view.
-            ViewData["SearchQuery"] = searchQuery;
+            ViewData["SearchQuery"] = searchQuery?.Trim();
+
+            int pageSize = PageSize;
 
             // Returns the view with the list of excursions to be rendered on the index page.
-            return View(excursions);
+            return View(await PaginatedList<ExcursionViewModel>.CreateAsync(excursions, pageNumber ?? 1, pageSize));
         }
 
         // Task for retrieving and displaying the details of a specific excursion based on its Id.
@@ -63,7 +66,7 @@ namespace TravelBuddy.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> MyFavoriteExcursions()
+        public async Task<IActionResult> MyFavoriteExcursions(int? pageNumber)
         {
             // Retrieves the user ID from the claims of the currently authenticated user.
             Guid userId = GetUserId();
@@ -72,8 +75,10 @@ namespace TravelBuddy.Controllers
             IEnumerable<ExcursionViewModel?> favoriteExcursions
                 = await excursionService.GetUserFavoriteExcursionsAsync(userId);
 
+            int pageSize = PageSize;
+
             // Returns the view with the list of the user's favorite excursions to be rendered on the MyFavoriteExcursions page.
-            return View(favoriteExcursions);
+            return View(await PaginatedList<ExcursionViewModel>.CreateAsync(favoriteExcursions, pageNumber ?? 1, pageSize));
         }
 
         // Task for adding a specific excursion to the user's favorites based on its Id.

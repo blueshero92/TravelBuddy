@@ -5,7 +5,7 @@ using TravelBuddy.Data.Models.Enums;
 using TravelBuddy.Services.Core.Contracts;
 using TravelBuddy.ViewModels.Booking;
 using TravelBuddy.ViewModels.BookingCancellationRequest;
-using static TravelBuddy.GCommon.OutputMessages;
+using static TravelBuddy.GCommon.Constants.OutputMessages;
 
 namespace TravelBuddy.Services.Core
 {

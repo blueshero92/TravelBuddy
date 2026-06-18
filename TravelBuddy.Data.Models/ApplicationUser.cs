@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-
-using static TravelBuddy.GCommon.ValidationConstants.ApplicationUserConstants;
+using static TravelBuddy.GCommon.Constants.ValidationConstants.ApplicationUserConstants;
 
 namespace TravelBuddy.Data.Models
 {

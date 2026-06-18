@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TravelBuddy.ViewModels.Excursion.ExcursionViewModel>
+﻿@model IEnumerable<ExcursionViewModel>
 
 @{
     ViewData["Title"] = "Favourites";
@@ -92,6 +92,10 @@
                         </div>
                     </div>
                 }
+
+                <p></p>
+                <partial name="_PaginationPartial" />
+
             </div>
         }
 
